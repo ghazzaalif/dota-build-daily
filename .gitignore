@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-single
+# Private puzzle queue — never commit to the public repo (PRD §8 spoiler safety)
+queue/
+# Raw OpenDota responses (restored from the Actions cache)
+# data/cache/matches/ is committed for the seed TI 2026 matches the tests use;
+# live runs add more, restored from the Actions cache and never committed.
+data/cache/constants/
+.DS_Store

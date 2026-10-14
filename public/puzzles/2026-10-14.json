@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 1,
+  "date": "2026-10-14",
+  "patch": "7.41",
+  "hero": {
+    "id": 55,
+    "key": "dark_seer",
+    "name": "Dark Seer"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Grand Final, game 5"
+  },
+  "hints": {
+    "allies": [
+      55,
+      3,
+      54,
+      120,
+      9
+    ],
+    "enemies": [
+      8,
+      2,
+      74,
+      86,
+      123
+    ],
+    "result": "win",
+    "durationSec": 3862,
+    "player": {
+      "name": "Collapse",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "4500-5500",
+      "2000-3500",
+      "4500-5500",
+      "4500-5500",
+      "5500+",
+      "2000-3500"
+    ]
+  },
+  "match": {
+    "matchId": 8960991322,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "Team Spirit",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQlhER1VJbgMXBUhWEh4UWVhdSGJRWRNeU1QDAk0eTQ9aVVQTDhhQAQ0KZVZZQV0PHRJZWFlfYgEBRgADCAEBUB1LD1pRQxNeQBdSV1VCRVlYU0YTGBhFDQ8BaVdTEAwfAwYdTBhBEw8HHRgIEkBTS0NVXllRSBNIQBBTX1VhU04TCh8IAg5MSBlGUVdJEAwPXkZIQ0NSVAgPDVRVb1BaRF9bDx0WTlgJBzdfURIIBR4BA1AdTxhaARtGABBEQFdbVFxyU1tVRRdASBhGWV9TflRTDwsHAgRUHzk="
+}

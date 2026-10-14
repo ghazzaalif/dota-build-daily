@@ -1,0 +1,46 @@
+{
+  "name": "dota-build-daily",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Daily Wordle-style puzzle: guess the first 6 core items a pro bought, in order.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:single": "vite build --mode single",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "data:items": "tsx scripts/pipeline/build-items.ts --offline",
+    "pipeline": "tsx scripts/pipeline/run.ts",
+    "pipeline:offline": "tsx scripts/pipeline/run.ts --offline --no-fetch",
+    "build:preview": "vite build --mode single && node scripts/make-preview.mjs",
+    "test:e2e": "node tests/e2e/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^20.19.43",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.6.1",
+    "dotaconstants": "^10.8.0",
+    "jsdom": "^29.1.1",
+    "postcss": "^8.5.30",
+    "puppeteer-core": "^24.43.1",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^2.1.9"
+  }
+}

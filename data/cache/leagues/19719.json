@@ -1,0 +1,65 @@
+[
+  {
+    "match_id": 8958950792,
+    "start_time": 1787393500,
+    "duration": 2685,
+    "radiant_win": false,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8959067169,
+    "start_time": 1787398152,
+    "duration": 2963,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960365292,
+    "start_time": 1787451068,
+    "duration": 2245,
+    "radiant_win": false,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960411225,
+    "start_time": 1787455201,
+    "duration": 2059,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960577698,
+    "start_time": 1787465757,
+    "duration": 2775,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960655084,
+    "start_time": 1787470563,
+    "duration": 3869,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960762254,
+    "start_time": 1787476452,
+    "duration": 2756,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960882635,
+    "start_time": 1787482181,
+    "duration": 2658,
+    "radiant_win": true,
+    "leagueid": 19719
+  },
+  {
+    "match_id": 8960991322,
+    "start_time": 1787486918,
+    "duration": 3862,
+    "radiant_win": false,
+    "leagueid": 19719
+  }
+]

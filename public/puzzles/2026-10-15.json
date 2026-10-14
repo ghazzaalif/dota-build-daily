@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 2,
+  "date": "2026-10-15",
+  "patch": "7.41",
+  "hero": {
+    "id": 53,
+    "key": "furion",
+    "name": "Nature's Prophet"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Grand Final, game 3"
+  },
+  "hints": {
+    "allies": [
+      53,
+      100,
+      109,
+      119,
+      2
+    ],
+    "enemies": [
+      11,
+      28,
+      120,
+      136,
+      58
+    ],
+    "result": "win",
+    "durationSec": 2756,
+    "player": {
+      "name": "Larl",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "5500+",
+      "3500-4500",
+      "3500-4500",
+      "3500-4500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8960762254,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "TEAM VISION",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQV9aVEdlRhYHBV5BEh4UWVhdSGJQWRBeVlYCTxxJFEZUSQ8LF1dYCw4IVFtCEBoPRVlAVGZfUUZYVQgEB08aVhNbSEgXABARDhBTX1FGU3JCU0hBQV9ARk5GTltdV2VIUhIXAAICCxlOHxhZVUsUFxNYWENHU1EFDAFlQllZUw8dEllYWF9hAQFGAAABAw5QHUsPWlBDEF5ABlZTU1lpRlheSm5XW0BGTkZOW11XZUhSEhcDAQgHGU4fGFlVSxQXE15YXVlTVA0HFhgeEkZfQFRjSFIXAABSV1VHbw=="
+}

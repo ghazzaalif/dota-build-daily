@@ -1,0 +1,544 @@
+{
+  "_comment": "Hand-maintained (PRD §9.3). An item must have a category to be eligible: OpenDota constants keep removed items and don't include the shop tab, so the category map doubles as the 'currently in the shop' list. Reviewed for patch 7.41. Aghanim's Shard and Aghanim's Blessing are excluded because they are consumed on purchase and never appear in a final inventory.",
+  "exclude": [
+    "tango",
+    "flask",
+    "clarity",
+    "faerie_fire",
+    "enchanted_mango",
+    "smoke_of_deceit",
+    "dust",
+    "ward_observer",
+    "ward_sentry",
+    "ward_dispenser",
+    "tpscroll",
+    "blood_grenade",
+    "tome_of_knowledge",
+    "gem",
+    "bottle",
+    "courier",
+    "flying_courier",
+    "magic_wand",
+    "bracer",
+    "wraith_band",
+    "null_talisman",
+    "soul_ring",
+    "orb_of_corrosion",
+    "aegis",
+    "cheese",
+    "royale_with_cheese",
+    "refresher_shard",
+    "ultimate_scepter_roshan",
+    "aghanims_shard_roshan",
+    "pocket_roshan",
+    "roshans_banner",
+    "great_famango",
+    "greater_famango",
+    "necronomicon",
+    "necronomicon_2",
+    "necronomicon_3",
+    "diffusal_blade_2",
+    "trident",
+    "aghanims_shard",
+    "ultimate_scepter_2"
+  ],
+  "standaloneAllow": [
+    "blink"
+  ],
+  "upgradedBoots": [
+    "power_treads",
+    "phase_boots",
+    "arcane_boots",
+    "tranquil_boots",
+    "guardian_greaves",
+    "boots_of_bearing",
+    "travel_boots"
+  ],
+  "levelNormalize": {
+    "dagon_2": "dagon",
+    "dagon_3": "dagon",
+    "dagon_4": "dagon",
+    "dagon_5": "dagon",
+    "travel_boots_2": "travel_boots"
+  },
+  "categories": {
+    "power_treads": "boots",
+    "phase_boots": "boots",
+    "arcane_boots": "boots",
+    "tranquil_boots": "boots",
+    "guardian_greaves": "boots",
+    "boots_of_bearing": "boots",
+    "travel_boots": "boots",
+    "blink": "accessories",
+    "falcon_blade": "accessories",
+    "oblivion_staff": "accessories",
+    "pers": "accessories",
+    "mask_of_madness": "accessories",
+    "hand_of_midas": "accessories",
+    "helm_of_the_dominator": "accessories",
+    "moon_shard": "accessories",
+    "mekansm": "support",
+    "vladmir": "support",
+    "holy_locket": "support",
+    "pipe": "support",
+    "spirit_vessel": "support",
+    "essence_distiller": "support",
+    "pavise": "support",
+    "solar_crest": "support",
+    "ancient_janggo": "support",
+    "wraith_pact": "support",
+    "crellas_crozier": "support",
+    "glimmer_cape": "support",
+    "force_staff": "support",
+    "ultimate_scepter": "magical",
+    "veil_of_discord": "magical",
+    "aether_lens": "magical",
+    "cyclone": "magical",
+    "wind_waker": "magical",
+    "rod_of_atos": "magical",
+    "gungir": "magical",
+    "dagon": "magical",
+    "orchid": "magical",
+    "bloodthorn": "magical",
+    "sheepstick": "magical",
+    "octarine_core": "magical",
+    "refresher": "magical",
+    "ethereal_blade": "magical",
+    "kaya": "magical",
+    "witch_blade": "magical",
+    "devastator": "magical",
+    "phylactery": "magical",
+    "angels_demise": "magical",
+    "revenants_brooch": "magical",
+    "meteor_hammer": "magical",
+    "vanguard": "armor",
+    "blade_mail": "armor",
+    "soul_booster": "armor",
+    "aeon_disk": "armor",
+    "eternal_shroud": "armor",
+    "crimson_guard": "armor",
+    "lotus_orb": "armor",
+    "black_king_bar": "armor",
+    "hurricane_pike": "armor",
+    "manta": "armor",
+    "sphere": "armor",
+    "shivas_guard": "armor",
+    "heart": "armor",
+    "assault": "armor",
+    "bloodstone": "armor",
+    "consecrated_wraps": "armor",
+    "lesser_crit": "weapons",
+    "armlet": "weapons",
+    "basher": "weapons",
+    "invis_sword": "weapons",
+    "bfury": "weapons",
+    "monkey_king_bar": "weapons",
+    "greater_crit": "weapons",
+    "butterfly": "weapons",
+    "silver_edge": "weapons",
+    "radiance": "weapons",
+    "abyssal_blade": "weapons",
+    "rapier": "weapons",
+    "desolator": "weapons",
+    "nullifier": "weapons",
+    "harpoon": "weapons",
+    "sange": "artifacts",
+    "yasha": "artifacts",
+    "sange_and_yasha": "artifacts",
+    "kaya_and_sange": "artifacts",
+    "yasha_and_kaya": "artifacts",
+    "dragon_lance": "artifacts",
+    "echo_sabre": "artifacts",
+    "maelstrom": "artifacts",
+    "mjollnir": "artifacts",
+    "diffusal_blade": "artifacts",
+    "disperser": "artifacts",
+    "heavens_halberd": "artifacts",
+    "skadi": "artifacts",
+    "satanic": "artifacts",
+    "mage_slayer": "artifacts",
+    "helm_of_the_overlord": "artifacts",
+    "specialists_array": "artifacts",
+    "hydras_breath": "artifacts",
+    "swift_blink": "artifacts",
+    "arcane_blink": "artifacts",
+    "overwhelming_blink": "artifacts"
+  },
+  "aliases": {
+    "black_king_bar": [
+      "bkb"
+    ],
+    "ultimate_scepter": [
+      "aghs",
+      "scepter",
+      "aghanim"
+    ],
+    "bfury": [
+      "bf",
+      "bfury",
+      "battlefury"
+    ],
+    "manta": [
+      "manta"
+    ],
+    "desolator": [
+      "deso"
+    ],
+    "monkey_king_bar": [
+      "mkb"
+    ],
+    "greater_crit": [
+      "daed",
+      "daedalus",
+      "crit"
+    ],
+    "lesser_crit": [
+      "crystalys",
+      "crysta"
+    ],
+    "butterfly": [
+      "fly",
+      "butter"
+    ],
+    "abyssal_blade": [
+      "abyssal",
+      "abby"
+    ],
+    "basher": [
+      "basher",
+      "skull basher"
+    ],
+    "sange_and_yasha": [
+      "sny",
+      "s&y",
+      "sy"
+    ],
+    "kaya_and_sange": [
+      "kns",
+      "k&s",
+      "ks"
+    ],
+    "yasha_and_kaya": [
+      "ynk",
+      "y&k",
+      "yk"
+    ],
+    "power_treads": [
+      "treads",
+      "pt"
+    ],
+    "phase_boots": [
+      "phase"
+    ],
+    "arcane_boots": [
+      "arcanes",
+      "arcane"
+    ],
+    "tranquil_boots": [
+      "tranqs",
+      "tranquils"
+    ],
+    "guardian_greaves": [
+      "greaves"
+    ],
+    "boots_of_bearing": [
+      "bob",
+      "bearing",
+      "drums boots"
+    ],
+    "travel_boots": [
+      "bots",
+      "travels",
+      "tp boots"
+    ],
+    "mjollnir": [
+      "mjol",
+      "mjolnir"
+    ],
+    "maelstrom": [
+      "mael"
+    ],
+    "sphere": [
+      "linken",
+      "linkens"
+    ],
+    "shivas_guard": [
+      "shiva",
+      "shivas"
+    ],
+    "sheepstick": [
+      "hex",
+      "sheep",
+      "scythe",
+      "guinsoo"
+    ],
+    "cyclone": [
+      "euls",
+      "eul"
+    ],
+    "wind_waker": [
+      "ww",
+      "windwaker"
+    ],
+    "hurricane_pike": [
+      "pike"
+    ],
+    "force_staff": [
+      "force",
+      "fs"
+    ],
+    "rod_of_atos": [
+      "atos"
+    ],
+    "orchid": [
+      "orchid"
+    ],
+    "bloodthorn": [
+      "bt",
+      "thorn"
+    ],
+    "gungir": [
+      "gleip",
+      "gleipnir"
+    ],
+    "ethereal_blade": [
+      "eblade",
+      "ethereal"
+    ],
+    "octarine_core": [
+      "octa",
+      "octarine"
+    ],
+    "refresher": [
+      "ref",
+      "refresher"
+    ],
+    "aeon_disk": [
+      "aeon"
+    ],
+    "lotus_orb": [
+      "lotus"
+    ],
+    "crimson_guard": [
+      "crimson",
+      "cg"
+    ],
+    "vanguard": [
+      "vg",
+      "vanguard"
+    ],
+    "blade_mail": [
+      "bm",
+      "blademail"
+    ],
+    "eternal_shroud": [
+      "shroud"
+    ],
+    "heart": [
+      "heart",
+      "tarrasque"
+    ],
+    "assault": [
+      "ac",
+      "assault"
+    ],
+    "radiance": [
+      "radi",
+      "radiance"
+    ],
+    "invis_sword": [
+      "sb",
+      "shadowblade",
+      "shadow blade"
+    ],
+    "silver_edge": [
+      "se",
+      "silver"
+    ],
+    "rapier": [
+      "rapier",
+      "divine"
+    ],
+    "skadi": [
+      "skadi",
+      "eye of skadi"
+    ],
+    "satanic": [
+      "satanic"
+    ],
+    "nullifier": [
+      "nulli",
+      "nullifier"
+    ],
+    "hand_of_midas": [
+      "midas"
+    ],
+    "helm_of_the_dominator": [
+      "hotd",
+      "dominator"
+    ],
+    "helm_of_the_overlord": [
+      "overlord",
+      "hoto"
+    ],
+    "mask_of_madness": [
+      "mom",
+      "madness"
+    ],
+    "falcon_blade": [
+      "falcon"
+    ],
+    "pers": [
+      "pers",
+      "perseverance"
+    ],
+    "oblivion_staff": [
+      "obl",
+      "oblivion"
+    ],
+    "witch_blade": [
+      "wb",
+      "witch"
+    ],
+    "devastator": [
+      "parasma"
+    ],
+    "angels_demise": [
+      "khanda"
+    ],
+    "phylactery": [
+      "phyl"
+    ],
+    "revenants_brooch": [
+      "brooch",
+      "revenant"
+    ],
+    "wraith_pact": [
+      "pact"
+    ],
+    "pipe": [
+      "pipe",
+      "insight"
+    ],
+    "mekansm": [
+      "mek",
+      "mekansm"
+    ],
+    "vladmir": [
+      "vlads",
+      "vladimir"
+    ],
+    "holy_locket": [
+      "locket",
+      "holy"
+    ],
+    "spirit_vessel": [
+      "vessel",
+      "sv"
+    ],
+    "glimmer_cape": [
+      "glimmer",
+      "gc"
+    ],
+    "veil_of_discord": [
+      "veil"
+    ],
+    "aether_lens": [
+      "lens",
+      "aether"
+    ],
+    "dagon": [
+      "dagon"
+    ],
+    "meteor_hammer": [
+      "meteor",
+      "mh"
+    ],
+    "dragon_lance": [
+      "lance",
+      "dl",
+      "dragon"
+    ],
+    "echo_sabre": [
+      "echo",
+      "es"
+    ],
+    "diffusal_blade": [
+      "diffusal",
+      "diff"
+    ],
+    "disperser": [
+      "disperser"
+    ],
+    "heavens_halberd": [
+      "halberd",
+      "hh"
+    ],
+    "mage_slayer": [
+      "mageslayer",
+      "ms"
+    ],
+    "harpoon": [
+      "harpoon"
+    ],
+    "specialists_array": [
+      "array",
+      "specialist"
+    ],
+    "hydras_breath": [
+      "hydra"
+    ],
+    "consecrated_wraps": [
+      "wraps"
+    ],
+    "crellas_crozier": [
+      "crozier",
+      "crella"
+    ],
+    "solar_crest": [
+      "solar",
+      "crest"
+    ],
+    "pavise": [
+      "pavise"
+    ],
+    "ancient_janggo": [
+      "drum",
+      "drums",
+      "janggo"
+    ],
+    "essence_distiller": [
+      "distiller",
+      "essence"
+    ],
+    "blink": [
+      "blink",
+      "dagger"
+    ],
+    "swift_blink": [
+      "swift"
+    ],
+    "arcane_blink": [
+      "arcane blink"
+    ],
+    "overwhelming_blink": [
+      "overwhelming",
+      "ow blink"
+    ],
+    "moon_shard": [
+      "moon"
+    ],
+    "soul_booster": [
+      "soul booster"
+    ],
+    "kaya": [
+      "kaya"
+    ],
+    "sange": [
+      "sange"
+    ],
+    "yasha": [
+      "yasha"
+    ]
+  }
+}

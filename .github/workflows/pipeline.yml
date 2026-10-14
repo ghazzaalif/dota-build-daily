@@ -1,0 +1,93 @@
+# Daily puzzle pipeline (PRD §8). Runs at 22:00 UTC, publishes tomorrow's puzzle.
+#
+# Spoiler safety: the future-puzzle queue never goes into this repo.
+#   - If repo variable QUEUE_REPO is set (plus secret QUEUE_REPO_TOKEN), the queue lives
+#     in that private repo.
+#   - Otherwise it lives in this repo's GitHub Actions cache, which isn't publicly readable.
+#     If the cache is ever evicted, the pipeline restores past days from public/puzzles, so
+#     a puzzle that's already live never changes.
+# Only puzzles with date ≤ tomorrow are written to public/puzzles and committed; the push
+# to main triggers the Render deploy.
+name: pipeline
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+    inputs:
+      today:
+        description: 'Override today (YYYY-MM-DD, UTC)'
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out private puzzle queue
+        if: ${{ vars.QUEUE_REPO != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.QUEUE_REPO }}
+          token: ${{ secrets.QUEUE_REPO_TOKEN }}
+          path: queue
+
+      - name: Restore puzzle queue from Actions cache
+        if: ${{ vars.QUEUE_REPO == '' }}
+        uses: actions/cache@v4
+        with:
+          path: queue
+          key: dbd-queue-${{ github.run_id }}
+          restore-keys: dbd-queue-
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Restore OpenDota match cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/cache/matches
+            data/cache/leagues
+            data/cache/constants
+          key: od-cache-${{ github.run_id }}
+          restore-keys: od-cache-
+
+      - run: npm ci
+
+      - name: Run pipeline
+        env:
+          OPENDOTA_API_KEY: ${{ secrets.OPENDOTA_API_KEY }}
+        run: npx tsx scripts/pipeline/run.ts ${{ inputs.today && format('--today={0}', inputs.today) || '' }}
+
+      - name: Commit queue (private repo)
+        if: ${{ vars.QUEUE_REPO != '' }}
+        working-directory: queue
+        run: |
+          git config user.name "dbd-pipeline"
+          git config user.email "pipeline@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "queue: $(date -u +%F)"
+          git push
+
+      - name: Commit published puzzles (public site → triggers Render deploy)
+        run: |
+          git config user.name "dbd-pipeline"
+          git config user.email "pipeline@users.noreply.github.com"
+          git add public/puzzles public/data data/cache/leagues
+          git diff --cached --quiet || git commit -m "puzzles: publish $(date -u +%F)"
+          git push
+
+      # A failed job emails the owner (GitHub default). run.ts also exits non-zero
+      # when the queue drops below QUEUE_ALERT_DAYS (3) or no candidate is found.

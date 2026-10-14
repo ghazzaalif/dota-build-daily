@@ -1,0 +1,17 @@
+{
+  "_comment": "Manual overrides (PRD §8). 'pin' forces a (match, player) onto a date; 'block' removes candidates ('matchId' or 'matchId:accountId'); 'stages' labels specific series more precisely than the date ranges in leagues.json.",
+  "pin": [],
+  "block": [],
+  "stages": {
+    "8960577698": "Grand Final, game 1",
+    "8960655084": "Grand Final, game 2",
+    "8960762254": "Grand Final, game 3",
+    "8960882635": "Grand Final, game 4",
+    "8960991322": "Grand Final, game 5",
+    "8960365292": "Lower Bracket Final, game 1",
+    "8960411225": "Lower Bracket Final, game 2",
+    "8958842370": "Upper Bracket Final, game 1",
+    "8958950792": "Upper Bracket Final, game 2",
+    "8959067169": "Upper Bracket Final, game 3"
+  }
+}

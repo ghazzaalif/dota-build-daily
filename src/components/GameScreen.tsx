@@ -1,0 +1,312 @@
+// One puzzle's play screen: header, grid, actions, hints, picker, end screen.
+import { useEffect, useMemo, useState } from 'react';
+import { track } from '../analytics';
+import { BUILD_SIZE, MAX_ROWS } from '../config';
+import { answerKey, decodeAnswer } from '../game/answer';
+import { solvedSlots, validateRow } from '../game/game';
+import { unlockedLevel } from '../game/hints';
+import { bestStates } from '../game/scoring';
+import { buildShareText } from '../game/share';
+import { displayStreak, loadStats, type Settings } from '../game/storage';
+import type { HeroesMap, ItemsMap, Puzzle } from '../game/types';
+import { useGame } from '../game/useGame';
+import { EndScreen } from './EndScreen';
+import { Grid } from './Grid';
+import { HintsPanel } from './HintsPanel';
+import { CloseIcon, HeroImage, ItemImage } from './Icons';
+import { ItemPicker } from './ItemPicker';
+
+interface Props {
+  puzzle: Puzzle;
+  items: ItemsMap;
+  heroes: HeroesMap;
+  settings: Settings;
+  updateSettings: (p: Partial<Settings>) => void;
+  reducedMotion: boolean;
+  today: string;
+  newPuzzleReady: boolean;
+  onPlayNew: () => void;
+  now: () => Date;
+  toast: (m: string) => void;
+  endOpen: boolean;
+  setEndOpen: (v: boolean) => void;
+}
+
+function useIsDesktop() {
+  const q = '(min-width: 1024px)';
+  const [d, setD] = useState(() => window.matchMedia(q).matches);
+  useEffect(() => {
+    const m = window.matchMedia(q);
+    const on = () => setD(m.matches);
+    m.addEventListener('change', on);
+    return () => m.removeEventListener('change', on);
+  }, []);
+  return d;
+}
+
+export function GameScreen(p: Props) {
+  const { puzzle, items, heroes, settings } = p;
+  const answerEntries = useMemo(() => decodeAnswer(puzzle.answer, answerKey(puzzle.date, puzzle.puzzleNo)), [puzzle]);
+  const answer = useMemo(() => answerEntries.map((a) => a.key), [answerEntries]);
+  const { state, dispatch } = useGame(puzzle, answer, items, settings.keepGreens);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [animate, setAnimate] = useState(false);
+  const desktop = useIsDesktop();
+
+  const playing = state.status === 'in_progress';
+  const finished = !playing;
+  const level = unlockedLevel(state.rows.length, state.hintsRevealed, finished);
+  const solved = solvedSlots(state.scored);
+  const best = useMemo(() => bestStates(state.scored), [state.scored]);
+  const rowFull = state.current.every(Boolean);
+  const stats = loadStats();
+
+  useEffect(() => {
+    track('puzzle_loaded', { puzzle: puzzle.puzzleNo });
+  }, [puzzle.puzzleNo]);
+
+  // Open the end screen right away when returning to a finished puzzle.
+  useEffect(() => {
+    if (finished && !animate) p.setEndOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (state.error) p.toast(state.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.error, state.submitSeq]);
+
+  const submit = () => {
+    setSelected(null);
+    const valid = playing && validateRow(state) === null;
+    dispatch({ type: 'submit' });
+    if (valid) {
+      setAnimate(true); // flip only the row just submitted
+      setSheetOpen(false);
+    }
+  };
+
+  // After the flip finishes, open the end screen if the game just ended.
+  useEffect(() => {
+    if (!animate || state.status === 'in_progress') return;
+    const t = setTimeout(() => p.setEndOpen(true), p.reducedMotion ? 300 : BUILD_SIZE * 250 + 600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animate, state.status]);
+
+  const onSlotTap = (slot: number) => {
+    if (!playing) return;
+    if (state.lifeline?.slot === slot) return p.toast('This slot is locked by the lifeline');
+    if (!state.current[slot]) {
+      setSelected(null);
+      if (!desktop) setSheetOpen(true);
+      return;
+    }
+    // Tapping the selected slot again removes it; first tap selects it for reordering.
+    if (selected === slot) {
+      dispatch({ type: 'clear', slot });
+      setSelected(null);
+    } else setSelected(slot);
+  };
+
+  const backspace = () => {
+    for (let i = BUILD_SIZE - 1; i >= 0; i--) {
+      if (state.current[i] && state.lifeline?.slot !== i) return dispatch({ type: 'clear', slot: i });
+    }
+  };
+
+  const share = async () => {
+    const text = buildShareText({
+      puzzleNo: puzzle.puzzleNo,
+      heroName: puzzle.hero.name,
+      roleLabel: puzzle.role.label,
+      rows: state.scored.map((r) => r.map((t) => t.state)),
+      won: state.status === 'won',
+      hintsUsed: state.earlyReveals,
+      colorblind: settings.colorblind,
+    });
+    track('share_clicked');
+    const touch = window.matchMedia('(pointer: coarse)').matches;
+    if (touch && navigator.share) {
+      try {
+        await navigator.share({ text });
+        return;
+      } catch {
+        /* cancelled — fall back to copy */
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    p.toast('Copied!');
+  };
+
+  const picker = (onClose?: () => void) => (
+    <ItemPicker
+      items={items}
+      best={best}
+      inRow={state.current}
+      rowFull={rowFull}
+      onAdd={(key) => {
+        setSelected(null);
+        dispatch({ type: 'add', key });
+      }}
+      onBackspace={backspace}
+      onSubmit={submit}
+      onClose={onClose}
+      autoFocus={desktop}
+    />
+  );
+
+  const role = puzzle.role.label;
+  const hero = heroes[puzzle.hero.id];
+
+  return (
+    <div className="mx-auto w-full max-w-[1120px] lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-8 lg:px-6">
+      <main className="px-4 pb-28 lg:px-0 lg:pb-10">
+        {/* F2 puzzle header */}
+        <header className="flex items-center gap-3 py-3">
+          <HeroImage hero={hero} className="h-[54px] w-[96px] shrink-0 rounded-md ring-1 ring-line" />
+          <div className="min-w-0">
+            <h1 className="font-display text-[23px] font-bold leading-tight">{puzzle.hero.name}</h1>
+            <p className="text-[15px] leading-snug">
+              <span className="font-semibold text-gold">{role}</span>
+              <span className="text-muted"> in {puzzle.tournament.name}</span>
+            </p>
+            <p className="text-[13px] leading-snug text-muted">
+              {puzzle.tournament.stage}. Patch {puzzle.patch}.
+            </p>
+          </div>
+        </header>
+
+        <Grid
+          state={state}
+          items={items}
+          animateLastRow={animate && !p.reducedMotion}
+          onSlotTap={onSlotTap}
+          onSwap={(from, to) => dispatch({ type: 'swap', from, to })}
+          onMove={(slot, dir) => {
+            dispatch({ type: 'move', slot, dir });
+            setSelected(slot + dir);
+          }}
+          onClear={(slot) => dispatch({ type: 'clear', slot })}
+          selected={selected}
+          setSelected={setSelected}
+        />
+
+        {playing ? (
+          <div className="mt-1 flex gap-2 lg:max-w-[560px]">
+            <button type="button" onClick={() => dispatch({ type: 'clearAll' })} className="h-12 rounded-md bg-raised px-4 font-semibold text-muted hover:text-ink">
+              Clear row
+            </button>
+            {!desktop && (
+              <button type="button" onClick={() => setSheetOpen(true)} className="h-12 flex-1 rounded-md bg-raised font-semibold">
+                Open shop
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={submit}
+              disabled={!rowFull}
+              className="h-12 flex-1 rounded-md bg-gold font-bold text-bg disabled:bg-raised disabled:text-muted"
+            >
+              Submit<span className="sr-only"> guess {state.rows.length + 1} of {MAX_ROWS}</span>
+            </button>
+          </div>
+        ) : (
+          <button type="button" onClick={() => p.setEndOpen(true)} className="mt-1 h-12 w-full rounded-md bg-gold font-bold text-bg lg:max-w-[560px]">
+            See his final items
+          </button>
+        )}
+
+        <div className="mt-6">
+          <HintsPanel
+            puzzle={puzzle}
+            heroes={heroes}
+            items={items}
+            level={level}
+            solved={solved}
+            lifeline={state.lifeline}
+            playing={playing}
+            confirmSeen={settings.hintConfirmSeen}
+            onConfirmSeen={() => p.updateSettings({ hintConfirmSeen: true })}
+            onReveal={() => dispatch({ type: 'revealHint' })}
+          />
+        </div>
+      </main>
+
+      {/* Desktop: the shop is a side panel. */}
+      {desktop && (
+        <aside aria-label="Item shop" className="sticky top-[60px] h-[calc(100dvh-76px)] self-start overflow-hidden rounded-lg border border-line bg-panel">
+          {picker()}
+        </aside>
+      )}
+
+      {/* Mobile: the shop is a bottom sheet with its own copy of the row being built. */}
+      {!desktop && sheetOpen && playing && (
+        <div className="fixed inset-0 z-40 flex flex-col justify-end bg-black/45" onClick={() => setSheetOpen(false)}>
+          <div
+            role="dialog"
+            aria-label="Item shop"
+            onClick={(e) => e.stopPropagation()}
+            className="sheet-up flex h-[78dvh] flex-col rounded-t-xl border-t border-line bg-panel shadow-2xl"
+          >
+            <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
+              {state.current.map((k, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => k && state.lifeline?.slot !== i && dispatch({ type: 'clear', slot: i })}
+                  aria-label={k ? `Slot ${i + 1}: ${items[k]?.name}. Tap to remove` : `Slot ${i + 1}: empty`}
+                  className={`relative aspect-[11/8] min-h-[34px] flex-1 overflow-hidden rounded-[4px] border ${k ? 'border-ink/50' : 'border-dashed border-line'} bg-raised`}
+                >
+                  {k && <ItemImage item={items[k]} className="h-full w-full" />}
+                  {k && state.lifeline?.slot !== i && (
+                    <span className="absolute right-0 top-0 rounded-bl-[3px] bg-black/60 p-[1px] text-white">
+                      <CloseIcon className="h-2.5 w-2.5" />
+                    </span>
+                  )}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={submit}
+                disabled={!rowFull}
+                className="ml-1 h-11 shrink-0 rounded-md bg-gold px-3 text-sm font-bold text-bg disabled:bg-raised disabled:text-muted"
+              >
+                Submit
+              </button>
+            </div>
+            {picker(() => setSheetOpen(false))}
+          </div>
+        </div>
+      )}
+
+      {p.endOpen && finished && (
+        <EndScreen
+          puzzle={puzzle}
+          answer={answerEntries}
+          items={items}
+          won={state.status === 'won'}
+          rowsUsed={state.rows.length}
+          hintsUsed={state.earlyReveals}
+          stats={stats}
+          streak={displayStreak(stats, p.today)}
+          now={p.now}
+          onShare={share}
+          onClose={() => p.setEndOpen(false)}
+          newPuzzleReady={p.newPuzzleReady}
+          onPlayNew={p.onPlayNew}
+        />
+      )}
+    </div>
+  );
+}

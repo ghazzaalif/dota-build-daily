@@ -1,0 +1,23 @@
+{
+  "_comment": "Hand-edited allowlist (PRD §7.1). Main events only — qualifier leagues have their own IDs and must not be added. 'stages' maps UTC start-time ranges to a stage label; matches outside every range get 'Main Event'. Add the remaining Tier-1 events here with their OpenDota league IDs as they are confirmed (the pipeline flags new 'premium' leagues for review).",
+  "leagues": [
+    {
+      "leagueId": 19719,
+      "name": "The International 2026",
+      "stages": [
+        { "label": "Group Stage", "from": "2026-08-13", "to": "2026-08-16" },
+        { "label": "Playoffs", "from": "2026-08-20", "to": "2026-08-23" }
+      ]
+    },
+    {
+      "leagueId": 18324,
+      "name": "The International 2025",
+      "stages": []
+    }
+  ],
+  "optional": {
+    "_comment": "Q3 in the PRD: FISSURE Universe and Esports Nations Cup are excluded by default.",
+    "leagues": []
+  },
+  "reviewed": [18324, 19719]
+}
