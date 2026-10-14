@@ -63,7 +63,7 @@ function withLifeline(s: GameState, ctx: GameContext): GameState {
 
 export function initGame(ctx: GameContext, saved: SavedGame | null, keepGreens: boolean): GameState {
   const rows = saved?.rows ?? [];
-  const scored = rows.map((r) => scoreRow(ctx.items, r, ctx.answer));
+  const scored = rows.map((r, i) => scoreRow(ctx.items, r, ctx.answer, rows.slice(0, i)));
   let s: GameState = {
     rows,
     scored,
@@ -153,7 +153,7 @@ export function gameReducer(ctx: GameContext) {
         const err = validateRow(s);
         if (err) return { ...s, error: err };
         const guess = s.current as string[];
-        const tiles = scoreRow(ctx.items, guess, ctx.answer);
+        const tiles = scoreRow(ctx.items, guess, ctx.answer, s.rows);
         const rows = [...s.rows, guess];
         const scored = [...s.scored, tiles];
         let next: GameState = { ...s, rows, scored, submitSeq: s.submitSeq + 1 };

@@ -10,7 +10,7 @@ export const SYMBOL: Record<TileState, string> = { green: '✓', yellow: '↔', 
 export const STATE_TEXT: Record<TileState, string> = {
   green: 'right item, right slot',
   yellow: 'in the build, wrong slot',
-  orange: 'shares a component with the build',
+  orange: "shares a component with an item you haven't found",
   grey: 'not in the build',
 };
 
@@ -55,7 +55,7 @@ function ScoredTileView({ tile, items, delay, animate, onInspect, active }: {
     <button
       type="button"
       onClick={onInspect}
-      title={tile.state === 'orange' && shared ? `Shares ${shared} with an item in the build` : label}
+      title={tile.state === 'orange' && shared ? `Shares ${shared} with an item you haven't found yet` : label}
       aria-label={label}
       className={`relative flex aspect-[11/8] min-h-[44px] w-full flex-col overflow-hidden rounded-[5px] border-2 ${
         revealed ? STATE_CLASS[tile.state] : 'border-line bg-raised'
@@ -99,7 +99,7 @@ export function Grid({ state, items, animateLastRow, onSlotTap, onSwap, onMove, 
     if (inspected.state === 'orange' && inspected.sharedComponent) {
       return (
         <>
-          <b>{name}</b> shares <b>{items[inspected.sharedComponent]?.name}</b> with an item in the build.
+          <b>{name}</b> shares <b>{items[inspected.sharedComponent]?.name}</b> with an item you haven't found yet.
         </>
       );
     }

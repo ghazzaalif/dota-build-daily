@@ -58,7 +58,7 @@ export function GameScreen(p: Props) {
   const finished = !playing;
   const level = unlockedLevel(state.rows.length, state.hintsRevealed, finished);
   const solved = solvedSlots(state.scored);
-  const best = useMemo(() => bestStates(state.scored), [state.scored]);
+  const best = useMemo(() => bestStates(state.scored, items, answer), [state.scored, items, answer]);
   const rowFull = state.current.every(Boolean);
   const stats = loadStats();
 

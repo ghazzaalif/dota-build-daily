@@ -1,4 +1,4 @@
-# Dota Build Wordle — Product Requirements (v1.1)
+# Dota Build Wordle — Product Requirements (v1.2)
 
 > **Status:** In development · **Owner:** Ghazza · **Last updated:** 2026-10-14
 > **Working title:** _Dota Build Daily_ (final name TBD — see [Open Questions](#14-open-questions))
@@ -7,6 +7,7 @@
 
 | Version | Date | Change |
 |---|---|---|
+| 1.2 | 2026-10-14 | **🟧 only points at items the player hasn't found yet.** Playtest feedback: 🟧 was hinting at components of items already 🟩/🟨, which read as a new clue but wasn't. Affects §5.2, §5.3, F3, F4, F9 and Appendix A. |
 | 1.1 | 2026-10-14 | **Answer is now the player's final inventory** (6 main slots at game end), ordered by purchase time, instead of the first 6 eligible purchases. Reason: answers must match what OpenDota/Dotabuff show on the match page. Affects §1, D2, new D5, §4, F6, F9, §5.3 example, S5, §7.3, §7.4, §9.3, §12, §13, §14 (Q7). Hosting moved to Render. |
 | 1.0 | 2026-10-14 | Initial spec |
 
@@ -116,16 +117,20 @@ for slot i in 0..5:
   g = guess[i]
   if g == answer[i]                 -> GREEN   🟩
   else if g in answer               -> YELLOW  🟨
-  else if sharesComponent(g, answer) -> ORANGE 🟧
+  else if sharesComponent(g, unfound) -> ORANGE 🟧
   else                              -> GREY    ⬛
+
+unfound = answer items NOT already identified, i.e. not 🟩/🟨 in this row
+          or in any earlier row
 ```
 
 ### 5.3 Shared-component rule (🟧)
-- `sharesComponent(g, answer)` is true when guessed item `g` and **any** answer item share at least one **significant component**. Each item's own key counts as part of its tree, so guessing a component of an answer item (e.g. Maelstrom when the answer has Mjollnir) is 🟧.
+- `sharesComponent(g, unfound)` is true when guessed item `g` and an answer item **the player hasn't found yet** share at least one **significant component**.
+- **Found items don't count.** An answer item that is 🟩 or 🟨 anywhere in the current row, or was 🟩/🟨 in an earlier row, is ignored. Otherwise 🟧 would just repeat something the player already knows (e.g. Desolator lighting up because Black King Bar is already 🟩). If the only overlap is with found items, the tile is ⬛. Each item's own key counts as part of its tree, so guessing a component of an answer item (e.g. Maelstrom when the answer has Mjollnir) is 🟧.
 - **Significant component:** any item in the recursive component tree (recipes excluded) with cost **≥ `SHARED_COMPONENT_MIN_COST`** (default **1,000 gold**), _or_ any intermediate item (a component that has components itself, e.g. Maelstrom, Perseverance, Kaya).
   - Examples: Mjollnir vs Maelstrom → 🟧 (Maelstrom). Desolator vs Black King Bar → 🟧 (Mithril Hammer is cost 1,600 and is significant).
   - When several components match, the tooltip names the most expensive one.
-- **Casual aid:** tapping or hovering a 🟧 tile shows _"Shares **{component}** with an item in the build."_
+- **Casual aid:** tapping or hovering a 🟧 tile shows _"Shares **{component}** with an item you haven't found yet."_
 - The threshold is a config value and gets tuned in playtesting (M3).
 
 ### 5.4 Hint schedule (casual)
@@ -178,6 +183,7 @@ Priority: **P0** = MVP must-have · **P1** = MVP if time allows · **P2** = post
 - [ ] Colors follow §5.2 exactly. Unit tests cover every case in Appendix A.
 - [ ] Each tile also shows a **symbol** (✓ / ↔ / ◐ / ✕) so it doesn't rely on color alone.
 - [ ] A tooltip on 🟧 tiles names the shared component.
+- [ ] 🟧 never refers to an answer item that is already 🟩/🟨 in the same or an earlier row.
 
 ### F4. Item picker — P0
 This replaces Wordle's keyboard.
@@ -185,7 +191,7 @@ This replaces Wordle's keyboard.
 - Shows **eligible items only**, grouped by shop category: Boots, Accessories, Support, Magical, Armor, Weapons, Artifacts.
 - **Search** by name and by alias (e.g. "bkb", "aghs", "bf", "manta", "deso"), with a fuzzy match.
 - Each item shows its icon, name and cost.
-- Each item is shaded by its **best known state** (🟩 > 🟨 > 🟧 > ⬛), the same as Wordle keyboard coloring. ⬛ items are dimmed but stay selectable.
+- Each item is shaded by its **best known state** (🟩 > 🟨 > 🟧 > ⬛), the same as Wordle keyboard coloring. An item shaded 🟧 drops to ⬛ once every answer item it pointed to has been found. ⬛ items are dimmed but stay selectable.
 - Flow: tap an item to fill the next empty slot; tap a filled slot to select it, then move it left/right with arrow buttons (P0) or tap it again to remove it; drag a slot to reorder (P1).
 
 **Acceptance criteria**
@@ -607,8 +613,12 @@ Answer: `[power_treads, battle_fury, manta, black_king_bar, butterfly, abyssal_b
 | `[phase_boots, battle_fury, manta, desolator, butterfly, abyssal_blade]` | ⬛🟩🟩🟧🟩🟩. Phase is ⬛ (shares only Boots of Speed, see *). Desolator is 🟧 (shares Mithril Hammer with BKB). |
 | `[power_treads, battle_fury, sange_and_yasha, black_king_bar, butterfly, abyssal_blade]` | 🟩🟩🟧🟩🟩🟩. Sange and Yasha shares Yasha (an intermediate item) with Manta. |
 | `[power_treads, battle_fury, manta, black_king_bar, butterfly, euls]` | 🟩🟩🟩🟩🟩⬛. Eul's shares no significant component with any answer item.** |
+| `[power_treads, battle_fury, manta, black_king_bar, desolator, abyssal_blade]` | 🟩🟩🟩🟩⬛🟩. Desolator shares Mithril Hammer only with BKB and Abyssal Blade, both already 🟩 in this row (v1.2 rule). |
+| `[black_king_bar, battle_fury, manta, desolator, butterfly, abyssal_blade]` | 🟨🟩🟩⬛🟩🟩. Same: BKB is already 🟨 and Abyssal 🟩, so Desolator gives no new clue. |
 
 \*Boots of Speed costs 500, which is below `SHARED_COMPONENT_MIN_COST`, so Phase vs Treads → **⬛**. This is intentional: otherwise every boot guess would light up 🟧.
+
+Across rows: if BKB was 🟨 in row 1 and row 2 guesses Desolator without BKB, Desolator is still ⬛ in row 2 (if no other unfound item contains Mithril Hammer).
 
 \*\*Verified against patch 7.41 constants. Component trees change between patches; re-check these expected values on every patch. (On 7.41, Daedalus is Crystalys + Demon Edge, so Daedalus vs Desolator is ⬛, which is why the §5.3 example now uses BKB.)
 

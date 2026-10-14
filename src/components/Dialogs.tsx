@@ -7,7 +7,7 @@ import { Modal } from './Modal';
 const EXAMPLE: { name: string; state: TileState; note: string }[] = [
   { name: 'Power Treads', state: 'green', note: 'right item, right slot' },
   { name: 'Battle Fury', state: 'yellow', note: 'in the build, wrong slot' },
-  { name: 'Desolator', state: 'orange', note: 'shares Mithril Hammer with a build item' },
+  { name: 'Desolator', state: 'orange', note: "shares Mithril Hammer with an item you haven't found" },
   { name: "Eul's Scepter", state: 'grey', note: 'not in the build' },
 ];
 
