@@ -27,5 +27,5 @@ export const MAX_SUPPORT_PER_WEEK = 2;
 /** §5.4 hint "price band per slot". Edges in gold; the last band is open-ended. */
 export const PRICE_BAND_EDGES = [2000, 3500, 4500, 5500];
 
-export const SITE_URL = 'https://dotabuilddaily.example';
+export const SITE_URL = 'https://dota-build-daily.onrender.com';
 export const GAME_NAME = 'Dota Build Daily';
