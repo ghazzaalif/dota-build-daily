@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 3,
+  "date": "2026-10-16",
+  "patch": "7.41",
+  "hero": {
+    "id": 107,
+    "key": "earth_spirit",
+    "name": "Earth Spirit"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Grand Final, game 2"
+  },
+  "hints": {
+    "allies": [
+      107,
+      54,
+      108,
+      86,
+      58
+    ],
+    "enemies": [
+      2,
+      11,
+      28,
+      123,
+      85
+    ],
+    "result": "win",
+    "durationSec": 3869,
+    "player": {
+      "name": "No[o]ne-",
+      "team": "TEAM VISION"
+    },
+    "priceBands": [
+      "2000-3500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "2000-3500"
+    ]
+  },
+  "match": {
+    "matchId": 8960655084,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "Team Spirit",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQkBEQ19ObBIHF0lXXBAaD0VZQFRlX1BGWF0LAU0eTQ9aVVQTDBhADAsSW0FvVUNMQ1QPHRROWgkHN19REggHGAkGUB1NGFgBG0YAEFJeV05ab0ZYWF1sBgMWGB4SRl9AVGNIUhQAAVVUVkceSxBdSEgSFxNUVlwLBhdOXV5XFAETRERcU2lWB0BeCAoIAEsBShJGVE8YCUYJBUNTb1NYSW5DTF9RXxFIQBBTX1VhU04TCh4DDw1OSBlGUVdJEAwPUFVCX2leWhcJRhYQRFtbSGJVThMMCQZSWhln"
+}
