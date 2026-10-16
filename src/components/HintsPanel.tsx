@@ -24,7 +24,8 @@ function Draft({ ids, heroes, label, highlightFirst }: { ids: number[]; heroes: 
   return (
     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
       <p className="shrink-0 text-label text-muted sm:w-[84px]">{label}</p>
-      <ul className="flex min-w-0 gap-1">
+      {/* flex-1 gives the row a real width; the portraits size themselves from it. */}
+      <ul className="flex w-full min-w-0 flex-1 gap-1">
         {ids.map((id, i) => (
           <li key={id} title={heroes[id]?.name} className="min-w-0 max-w-[56px] flex-1">
             <HeroImage
