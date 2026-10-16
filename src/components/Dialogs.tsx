@@ -21,12 +21,15 @@ const CHIP: Record<TileState, string> = {
 export function HowToPlay({ onClose }: { onClose: () => void }) {
   return (
     <Modal title="How to play" onClose={onClose}>
-      <div className="space-y-3 text-[15px] leading-relaxed">
+      <div className="space-y-4 text-small">
         <p>Guess the 6 items a pro was holding when a big tournament match ended, ordered by when he bought each one. You get 6 rows.</p>
-        <ul className="space-y-1.5" aria-label="Tile colors">
+        <ul className="space-y-2" aria-label="Tile colors">
           {EXAMPLE.map((e) => (
-            <li key={e.state} className="flex items-center gap-2.5">
-              <span className={`flex h-7 w-9 shrink-0 items-center justify-center rounded-[4px] text-sm font-bold text-[var(--s-ink)] ${CHIP[e.state]}`} aria-label={STATE_TEXT[e.state]}>
+            <li key={e.state} className="flex items-center gap-3">
+              <span
+                className={`flex h-7 w-9 shrink-0 items-center justify-center rounded-[3px] text-label font-bold text-[var(--s-ink)] ${CHIP[e.state]}`}
+                aria-label={STATE_TEXT[e.state]}
+              >
                 {SYMBOL[e.state]}
               </span>
               <span>
@@ -40,7 +43,7 @@ export function HowToPlay({ onClose }: { onClose: () => void }) {
           Items are finished items costing 1,000 gold or more, plus upgraded boots and Blink Dagger. Backpack, neutral items and consumables don't count.
         </p>
       </div>
-      <button type="button" onClick={onClose} className="mt-5 h-11 w-full rounded-md bg-gold font-bold text-bg">
+      <button type="button" onClick={onClose} className="mt-6 h-12 w-full rounded-[3px] bg-ink font-bold text-bg">
         Start guessing
       </button>
     </Modal>
@@ -59,21 +62,23 @@ export function StatsBlock({ stats, streak }: { stats: Stats; streak: number }) 
   ];
   return (
     <div>
-      <dl className="grid grid-cols-4 gap-2 text-center">
+      <dl className="grid grid-cols-4 divide-x divide-line">
         {figures.map((f) => (
-          <div key={f.l}>
-            <dd className="font-display text-2xl font-bold tabular-nums">{f.v}</dd>
-            <dt className="text-[12px] leading-tight text-muted">{f.l}</dt>
+          <div key={f.l} className="flex flex-col-reverse px-2 first:pl-0">
+            <dt className="text-meta text-muted">{f.l}</dt>
+            <dd className="font-display text-h2 font-extrabold tabular-nums">{f.v}</dd>
           </div>
         ))}
       </dl>
-      <p className="mb-1.5 mt-4 text-[13px] font-semibold text-muted">Rows to solve</p>
+      <h3 className="mb-2 mt-5 text-label font-semibold text-muted">Rows to solve</h3>
       <ul className="space-y-1">
         {keys.map((k) => (
-          <li key={k} className="flex items-center gap-2 text-[13px] tabular-nums">
-            <span className="w-3 text-muted">{k}</span>
+          <li key={k} className="flex items-center gap-2 text-label tabular-nums">
+            <span className="w-3 font-display font-bold text-muted">{k}</span>
             <span
-              className={`flex h-5 min-w-[1.5rem] items-center justify-end rounded-[3px] px-1.5 font-semibold ${stats.dist[k] ? (k === 'X' ? 'bg-s-grey text-ink' : 'bg-s-green text-[var(--s-ink)]') : 'bg-raised text-muted'}`}
+              className={`flex h-5 min-w-[1.5rem] items-center justify-end rounded-[2px] px-1.5 font-semibold ${
+                stats.dist[k] ? (k === 'X' ? 'bg-s-grey text-ink' : 'bg-s-green text-[var(--s-ink)]') : 'bg-raised text-muted'
+              }`}
               style={{ width: `${(stats.dist[k] / max) * 100}%` }}
             >
               {stats.dist[k]}
@@ -89,7 +94,7 @@ export function StatsDialog({ stats, streak, onClose, saved }: { stats: Stats; s
   return (
     <Modal title="Your stats" onClose={onClose}>
       <StatsBlock stats={stats} streak={streak} />
-      {!saved && <p className="mt-4 text-sm text-muted">Stats won't be saved in this browser (storage is blocked).</p>}
+      {!saved && <p className="mt-4 text-small text-muted">Stats won't be saved in this browser (storage is blocked).</p>}
     </Modal>
   );
 }
@@ -99,10 +104,10 @@ function Toggle({ label, desc, checked, onChange }: { label: string; desc?: stri
     <label className="flex min-h-[44px] cursor-pointer items-center justify-between gap-4 py-2">
       <span>
         <span className="block font-semibold">{label}</span>
-        {desc && <span className="block text-[13px] text-muted">{desc}</span>}
+        {desc && <span className="block text-label text-muted">{desc}</span>}
       </span>
       <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
-      <span aria-hidden="true" className="relative h-6 w-11 shrink-0 rounded-full bg-raised ring-1 ring-line transition-colors peer-checked:bg-s-green peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-gold">
+      <span aria-hidden="true" className="relative h-6 w-11 shrink-0 rounded-full bg-raised ring-1 ring-line transition-colors peer-checked:bg-s-green peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-ink">
         <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-ink transition-transform ${checked ? 'translate-x-[22px]' : 'translate-x-0.5'}`} />
       </span>
     </label>
@@ -113,9 +118,14 @@ function Segmented<T extends string>({ label, value, options, onChange }: { labe
   return (
     <fieldset className="py-2">
       <legend className="mb-1.5 font-semibold">{label}</legend>
-      <div className="flex rounded-md bg-raised p-0.5">
+      <div className="flex rounded-[3px] bg-raised p-0.5">
         {options.map((o) => (
-          <label key={o.v} className={`flex h-10 flex-1 cursor-pointer items-center justify-center rounded-[5px] text-sm font-semibold ${value === o.v ? 'bg-ink text-bg' : 'text-muted'}`}>
+          <label
+            key={o.v}
+            className={`flex h-10 flex-1 cursor-pointer items-center justify-center rounded-[2px] text-small font-semibold has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
+              value === o.v ? 'bg-ink text-bg' : 'text-muted'
+            }`}
+          >
             <input type="radio" name={label} value={o.v} checked={value === o.v} onChange={() => onChange(o.v)} className="sr-only" />
             {o.l}
           </label>

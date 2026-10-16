@@ -86,21 +86,25 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
           onClick={() => add(key)}
           disabled={used}
           aria-label={`${item.name}, ${item.cost} gold${state ? `, ${state === 'grey' ? 'not in build' : state}` : ''}${used ? ', in row' : ''}`}
-          className={`group flex min-h-[44px] w-full items-center gap-2 rounded-md p-1 pr-2 text-left hover:bg-raised disabled:cursor-default disabled:hover:bg-transparent ${
-            state === 'grey' && !used ? 'opacity-45' : ''
-          }`}
+          className="group flex min-h-[48px] w-full items-center gap-2.5 rounded-[3px] px-1.5 py-1 text-left hover:bg-raised disabled:cursor-default disabled:hover:bg-transparent"
         >
           <span className="relative shrink-0">
-            <ItemImage item={item} className={`h-[29px] w-[40px] rounded-[3px] ${used ? 'opacity-30' : ''}`} />
+            <ItemImage
+              item={item}
+              className={`h-[29px] w-[40px] rounded-[2px] ${used ? 'opacity-30' : state === 'grey' ? 'opacity-40 grayscale' : ''}`}
+            />
             {state && (
-              <span aria-hidden="true" className={`absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full text-[9px] font-bold text-[var(--s-ink)] ${BADGE[state]}`}>
+              <span
+                aria-hidden="true"
+                className={`absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center text-[11px] font-bold text-[var(--s-ink)] ${BADGE[state]}`}
+              >
                 {SYMBOL[state]}
               </span>
             )}
           </span>
           <span className="min-w-0 flex-1">
-            <span className={`block truncate text-[14px] font-medium leading-tight ${used ? 'text-muted' : ''}`}>{item.name}</span>
-            <span className="flex items-center gap-1 text-[12px] leading-tight text-gold tabular-nums">
+            <span className={`block truncate text-small font-medium ${used || state === 'grey' ? 'text-muted' : ''}`}>{item.name}</span>
+            <span className="flex items-center gap-1 text-meta tabular-nums text-gold">
               {used ? (
                 <span className="text-muted">In row</span>
               ) : (
@@ -117,6 +121,7 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
 
   return (
     <div className="flex h-full min-h-0 flex-col">
+      <h2 className="sr-only">Item shop</h2>
       <div className="flex items-center gap-2 px-3 pt-3">
         <label className="relative flex-1">
           <span className="sr-only">Search items</span>
@@ -132,18 +137,18 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
             autoCapitalize="off"
             spellCheck={false}
             enterKeyHint="go"
-            className="h-11 w-full rounded-md border border-line bg-bg pl-9 pr-3 text-[16px] text-ink placeholder:text-muted/70 focus:border-gold focus:outline-none"
+            className="h-11 w-full rounded-[3px] bg-raised pl-9 pr-3 text-body text-ink placeholder:text-muted focus:outline focus:outline-2 focus:outline-ink"
           />
         </label>
         {onClose && (
-          <button type="button" onClick={onClose} aria-label="Close item shop" className="flex h-11 w-11 items-center justify-center rounded-md bg-raised">
+          <button type="button" onClick={onClose} aria-label="Close item shop" className="flex h-11 w-11 items-center justify-center rounded-[3px] bg-raised">
             <CloseIcon />
           </button>
         )}
       </div>
 
       {!query.trim() && (
-        <div className="no-scrollbar flex gap-1.5 overflow-x-auto px-3 pb-1 pt-2" role="tablist" aria-label="Shop categories">
+        <div className="no-scrollbar mt-2 flex overflow-x-auto border-b border-line px-1.5" role="tablist" aria-label="Shop categories">
           {[{ id: 'all' as const, label: 'All' }, ...CATEGORY_ORDER].map((c) => (
             <button
               key={c.id}
@@ -151,7 +156,9 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
               role="tab"
               aria-selected={cat === c.id}
               onClick={() => setCat(c.id)}
-              className={`h-9 shrink-0 rounded-full px-3 text-[13px] font-semibold ${cat === c.id ? 'bg-ink text-bg' : 'bg-raised text-muted hover:text-ink'}`}
+              className={`-mb-px h-11 shrink-0 border-b-2 px-2.5 text-label font-semibold ${
+                cat === c.id ? 'border-ink text-ink' : 'border-transparent text-muted hover:text-ink'
+              }`}
             >
               {c.label}
             </button>
@@ -159,17 +166,17 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
         </div>
       )}
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-4 pt-1">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1.5 pb-4 pt-1">
         {query.trim() ? (
           results.length ? (
             <ul className="grid grid-cols-2 gap-x-1 lg:grid-cols-2">{results.map((r) => renderItem(r.key))}</ul>
           ) : (
-            <p className="px-2 py-6 text-sm text-muted">No item matches “{query}”. Try a short name like “bkb” or “deso”.</p>
+            <p className="px-2 py-6 text-small text-muted">No item matches “{query}”. Try a short name like “bkb” or “deso”.</p>
           )
         ) : (
           groups.map((g) => (
             <section key={g.id} aria-label={g.label} className="mb-2">
-              {cat === 'all' && <h3 className="px-2 pb-1 pt-2 text-[13px] font-semibold text-muted">{g.label}</h3>}
+              {cat === 'all' && <h3 className="px-1.5 pb-1 pt-3 text-label font-semibold text-muted">{g.label}</h3>}
               <ul className="grid grid-cols-2 gap-x-1">{g.entries.map((e) => renderItem(e.key))}</ul>
             </section>
           ))

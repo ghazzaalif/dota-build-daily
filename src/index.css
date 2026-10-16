@@ -2,53 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tokens. Dark is the default "shop at night" look; light is parchment. */
+/*
+ * Broadcast design system.
+ * Dark is the default "on air" look: ink-navy base, cool white type, a white
+ * lower-third (chyron) for the hero. Light is a cool studio grey; the chyron
+ * inverts because it is drawn with --ink on --bg.
+ *
+ * Color has jobs, not decoration:
+ *   --s-*      tile states (game semantics, also the share emoji)
+ *   --radiant / --dire   team sides, only where a side is shown
+ *   --gold     item gold costs only
+ * Text colors (--ink, --muted) pass WCAG AA on --bg, --panel and --raised.
+ * --faint is for non-text marks (empty slots, dividers) only.
+ */
 :root {
-  --bg: #16232b;
-  --panel: #1d2c35;
-  --raised: #263943;
-  --line: #34484f;
-  --ink: #ece4d2;
-  --muted: #9eaaa8;
-  --gold: #d8a647;
+  --bg: #0e141b;
+  --panel: #151e27;
+  --raised: #1e2934;
+  --line: #2c3a47;
+  --faint: #3a4a59;
+  --ink: #edf1f4;
+  --muted: #9aa8b5;
+  --gold: #e2ae48;
+  --radiant: #5bb46b;
+  --dire: #e05a48;
   --s-green: #4fa35a;
   --s-yellow: #d6b33a;
   --s-orange: #db7a34;
-  --s-grey: #3c4950;
-  --s-ink: #10181c;
+  --s-grey: #3a4752;
+  --s-ink: #0b1116;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
-    --bg: #f0e9da;
-    --panel: #e6dcc7;
-    --raised: #faf5ea;
-    --line: #cbbd9f;
-    --ink: #1f2a2f;
-    --muted: #5d665f;
-    --gold: #8f6514;
+    --bg: #e6eaee;
+    --panel: #f3f5f7;
+    --raised: #ffffff;
+    --line: #c4cdd5;
+    --faint: #aab5bf;
+    --ink: #0e141b;
+    --muted: #485664;
+    --gold: #8a6110;
+    --radiant: #2e8540;
+    --dire: #b8392b;
     --s-green: #3d8a47;
     --s-yellow: #c39f22;
     --s-orange: #c9661f;
-    --s-grey: #7c878a;
-    --s-ink: #fff;
+    --s-grey: #7c878f;
+    --s-ink: #ffffff;
     color-scheme: light;
   }
 }
 :root[data-theme='light'] {
-  --bg: #f0e9da;
-  --panel: #e6dcc7;
-  --raised: #faf5ea;
-  --line: #cbbd9f;
-  --ink: #1f2a2f;
-  --muted: #5d665f;
-  --gold: #8f6514;
+  --bg: #e6eaee;
+  --panel: #f3f5f7;
+  --raised: #ffffff;
+  --line: #c4cdd5;
+  --faint: #aab5bf;
+  --ink: #0e141b;
+  --muted: #485664;
+  --gold: #8a6110;
+  --radiant: #2e8540;
+  --dire: #b8392b;
   --s-green: #3d8a47;
   --s-yellow: #c39f22;
   --s-orange: #c9661f;
-  --s-grey: #7c878a;
-  --s-ink: #fff;
+  --s-grey: #7c878f;
+  --s-ink: #ffffff;
   color-scheme: light;
 }
 
@@ -65,14 +87,21 @@ body {
   color: var(--ink);
 }
 body {
-  font-family: 'Barlow Semi Condensed', 'Arial Narrow', system-ui, sans-serif;
+  font-family: 'Sofia Sans', 'Segoe UI', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
+}
+
+/* The lower-third name bar: one angled edge, like a broadcast chyron. */
+.chyron-cut {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
 }
 
 /* Tiles flip one after another on submit (≈250 ms per tile). */
@@ -90,9 +119,6 @@ body {
 .tile-flip {
   animation: tile-flip 500ms ease-in-out both;
 }
-.tile-reveal {
-  transition: background-color 0s, border-color 0s;
-}
 
 @keyframes sheet-up {
   from {
@@ -103,7 +129,7 @@ body {
   }
 }
 .sheet-up {
-  animation: sheet-up 220ms ease-out;
+  animation: sheet-up 260ms var(--ease-out);
 }
 
 @keyframes row-shake {

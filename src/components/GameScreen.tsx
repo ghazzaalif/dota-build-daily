@@ -13,8 +13,9 @@ import { useGame } from '../game/useGame';
 import { EndScreen } from './EndScreen';
 import { Grid } from './Grid';
 import { HintsPanel } from './HintsPanel';
-import { CloseIcon, HeroImage, ItemImage } from './Icons';
+import { CloseIcon, ItemImage } from './Icons';
 import { ItemPicker } from './ItemPicker';
+import { PuzzleHeader } from './PuzzleHeader';
 
 interface Props {
   puzzle: Puzzle;
@@ -166,26 +167,14 @@ export function GameScreen(p: Props) {
     />
   );
 
-  const role = puzzle.role.label;
   const hero = heroes[puzzle.hero.id];
+  const primary = 'h-12 rounded-[3px] bg-ink font-bold text-bg transition-opacity duration-150 hover:opacity-90 disabled:bg-raised disabled:text-muted disabled:hover:opacity-100';
+  const secondary = 'h-12 rounded-[3px] bg-raised font-semibold';
 
   return (
-    <div className="mx-auto w-full max-w-[1120px] lg:grid lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-8 lg:px-6">
-      <main className="px-4 pb-28 lg:px-0 lg:pb-10">
-        {/* F2 puzzle header */}
-        <header className="flex items-center gap-3 py-3">
-          <HeroImage hero={hero} className="h-[54px] w-[96px] shrink-0 rounded-md ring-1 ring-line" />
-          <div className="min-w-0">
-            <h1 className="font-display text-[23px] font-bold leading-tight">{puzzle.hero.name}</h1>
-            <p className="text-[15px] leading-snug">
-              <span className="font-semibold text-gold">{role}</span>
-              <span className="text-muted"> in {puzzle.tournament.name}</span>
-            </p>
-            <p className="text-[13px] leading-snug text-muted">
-              {puzzle.tournament.stage}. Patch {puzzle.patch}.
-            </p>
-          </div>
-        </header>
+    <div className="mx-auto w-full max-w-[1080px] lg:grid lg:grid-cols-[minmax(0,600px)_minmax(0,1fr)] lg:gap-10 lg:px-6">
+      <main className="px-4 pb-24 lg:px-0 lg:pb-10">
+        <PuzzleHeader puzzle={puzzle} hero={hero} />
 
         <Grid
           state={state}
@@ -203,31 +192,26 @@ export function GameScreen(p: Props) {
         />
 
         {playing ? (
-          <div className="mt-1 flex gap-2 lg:max-w-[560px]">
-            <button type="button" onClick={() => dispatch({ type: 'clearAll' })} className="h-12 rounded-md bg-raised px-4 font-semibold text-muted hover:text-ink">
+          <div className="mt-1 flex gap-2">
+            <button type="button" onClick={() => dispatch({ type: 'clearAll' })} className="h-12 px-3 font-semibold text-muted hover:text-ink">
               Clear row
             </button>
             {!desktop && (
-              <button type="button" onClick={() => setSheetOpen(true)} className="h-12 flex-1 rounded-md bg-raised font-semibold">
+              <button type="button" onClick={() => setSheetOpen(true)} className={`${secondary} flex-1`}>
                 Open shop
               </button>
             )}
-            <button
-              type="button"
-              onClick={submit}
-              disabled={!rowFull}
-              className="h-12 flex-1 rounded-md bg-gold font-bold text-bg disabled:bg-raised disabled:text-muted"
-            >
+            <button type="button" onClick={submit} disabled={!rowFull} className={`${primary} flex-1`}>
               Submit<span className="sr-only"> guess {state.rows.length + 1} of {MAX_ROWS}</span>
             </button>
           </div>
         ) : (
-          <button type="button" onClick={() => p.setEndOpen(true)} className="mt-1 h-12 w-full rounded-md bg-gold font-bold text-bg lg:max-w-[560px]">
+          <button type="button" onClick={() => p.setEndOpen(true)} className={`${primary} mt-1 w-full`}>
             See his final items
           </button>
         )}
 
-        <div className="mt-6">
+        <div className="mt-8">
           <HintsPanel
             puzzle={puzzle}
             heroes={heroes}
@@ -245,32 +229,32 @@ export function GameScreen(p: Props) {
 
       {/* Desktop: the shop is a side panel. */}
       {desktop && (
-        <aside aria-label="Item shop" className="sticky top-[60px] h-[calc(100dvh-76px)] self-start overflow-hidden rounded-lg border border-line bg-panel">
+        <aside aria-label="Item shop" className="sticky top-[72px] mt-4 h-[calc(100dvh-88px)] self-start overflow-hidden rounded-[4px] bg-panel">
           {picker()}
         </aside>
       )}
 
       {/* Mobile: the shop is a bottom sheet with its own copy of the row being built. */}
       {!desktop && sheetOpen && playing && (
-        <div className="fixed inset-0 z-40 flex flex-col justify-end bg-black/45" onClick={() => setSheetOpen(false)}>
+        <div className="fixed inset-0 z-40 flex flex-col justify-end bg-black/55" onClick={() => setSheetOpen(false)}>
           <div
             role="dialog"
             aria-label="Item shop"
             onClick={(e) => e.stopPropagation()}
-            className="sheet-up flex h-[78dvh] flex-col rounded-t-xl border-t border-line bg-panel shadow-2xl"
+            className="sheet-up flex h-[80dvh] flex-col rounded-t-[8px] border-t border-line bg-panel"
           >
-            <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
+            <div className="flex items-center gap-1.5 border-b border-line px-3 py-2.5">
               {state.current.map((k, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => k && state.lifeline?.slot !== i && dispatch({ type: 'clear', slot: i })}
                   aria-label={k ? `Slot ${i + 1}: ${items[k]?.name}. Tap to remove` : `Slot ${i + 1}: empty`}
-                  className={`relative aspect-[11/8] min-h-[34px] flex-1 overflow-hidden rounded-[4px] border ${k ? 'border-ink/50' : 'border-dashed border-line'} bg-raised`}
+                  className={`relative aspect-[11/8] min-h-[34px] flex-1 overflow-hidden rounded-[2px] border-2 ${k ? 'border-raised' : 'border-dashed border-faint'} bg-raised`}
                 >
                   {k && <ItemImage item={items[k]} className="h-full w-full" />}
                   {k && state.lifeline?.slot !== i && (
-                    <span className="absolute right-0 top-0 rounded-bl-[3px] bg-black/60 p-[1px] text-white">
+                    <span className="absolute right-0 top-0 bg-black/70 p-[1px] text-white">
                       <CloseIcon className="h-2.5 w-2.5" />
                     </span>
                   )}
@@ -280,7 +264,7 @@ export function GameScreen(p: Props) {
                 type="button"
                 onClick={submit}
                 disabled={!rowFull}
-                className="ml-1 h-11 shrink-0 rounded-md bg-gold px-3 text-sm font-bold text-bg disabled:bg-raised disabled:text-muted"
+                className={`${primary.replace('h-12', 'h-11')} ml-1 shrink-0 px-3 text-small`}
               >
                 Submit
               </button>

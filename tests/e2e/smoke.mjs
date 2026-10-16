@@ -91,7 +91,7 @@ async function run(viewport, label) {
   if (!tiles1.every((t) => /in the build|right slot|shares|not in the build/.test(t))) fail(`bad tile labels ${tiles1}`);
 
   // Hint 1 (draft) unlocked after row 1.
-  const draftOpen = await page.$eval('section[aria-label=Hints]', (s) => s.textContent.includes('Allies'));
+  const draftOpen = await page.$eval('section[aria-labelledby=hints-heading]', (s) => s.textContent.includes('His team'));
   if (!draftOpen) fail('draft hint not unlocked after row 1');
 
   // Row 2: right items in the wrong order (reversed) → expect yellows.

@@ -134,40 +134,46 @@ export default function App() {
 
   return (
     <div className="min-h-dvh">
-      <nav className="sticky top-0 z-30 border-b border-line bg-bg/95 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-[1120px] items-center gap-1 px-2 lg:px-6">
-          <p className="ml-2 mr-auto flex items-baseline gap-2">
-            <span className="font-display text-[19px] font-bold tracking-wide">{GAME_NAME}</span>
-            {puzzle && <span className="text-[14px] font-semibold tabular-nums text-muted">#{puzzle.puzzleNo}</span>}
+      <nav className="sticky top-0 z-30 border-b border-line bg-bg">
+        <div className="mx-auto flex h-14 max-w-[1080px] items-center gap-1 px-2 lg:px-6">
+          <p className="ml-2 mr-auto flex items-center gap-2.5">
+            <span aria-hidden="true" className="flex h-4 items-end gap-[3px]">
+              <span className="h-full w-[5px] bg-s-green" />
+              <span className="h-3 w-[5px] bg-s-yellow" />
+              <span className="h-2 w-[5px] bg-s-orange" />
+            </span>
+            <span className="whitespace-nowrap font-display text-body font-extrabold uppercase tracking-[0.02em] sm:text-lead">{GAME_NAME}</span>
+            {puzzle && <span className="font-display text-body font-bold tabular-nums text-muted sm:text-lead">#{puzzle.puzzleNo}</span>}
           </p>
-          <button type="button" onClick={() => setDialog('help')} aria-label="How to play" className="flex h-11 w-11 items-center justify-center rounded-md text-muted hover:text-ink">
+          <button type="button" onClick={() => setDialog('help')} aria-label="How to play" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
             <HelpIcon />
           </button>
-          <button type="button" onClick={() => setDialog('stats')} aria-label="Stats" className="flex h-11 w-11 items-center justify-center rounded-md text-muted hover:text-ink">
+          <button type="button" onClick={() => setDialog('stats')} aria-label="Stats" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
             <StatsIcon />
           </button>
-          <button type="button" onClick={() => setDialog('settings')} aria-label="Settings" className="flex h-11 w-11 items-center justify-center rounded-md text-muted hover:text-ink">
+          <button type="button" onClick={() => setDialog('settings')} aria-label="Settings" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
             <GearIcon />
           </button>
         </div>
       </nav>
 
       {banners.map((b) => (
-        <div key={b.kind} role="status" className={`border-b border-line px-4 py-2 text-center text-sm ${b.kind === 'late' ? 'bg-s-orange/20' : 'bg-panel'}`}>
+        <div key={b.kind} role="status" className="border-b border-line bg-panel px-4 py-2 text-center text-small">
+          {b.kind === 'late' && <span aria-hidden="true" className="mr-2 inline-block h-2.5 w-2.5 bg-s-orange align-middle" />}
           {b.text}
         </div>
       ))}
       {newPuzzleReady && !endOpen && (
-        <div role="status" className="flex items-center justify-center gap-3 border-b border-line bg-panel px-4 py-1.5 text-sm">
+        <div role="status" className="flex items-center justify-center gap-3 border-b border-line bg-panel px-4 py-1.5 text-small">
           A new puzzle is ready.
-          <button type="button" onClick={playNew} className="h-9 rounded-md bg-gold px-3 font-bold text-bg">
+          <button type="button" onClick={playNew} className="h-9 rounded-[3px] bg-ink px-3 font-bold text-bg">
             Play #{puzzle ? puzzle.puzzleNo + 1 : ''}
           </button>
         </div>
       )}
 
       {error ? (
-        <p className="mx-auto max-w-md px-4 py-16 text-center text-muted">{error}</p>
+        <p className="mx-auto max-w-md px-4 py-16 text-center text-small text-muted">{error}</p>
       ) : !data || !puzzle ? (
         <p className="py-24 text-center text-muted" aria-live="polite">
           Loading today's puzzle…
@@ -192,7 +198,7 @@ export default function App() {
       )}
 
       {/* F12 footer / legal */}
-      <footer className="mx-auto max-w-[1120px] px-4 pb-10 pt-4 text-[13px] leading-relaxed text-muted lg:px-6">
+      <footer className="mx-auto max-w-[1080px] px-4 pb-10 pt-6 text-label text-muted lg:px-6">
         Dota 2 is a registered trademark of Valve Corporation. This project is not affiliated with or endorsed by Valve. Match data from OpenDota.
       </footer>
 

@@ -78,7 +78,7 @@ export function HeroImage({ hero, className = '' }: { hero: HeroInfo | undefined
   const [state, setState] = useState<'loading' | 'ok' | 'failed'>('loading');
   return (
     <span className={`relative block overflow-hidden bg-raised ${className}`}>
-      <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center px-0.5 text-center text-[10px] font-semibold leading-tight text-ink [overflow-wrap:anywhere]">
+      <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center px-0.5 text-center text-[11px] font-semibold leading-tight text-ink [overflow-wrap:anywhere]">
         {state !== 'ok' && (hero?.name ?? '?')}
       </span>
       {hero && state !== 'failed' && (

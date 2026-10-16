@@ -23,11 +23,11 @@ export function Modal({ title, onClose, children, wide }: { title: string; onClo
         aria-label={title}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className={`sheet-up max-h-[92dvh] w-full overflow-y-auto rounded-t-xl border border-line bg-panel p-5 shadow-2xl focus:outline-none sm:rounded-xl ${wide ? 'sm:max-w-lg' : 'sm:max-w-md'}`}
+        className={`sheet-up max-h-[92dvh] w-full overflow-y-auto rounded-t-[8px] border border-line bg-panel px-5 pb-6 pt-5 focus:outline-none sm:rounded-[6px] ${wide ? 'sm:max-w-lg' : 'sm:max-w-md'}`}
       >
-        <div className="mb-3 flex items-start justify-between gap-4">
-          <h2 className="font-display text-xl font-bold leading-tight">{title}</h2>
-          <button type="button" onClick={onClose} aria-label="Close" className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-muted hover:text-ink">
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <h2 className="font-display text-h2 font-extrabold uppercase">{title}</h2>
+          <button type="button" onClick={onClose} aria-label="Close" className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center text-muted hover:text-ink">
             <CloseIcon />
           </button>
         </div>
@@ -40,7 +40,7 @@ export function Modal({ title, onClose, children, wide }: { title: string; onClo
 export function Toast({ message }: { message: string | null }) {
   return (
     <div aria-live="assertive" className="pointer-events-none fixed inset-x-0 top-16 z-[60] flex justify-center px-4">
-      {message && <div className="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-bg shadow-lg">{message}</div>}
+      {message && <div className="rounded-[3px] bg-ink px-4 py-2 text-small font-semibold text-bg">{message}</div>}
     </div>
   );
 }
