@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 4,
+  "date": "2026-10-17",
+  "patch": "7.41",
+  "hero": {
+    "id": 85,
+    "key": "undying",
+    "name": "Undying"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Grand Final, game 1"
+  },
+  "hints": {
+    "allies": [
+      85,
+      87,
+      11,
+      93,
+      119
+    ],
+    "enemies": [
+      106,
+      2,
+      91,
+      123,
+      9
+    ],
+    "result": "win",
+    "durationSec": 2775,
+    "player": {
+      "name": "Collapse",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "4500-5500",
+      "2000-3500",
+      "2000-3500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8960577698,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "TEAM VISION",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQVhMQlJlVgsNEEkQHBBCRFxVflRUGA5QUVdHHksQXUhIEhcTWFlABRANVFdvUVlfVBIBE0NTWQExAVkQCgsPH0wcVhNcX01GWEZdXllfW0hDb05QR18WSEAQU19VYVNOEwocAwIISUgZRlFXSRAMD1NcRF9cGBhGFg1XV2NXVQ8LARgCBUcYH0APX0sSCBRFVFFfRRUWFhALCV9hVVEUFwMCGgRKFk9GCQFDEAoQRUVUVV1CQ1NXD0BIGEZZX1N+VFMPCwUPAlAfOQ=="
+}
