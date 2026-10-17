@@ -132,6 +132,11 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
   Links, Attach Files, Read Message History = `117760`) and `DISCORD_BOT_TOKEN` on Render.
   `.github/workflows/keepalive.yml` pings the API every 10 minutes because Discord gives a
   button 3 s to respond and a sleeping free instance takes ~50 s to wake.
+- **Discord relay:** Discord blocks Render's shared free IPs, so the API calls Discord through a
+  Cloudflare Worker (`relay/discord-relay.js`, deployed as `dota-discord-relay.ghazza123.workers.dev`).
+  Worker secret `RELAY_KEY`; Render env `DISCORD_RELAY_KEY` (same value) and
+  `DISCORD_API_BASE=https://dota-discord-relay.ghazza123.workers.dev/api/v10`. `GET /health`
+  shows `viaRelay` and the last Discord status.
 - **Tests:** `tests/server.test.ts` (API), `tests/results.test.ts` (card, posting, interactions), and `npm run test:discord`, which runs two players
   through the real build against a fake Discord host (`tests/e2e/discord-host.ts`).
 - **Who can play:** until Discord verifies the app, only the developer team and app testers can
