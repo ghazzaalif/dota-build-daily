@@ -35,12 +35,20 @@ export function namesLine(names: string[]): string {
   return `${names.slice(0, 3).map(bold).join(', ')} and ${rest} other${rest === 1 ? '' : 's'}`;
 }
 
-export function createResultsPublisher(deps: { store: Store; content: Content; bot: BotApi }) {
+/** Minutes to wait before trying a failed post again (Discord can block shared IPs for a while). */
+const RETRY_MS = [1, 3, 10, 30, 60].map((m) => m * 60_000);
+
+export function createResultsPublisher(deps: { store: Store; content: Content; bot: BotApi; retryMs?: number[] }) {
+  const retryMs = deps.retryMs ?? RETRY_MS;
   const queues = new Map<string, Promise<void>>();
   const channelGuilds = new Map<string, string | null>();
 
   async function channelInGuild(channelId: string, guildId: string) {
-    if (!channelGuilds.has(channelId)) channelGuilds.set(channelId, await deps.bot.channelGuild(channelId));
+    if (!channelGuilds.has(channelId)) {
+      const g = await deps.bot.channelGuild(channelId);
+      if (!g) return false; // not cached: the bot may be added to the server later
+      channelGuilds.set(channelId, g);
+    }
     return channelGuilds.get(channelId) === guildId;
   }
 
@@ -77,11 +85,15 @@ export function createResultsPublisher(deps: { store: Store; content: Content; b
   }
 
   /** Queued per server and day so two people finishing at once can't post two cards. */
-  function publish(guildId: string, date: string, openedIn: string | null): Promise<void> {
+  function publish(guildId: string, date: string, openedIn: string | null, attempt = 0): Promise<void> {
     const key = `${guildId}:${date}`;
     const next = (queues.get(key) ?? Promise.resolve())
       .then(() => publishNow(guildId, date, openedIn))
-      .catch((e) => console.error(`results card for ${key} failed:`, e));
+      .catch((e) => {
+        const wait = retryMs[attempt];
+        console.error(`results card for ${key} failed${wait !== undefined ? `; retrying in ${Math.round(wait / 60_000)} min` : ''}:`, e);
+        if (wait !== undefined) setTimeout(() => void publish(guildId, date, openedIn, attempt + 1), wait).unref?.();
+      });
     queues.set(key, next);
     void next.then(() => queues.get(key) === next && queues.delete(key));
     return next;

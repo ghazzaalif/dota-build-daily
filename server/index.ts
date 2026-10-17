@@ -25,9 +25,30 @@ const PUBLIC_KEY = env('DISCORD_PUBLIC_KEY', 'a305659cb4c15983714155e66b562e3b8a
 const SITE = env('SITE_URL', 'https://dota-build-daily.onrender.com').replace(/\/$/, '');
 const DISCORD = 'https://discord.com/api/v10';
 
+/** Last Discord API answer, shown on /health so blocks are easy to spot. */
+const health = { bot: !!BOT_TOKEN, commandRegistered: false, lastDiscord: null as null | { status: number; path: string; at: string } };
+
+/**
+ * All Discord API calls. Short 429s are waited out; Render's shared free IPs sometimes get
+ * a temporary Discord block (429 without retry_after), which callers retry later.
+ */
+async function discordFetch(path: string, init: RequestInit = {}, attempt = 0): Promise<Response> {
+  const res = await fetch(`${DISCORD}${path}`, init);
+  health.lastDiscord = { status: res.status, path: path.replace(/\d{15,}/g, ':id').split('?')[0], at: new Date().toISOString() };
+  if (res.status === 429 && attempt < 2) {
+    const body = (await res.clone().json().catch(() => ({}))) as { retry_after?: number };
+    const wait = body.retry_after ?? Number(res.headers.get('retry-after') ?? NaN);
+    if (Number.isFinite(wait) && wait <= 5) {
+      await new Promise((r) => setTimeout(r, wait * 1000 + 100));
+      return discordFetch(path, init, attempt + 1);
+    }
+  }
+  return res;
+}
+
 const discord: DiscordApi = {
   async exchangeCode(code) {
-    const res = await fetch(`${DISCORD}/oauth2/token`, {
+    const res = await discordFetch(`/oauth2/token`, {
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ client_id: CLIENT_ID, client_secret: CLIENT_SECRET, grant_type: 'authorization_code', code }),
@@ -36,28 +57,21 @@ const discord: DiscordApi = {
     return (await res.json()) as { access_token: string };
   },
   async fetchUser(token) {
-    const res = await fetch(`${DISCORD}/users/@me`, { headers: { authorization: `Bearer ${token}` } });
+    const res = await discordFetch(`/users/@me`, { headers: { authorization: `Bearer ${token}` } });
     if (!res.ok) throw new Error(`users/@me: ${res.status}`);
     const u = (await res.json()) as { id: string; username: string; global_name?: string | null; avatar?: string | null };
     return { id: u.id, username: u.username, globalName: u.global_name ?? null, avatar: u.avatar ?? null } satisfies DiscordUserLite;
   },
   async fetchGuildIds(token) {
-    const res = await fetch(`${DISCORD}/users/@me/guilds?limit=200`, { headers: { authorization: `Bearer ${token}` } });
+    const res = await discordFetch(`/users/@me/guilds?limit=200`, { headers: { authorization: `Bearer ${token}` } });
     if (!res.ok) throw new Error(`users/@me/guilds: ${res.status}`);
     return ((await res.json()) as { id: string }[]).map((g) => g.id);
   },
 };
 
-/** Bot calls, retrying once when Discord rate-limits us. */
-async function botFetch(path: string, init: RequestInit = {}, retry = true): Promise<Response> {
-  const res = await fetch(`${DISCORD}${path}`, { ...init, headers: { ...init.headers, authorization: `Bot ${BOT_TOKEN}` } });
-  if (res.status === 429 && retry) {
-    const { retry_after } = (await res.json().catch(() => ({ retry_after: 1 }))) as { retry_after?: number };
-    await new Promise((r) => setTimeout(r, Math.min(10, retry_after ?? 1) * 1000));
-    return botFetch(path, init, false);
-  }
-  return res;
-}
+/** Bot calls. */
+const botFetch = (path: string, init: RequestInit = {}) =>
+  discordFetch(path, { ...init, headers: { ...init.headers, authorization: `Bot ${BOT_TOKEN}` } });
 
 function messageForm(m: OutgoingMessage): FormData {
   const form = new FormData();
@@ -77,6 +91,7 @@ function messageForm(m: OutgoingMessage): FormData {
 const bot: BotApi = {
   async channelGuild(channelId) {
     const res = await botFetch(`/channels/${channelId}`);
+    if (res.status === 429 || res.status >= 500) throw new Error(`channel ${channelId}: ${res.status}`); // retried later
     if (!res.ok) {
       console.warn(`can't see channel ${channelId}: ${res.status} (is the bot in that server?)`);
       return null;
@@ -105,14 +120,20 @@ const bot: BotApi = {
 };
 
 /** Creates or updates /results-channel (POST upserts by name and leaves the entry point command alone). */
-async function registerCommands() {
+async function registerCommands(attempt = 0) {
   const res = await botFetch(`/applications/${CLIENT_ID}/commands`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(RESULTS_CHANNEL_COMMAND),
-  });
-  if (!res.ok) console.warn(`registering /${RESULTS_CHANNEL_COMMAND.name} failed: ${res.status} ${await res.text()}`);
-  else console.log(`/${RESULTS_CHANNEL_COMMAND.name} registered`);
+  }).catch((e: unknown) => ({ ok: false, status: 0, text: async () => String(e) }) as Response);
+  if (res.ok) {
+    health.commandRegistered = true;
+    console.log(`/${RESULTS_CHANNEL_COMMAND.name} registered`);
+    return;
+  }
+  const mins = [1, 2, 5, 10, 20, 30][attempt] ?? 60;
+  console.warn(`registering /${RESULTS_CHANNEL_COMMAND.name} failed: ${res.status} ${(await res.text()).slice(0, 200)}; retrying in ${mins} min`);
+  setTimeout(() => void registerCommands(attempt + 1), mins * 60_000).unref();
 }
 
 // Puzzles and items come from the public site. Published puzzles never change, so they
@@ -161,6 +182,7 @@ const app = createApp({
   content,
   corsOrigins: [`*.discordsays.com`, SITE, 'http://localhost:5173'],
   results: BOT_TOKEN ? createResultsPublisher({ store, content, bot }) : undefined,
+  health: () => health,
   interactions: createInteractions({ store, publicKey: PUBLIC_KEY }),
 });
 const port = Number(env('PORT', '3001'));

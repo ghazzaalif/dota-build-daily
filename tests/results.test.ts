@@ -116,7 +116,7 @@ describe('posting the results card', () => {
     discord,
     content,
     now: () => new Date('2026-10-16T12:00:00Z'),
-    results: createResultsPublisher({ store, content, bot }),
+    results: createResultsPublisher({ store, content, bot, retryMs: [] }),
   });
 
   beforeAll(async () => {
@@ -218,5 +218,28 @@ describe('interactions endpoint', () => {
     expect(await store.getResultsChannel(GUILD)).toBe(CH_FIXED);
     await cmd(String((1 << 5) | (1 << 3)));
     expect(await store.getResultsChannel(GUILD)).toBeNull();
+  });
+});
+
+describe('when Discord is temporarily blocking us', () => {
+  it('retries a failed post and succeeds later', async () => {
+    const store = new MemoryStore();
+    const bot = new FakeBot();
+    let fail = 2;
+    const create = bot.createMessage.bind(bot);
+    bot.createMessage = async (c, m) => {
+      if (fail-- > 0) throw new Error('429 blocked');
+      return create(c, m);
+    };
+    await store.upsertUser({ id: '1', username: 'a', globalName: 'A', avatar: null });
+    await store.addGuildMember(GUILD, '1');
+    await store.saveGame({ userId: '1', date: DATE, puzzleNo: puzzle.puzzleNo, rows: [ANSWER], states: [Array(6).fill('green')], status: 'won', hintsRevealed: 0, earlyReveals: 0, lifeline: null });
+    const content = { puzzle: async (d: string) => loadPuzzle(d), items: async () => items };
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    await createResultsPublisher({ store, content, bot, retryMs: [5, 5, 5] }).publish(GUILD, DATE, CH_OPEN);
+    await new Promise((r) => setTimeout(r, 200));
+    errSpy.mockRestore();
+    expect(bot.log).toHaveLength(1);
+    expect(bot.log[0]).toMatchObject({ op: 'create', channel: CH_OPEN });
   });
 });

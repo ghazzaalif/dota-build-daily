@@ -29,6 +29,8 @@ export interface AppDeps {
   results?: { publish(guildId: string, date: string, channelId: string | null): Promise<void> };
   /** Discord interactions endpoint (signature-checked). */
   interactions?: (raw: Buffer, headers: IncomingMessage['headers']) => Promise<{ status: number; body: unknown }>;
+  /** Extra non-secret status for GET /health. */
+  health?: () => object;
 }
 
 const MAX_BODY = 32 * 1024;
@@ -122,7 +124,7 @@ export function createApp(deps: AppDeps) {
     const { path, query } = routePath(req.url ?? '/');
     const method = req.method ?? 'GET';
 
-    if (method === 'GET' && (path === '/' || path === '/health')) return send(res, 200, { ok: true });
+    if (method === 'GET' && (path === '/' || path === '/health')) return send(res, 200, { ok: true, ...deps.health?.() });
 
     if (method === 'POST' && path === '/interactions') {
       if (!deps.interactions) throw new HttpError(404, 'Interactions are not configured');
