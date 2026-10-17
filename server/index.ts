@@ -14,7 +14,7 @@ import { createApp, type Content, type DiscordApi } from './app';
 import { MemoryStore, PgStore, type Store } from './store';
 
 const env = (k: string, fallback?: string) => process.env[k] ?? fallback ?? '';
-const CLIENT_ID = env('DISCORD_CLIENT_ID');
+const CLIENT_ID = env('DISCORD_CLIENT_ID', '1560832626720243823');
 const CLIENT_SECRET = env('DISCORD_CLIENT_SECRET');
 const SITE = env('SITE_URL', 'https://dota-build-daily.onrender.com').replace(/\/$/, '');
 const DISCORD = 'https://discord.com/api/v10';

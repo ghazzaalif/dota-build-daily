@@ -36,7 +36,7 @@ export const GAME_NAME = 'Dota Build Daily';
  * Both can be overridden at build time with VITE_DISCORD_CLIENT_ID / VITE_API_URL.
  * (`?.` because the server imports this file too, where import.meta.env doesn't exist.)
  */
-export const DISCORD_CLIENT_ID: string = import.meta.env?.VITE_DISCORD_CLIENT_ID ?? '';
+export const DISCORD_CLIENT_ID: string = import.meta.env?.VITE_DISCORD_CLIENT_ID ?? '1560832626720243823';
 export const API_URL: string = import.meta.env?.VITE_API_URL ?? 'https://dota-build-daily-api.onrender.com';
 /** How often the "played in this server" list refreshes while open. */
 export const SCOREBOARD_POLL_MS = 20_000;
