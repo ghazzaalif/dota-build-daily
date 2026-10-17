@@ -23,17 +23,24 @@ const CLIENT_SECRET = env('DISCORD_CLIENT_SECRET');
 const BOT_TOKEN = env('DISCORD_BOT_TOKEN');
 const PUBLIC_KEY = env('DISCORD_PUBLIC_KEY', 'a305659cb4c15983714155e66b562e3b8a0ee5ccea24caa4cb12bb20890f7b9e');
 const SITE = env('SITE_URL', 'https://dota-build-daily.onrender.com').replace(/\/$/, '');
-const DISCORD = 'https://discord.com/api/v10';
+// Discord blocks Render's shared free IPs at times, so API calls can go through a small
+// Cloudflare Worker (relay/discord-relay.js) instead: set DISCORD_API_BASE to the Worker's
+// URL + /api/v10 and DISCORD_RELAY_KEY to the key the Worker checks.
+const DISCORD = env('DISCORD_API_BASE', 'https://discord.com/api/v10').replace(/\/$/, '');
+const RELAY_KEY = env('DISCORD_RELAY_KEY');
 
 /** Last Discord API answer, shown on /health so blocks are easy to spot. */
-const health = { bot: !!BOT_TOKEN, commandRegistered: false, lastDiscord: null as null | { status: number; path: string; at: string } };
+const health = { bot: !!BOT_TOKEN, viaRelay: !DISCORD.startsWith('https://discord.com'), commandRegistered: false, lastDiscord: null as null | { status: number; path: string; at: string } };
 
 /**
  * All Discord API calls. Short 429s are waited out; Render's shared free IPs sometimes get
  * a temporary Discord block (429 without retry_after), which callers retry later.
  */
 async function discordFetch(path: string, init: RequestInit = {}, attempt = 0): Promise<Response> {
-  const res = await fetch(`${DISCORD}${path}`, init);
+  const headers = new Headers(init.headers);
+  headers.set('user-agent', 'DiscordBot (https://github.com/ghazzaalif/dota-build-daily, 1.0)');
+  if (RELAY_KEY) headers.set('x-relay-key', RELAY_KEY);
+  const res = await fetch(`${DISCORD}${path}`, { ...init, headers });
   health.lastDiscord = { status: res.status, path: path.replace(/\d{15,}/g, ':id').split('?')[0], at: new Date().toISOString() };
   if (res.status === 429 && attempt < 2) {
     const body = (await res.clone().json().catch(() => ({}))) as { retry_after?: number };
