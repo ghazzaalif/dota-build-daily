@@ -50,7 +50,8 @@ export function parseUpload(body: unknown): GameUpload {
     const l = b.lifeline as { slot?: unknown; key?: unknown };
     if (Number.isInteger(l.slot) && typeof l.key === 'string') lifeline = { slot: l.slot as number, key: l.key };
   }
-  const guildId = typeof b.guildId === 'string' && /^\d{5,25}$/.test(b.guildId) ? b.guildId : null;
+  const snowflake = (v: unknown) => (typeof v === 'string' && /^\d{5,25}$/.test(v) ? v : null);
+  const guildId = snowflake(b.guildId);
   return {
     date: b.date,
     rows: b.rows as string[][],
@@ -58,6 +59,7 @@ export function parseUpload(body: unknown): GameUpload {
     earlyReveals: int(b.earlyReveals, MAX_HINT_LEVEL),
     lifeline,
     guildId,
+    channelId: guildId ? snowflake(b.channelId) : null,
   };
 }
 

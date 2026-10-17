@@ -16,6 +16,8 @@ export interface GameUpload {
   earlyReveals: number;
   lifeline: { slot: number; key: string } | null;
   guildId: string | null;
+  /** Channel the Activity was opened in; the server posts the results card there. */
+  channelId?: string | null;
 }
 
 /** The caller's own saved game (item keys included, so it can resume on another device). */

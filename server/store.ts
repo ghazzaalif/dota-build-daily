@@ -17,6 +17,12 @@ export interface Store {
   /** Games for `date` from everyone who has played in this server. */
   board(guildId: string, date: string): Promise<BoardRow[]>;
   games(userId: string): Promise<StoredGame[]>;
+  /** Fixed channel for result cards (set with /results-channel), or null = where the game was opened. */
+  getResultsChannel(guildId: string): Promise<string | null>;
+  setResultsChannel(guildId: string, channelId: string | null): Promise<void>;
+  /** The day's result card already posted in a channel, so it is edited instead of re-posted. */
+  getPost(guildId: string, date: string, channelId: string): Promise<string | null>;
+  savePost(guildId: string, date: string, channelId: string, messageId: string): Promise<void>;
 }
 
 export class MemoryStore implements Store {
@@ -46,6 +52,21 @@ export class MemoryStore implements Store {
   }
   async games(userId: string) {
     return [...this.gamesByKey.values()].filter((g) => g.userId === userId);
+  }
+  channels = new Map<string, string>();
+  posts = new Map<string, string>();
+  async getResultsChannel(guildId: string) {
+    return this.channels.get(guildId) ?? null;
+  }
+  async setResultsChannel(guildId: string, channelId: string | null) {
+    if (channelId) this.channels.set(guildId, channelId);
+    else this.channels.delete(guildId);
+  }
+  async getPost(guildId: string, date: string, channelId: string) {
+    return this.posts.get(`${guildId}:${date}:${channelId}`) ?? null;
+  }
+  async savePost(guildId: string, date: string, channelId: string, messageId: string) {
+    this.posts.set(`${guildId}:${date}:${channelId}`, messageId);
   }
 }
 
@@ -110,6 +131,17 @@ export class PgStore implements Store {
         primary key (user_id, date)
       );
       create index if not exists games_date on games(date);
+      create table if not exists guild_settings (
+        guild_id text primary key,
+        results_channel_id text
+      );
+      create table if not exists result_posts (
+        guild_id text not null,
+        date text not null,
+        channel_id text not null,
+        message_id text not null,
+        primary key (guild_id, date, channel_id)
+      );
     `);
   }
 
@@ -159,5 +191,34 @@ export class PgStore implements Store {
   async games(userId: string) {
     const { rows } = await this.pool.query<GameRow>('select * from games where user_id=$1', [userId]);
     return rows.map(toGame);
+  }
+
+  async getResultsChannel(guildId: string) {
+    const { rows } = await this.pool.query<{ results_channel_id: string | null }>('select results_channel_id from guild_settings where guild_id=$1', [guildId]);
+    return rows[0]?.results_channel_id ?? null;
+  }
+
+  async setResultsChannel(guildId: string, channelId: string | null) {
+    await this.pool.query(
+      `insert into guild_settings (guild_id, results_channel_id) values ($1,$2)
+       on conflict (guild_id) do update set results_channel_id=$2`,
+      [guildId, channelId],
+    );
+  }
+
+  async getPost(guildId: string, date: string, channelId: string) {
+    const { rows } = await this.pool.query<{ message_id: string }>(
+      'select message_id from result_posts where guild_id=$1 and date=$2 and channel_id=$3',
+      [guildId, date, channelId],
+    );
+    return rows[0]?.message_id ?? null;
+  }
+
+  async savePost(guildId: string, date: string, channelId: string, messageId: string) {
+    await this.pool.query(
+      `insert into result_posts (guild_id, date, channel_id, message_id) values ($1,$2,$3,$4)
+       on conflict (guild_id, date, channel_id) do update set message_id=$4`,
+      [guildId, date, channelId, messageId],
+    );
   }
 }

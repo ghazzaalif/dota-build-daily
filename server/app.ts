@@ -25,6 +25,10 @@ export interface AppDeps {
   now?: () => Date;
   /** Origins allowed to call the API directly (Discord proxies requests same-origin). */
   corsOrigins?: string[];
+  /** Posts/edits the results card when someone finishes (needs the bot). */
+  results?: { publish(guildId: string, date: string, channelId: string | null): Promise<void> };
+  /** Discord interactions endpoint (signature-checked). */
+  interactions?: (raw: Buffer, headers: IncomingMessage['headers']) => Promise<{ status: number; body: unknown }>;
 }
 
 const MAX_BODY = 32 * 1024;
@@ -44,17 +48,22 @@ function send(res: ServerResponse, status: number, body: unknown) {
   res.end(JSON.stringify(body));
 }
 
-async function readJson(req: IncomingMessage): Promise<unknown> {
+async function readRaw(req: IncomingMessage, max = MAX_BODY): Promise<Buffer> {
   let size = 0;
   const chunks: Buffer[] = [];
   for await (const c of req) {
     size += (c as Buffer).length;
-    if (size > MAX_BODY) throw new HttpError(413, 'Body too large');
+    if (size > max) throw new HttpError(413, 'Body too large');
     chunks.push(c as Buffer);
   }
-  if (!chunks.length) return null;
+  return Buffer.concat(chunks);
+}
+
+async function readJson(req: IncomingMessage): Promise<unknown> {
+  const raw = await readRaw(req);
+  if (!raw.length) return null;
   try {
-    return JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    return JSON.parse(raw.toString('utf8'));
   } catch {
     throw new HttpError(400, 'Body is not valid JSON');
   }
@@ -71,6 +80,7 @@ export function createApp(deps: AppDeps) {
   const now = deps.now ?? (() => new Date());
   const users = new Map<string, { user: DiscordUserLite; exp: number }>();
   const guilds = new Map<string, { ids: Set<string>; exp: number }>();
+  const background = new Set<Promise<void>>();
 
   async function authUser(req: IncomingMessage): Promise<{ user: DiscordUserLite; token: string }> {
     const m = /^Bearer (\S+)$/.exec(req.headers.authorization ?? '');
@@ -114,6 +124,12 @@ export function createApp(deps: AppDeps) {
 
     if (method === 'GET' && (path === '/' || path === '/health')) return send(res, 200, { ok: true });
 
+    if (method === 'POST' && path === '/interactions') {
+      if (!deps.interactions) throw new HttpError(404, 'Interactions are not configured');
+      const out = await deps.interactions(await readRaw(req, 256 * 1024), req.headers);
+      return send(res, out.status, out.body);
+    }
+
     if (method === 'POST' && path === '/token') {
       const body = (await readJson(req)) as { code?: unknown } | null;
       if (typeof body?.code !== 'string' || !body.code) throw new HttpError(400, 'code is required');
@@ -139,7 +155,15 @@ export function createApp(deps: AppDeps) {
       const previous = await deps.store.getGame(user.id, upload.date);
       const game = scoreUpload(user.id, upload, puzzle, items, previous);
       await deps.store.saveGame(game);
-      if (upload.guildId && (await inGuild(token, upload.guildId))) await deps.store.addGuildMember(upload.guildId, user.id);
+      if (upload.guildId && (await inGuild(token, upload.guildId))) {
+        await deps.store.addGuildMember(upload.guildId, user.id);
+        // Just finished: post (or update) today's results card in the server.
+        if (deps.results && game.status !== 'in_progress' && previous?.status !== game.status) {
+          const p = deps.results.publish(upload.guildId, game.date, upload.channelId ?? null);
+          background.add(p);
+          void p.finally(() => background.delete(p));
+        }
+      }
       return send(res, 200, { ok: true, status: game.status });
     }
 
@@ -170,7 +194,7 @@ export function createApp(deps: AppDeps) {
     throw new HttpError(404, 'Not found');
   }
 
-  return async function handler(req: IncomingMessage, res: ServerResponse) {
+  const handler = async function handler(req: IncomingMessage, res: ServerResponse) {
     const origin = req.headers.origin;
     if (origin && deps.corsOrigins?.some((o) => o === origin || (o.startsWith('*.') && origin.endsWith(o.slice(1))))) {
       res.setHeader('access-control-allow-origin', origin);
@@ -190,4 +214,6 @@ export function createApp(deps: AppDeps) {
       send(res, 500, { error: 'Something went wrong on our side. Try again in a minute.' });
     }
   };
+  /** Resolves once background work (results cards) has finished. For tests. */
+  return Object.assign(handler, { settled: () => Promise.all([...background]).then(() => undefined) });
 }

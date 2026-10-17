@@ -113,7 +113,7 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
   tokens and server membership, re-scores every upload with the game's own scoring code, and
   stores games in Postgres. Routes: `POST /token`, `GET|POST /game`, `GET /scoreboard`,
   `GET /stats`, `GET /health`. Build `npm run build:server`, start `npm run start:server`.
-- **Env (Render web service):** `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DATABASE_URL`
+- **Env (Render web service):** `DISCORD_CLIENT_SECRET`, `DISCORD_BOT_TOKEN`, `DATABASE_URL`
   (Neon Postgres; Render's free Postgres is deleted after 30 days), optional `SITE_URL`.
 - **Discord URL mappings** (Developer Portal → Activities → URL Mappings):
 
@@ -124,7 +124,15 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
   | `/steam` | `cdn.cloudflare.steamstatic.com` |
   | `/discordcdn` | `cdn.discordapp.com` |
 
-- **Tests:** `tests/server.test.ts` (API), and `npm run test:discord`, which runs two players
+- **Results card:** when someone finishes, the bot posts a card (avatars + colour grids, never
+  items) in the channel the game was opened in, and edits that same message as more people
+  finish that day. Admins can pin a channel with `/results-channel`. "Play now!" on the card
+  opens the Activity through `POST /interactions` (signature-checked). Needs the bot in the
+  server (scopes `bot applications.commands`, permissions View Channel, Send Messages, Embed
+  Links, Attach Files, Read Message History = `117760`) and `DISCORD_BOT_TOKEN` on Render.
+  `.github/workflows/keepalive.yml` pings the API every 10 minutes because Discord gives a
+  button 3 s to respond and a sleeping free instance takes ~50 s to wake.
+- **Tests:** `tests/server.test.ts` (API), `tests/results.test.ts` (card, posting, interactions), and `npm run test:discord`, which runs two players
   through the real build against a fake Discord host (`tests/e2e/discord-host.ts`).
 - **Who can play:** until Discord verifies the app, only the developer team and app testers can
   launch it, in servers with fewer than 25 members.

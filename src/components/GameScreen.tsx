@@ -88,6 +88,7 @@ export function GameScreen(p: Props) {
         earlyReveals: state.earlyReveals,
         lifeline: state.lifeline,
         guildId: session.guildId,
+        channelId: session.channelId,
       })
       .then(() => {
         if (cancelled) return;
