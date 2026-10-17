@@ -15,6 +15,7 @@ import type { ServerStats } from './discord/api';
 import { isDiscordActivity, loadSession } from './discord/client';
 import type { DiscordSession } from './discord/session';
 import { saveGame } from './game/storage';
+import { BrandMark } from './components/BrandMark';
 
 const IN_DISCORD = typeof window !== 'undefined' && isDiscordActivity();
 
@@ -182,11 +183,7 @@ export default function App() {
       <nav className="sticky top-0 z-30 border-b border-line bg-bg">
         <div className="mx-auto flex h-14 max-w-[1080px] items-center gap-1 px-2 lg:px-6">
           <p className="ml-2 mr-auto flex items-center gap-2.5">
-            <span aria-hidden="true" className="flex h-4 items-end gap-[3px]">
-              <span className="h-full w-[5px] bg-s-green" />
-              <span className="h-3 w-[5px] bg-s-yellow" />
-              <span className="h-2 w-[5px] bg-s-orange" />
-            </span>
+            <BrandMark size={26} className="shrink-0" />
             <span className="whitespace-nowrap font-display text-body font-extrabold uppercase tracking-[0.02em] sm:text-lead">{GAME_NAME}</span>
             {puzzle && <span className="font-display text-body font-bold tabular-nums text-muted sm:text-lead">#{puzzle.puzzleNo}</span>}
           </p>

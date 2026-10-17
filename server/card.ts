@@ -3,6 +3,7 @@
 // to PNG with resvg using the same fonts as the game.
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { MARK_BODY, MARK_BOWL } from '../src/brand/mark';
 import type { TileState } from '../src/game/types';
 import { woffToSfnt } from './woff';
 
@@ -104,7 +105,8 @@ export function cardSvg(input: CardInput): string {
   const more = input.players.length - shown.length;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <rect width="${width}" height="${height}" rx="18" fill="${C.bg}"/>
-  <text x="${width / 2}" y="50" text-anchor="middle" font-family="Big Shoulders Display" font-weight="800" font-size="30" letter-spacing="1"><tspan fill="${C.gold}">DOTA BUILD DAILY</tspan><tspan fill="${C.ink}"> #${input.puzzleNo}</tspan></text>
+  <g transform="translate(${PAD - 4} 22) scale(${34 / 256})"><path fill="${C.gold}" d="${MARK_BODY}"/><path fill="${C.green}" d="${MARK_BOWL}"/></g>
+  <text x="${PAD + 38}" y="50" font-family="Big Shoulders Display" font-weight="800" font-size="30" letter-spacing="1"><tspan fill="${C.gold}">DOTA BUILD DAILY</tspan><tspan fill="${C.ink}"> #${input.puzzleNo}</tspan></text>
   ${panels.join('\n')}
   ${more > 0 ? `<text x="${width / 2}" y="${height - PAD + 4}" text-anchor="middle" font-family="Sofia Sans" font-weight="700" font-size="14" fill="${C.muted}">+${more} more</text>` : ''}
 </svg>`;

@@ -12,6 +12,7 @@
  *   --s-*      tile states (game semantics, also the share emoji)
  *   --radiant / --dire   team sides, only where a side is shown
  *   --gold     item gold costs only
+ *   --brand-*  the logo (tiles + the green "found" tile); not remapped by colour-blind mode
  * Text colors (--ink, --muted) pass WCAG AA on --bg, --panel and --raised.
  * --faint is for non-text marks (empty slots, dividers) only.
  */
@@ -31,6 +32,8 @@
   --s-orange: #db7a34;
   --s-grey: #3a4752;
   --s-ink: #0b1116;
+  --brand-tile: #e2ae48;
+  --brand-bowl: #4fa35a;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
@@ -52,6 +55,8 @@
     --s-orange: #c9661f;
     --s-grey: #7c878f;
     --s-ink: #ffffff;
+    --brand-tile: #0e141b;
+    --brand-bowl: #3d8a47;
     color-scheme: light;
   }
 }
@@ -71,6 +76,8 @@
   --s-orange: #c9661f;
   --s-grey: #7c878f;
   --s-ink: #ffffff;
+  --brand-tile: #0e141b;
+  --brand-bowl: #3d8a47;
   color-scheme: light;
 }
 

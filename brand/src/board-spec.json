@@ -1,0 +1,35 @@
+{
+  "brand": "Dota Build Daily",
+  "tagline": "Guess the pro's six-item build. A new puzzle every day.",
+  "brief": "A daily Wordle-style puzzle for Dota players, played on the web and inside Discord: guess the six items a pro finished a big tournament match with. It should feel like an esports broadcast — sharp, competitive, a daily ritual you share with your server — without borrowing Valve's artwork.",
+  "adjectives": ["competitive", "sharp", "daily", "social"],
+  "criteria": "Success: ownable outside the sword-and-shield gaming clichés, reads at Discord avatar size, ties to the name, and comes from the game itself.",
+  "mockups": ["app-icon", "favicon-tab", "website", "social", "sticker", "tshirt"],
+  "nav": ["Today", "Stats", "How to play"],
+  "brand_color": "#0E141B",
+  "tile_color": "#0E141B",
+  "greyscale": false,
+  "final": true,
+  "designer": "Claude for Ghazza",
+  "concepts": [
+    {
+      "name": "Build D",
+      "symbol": "../dbd-symbol-light.svg",
+      "lockup": "../dbd-horizontal-light.svg",
+      "stacked": "../dbd-stacked-light.svg",
+      "symbol_on_tile": "../dbd-symbol.svg",
+      "symbol_on_dark": "../dbd-symbol.svg",
+      "lockup_on_dark": "../dbd-horizontal.svg",
+      "stacked_on_dark": "../dbd-stacked.svg",
+      "stacked_on_tile": "../dbd-stacked.svg",
+      "idea": "Six item tiles assemble into a D: the build is the brand.",
+      "rationale": [
+        "Six tiles = the six inventory slots every answer fills",
+        "Gold for Dota's currency, green for the slot you got right",
+        "A D on a 3×3 grid: square, bold, survives a Discord avatar",
+        "Wordmark in the game's own display face, converted to outlines"
+      ]
+    }
+  ],
+  "recommendation": "Build D is the final mark: ownable, tied to the name, and drawn from the game's own mechanic."
+}
