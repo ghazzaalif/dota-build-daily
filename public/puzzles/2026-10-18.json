@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 5,
+  "date": "2026-10-18",
+  "patch": "7.41",
+  "hero": {
+    "id": 54,
+    "key": "life_stealer",
+    "name": "Lifestealer"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Grand Final, game 4"
+  },
+  "hints": {
+    "allies": [
+      54,
+      69,
+      16,
+      90,
+      9
+    ],
+    "enemies": [
+      112,
+      46,
+      17,
+      51,
+      96
+    ],
+    "result": "win",
+    "durationSec": 2658,
+    "player": {
+      "name": "Satanic",
+      "team": "TEAM VISION"
+    },
+    "priceBands": [
+      "0-2000",
+      "4500-5500",
+      "4500-5500",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8960882635,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "Team Spirit",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQVhMQl1lVwsNEEkQHBBCRFxVflRbGA9XUVJHHksQXUhIEhcTVVtbEANGFhBEW1tIYlVOEwILAVNTGRZJEllTVBMKD1BLSVQRDhAYHhJGX0BUY0hSGgAEXFBdRx5LEF1ISBIXE01WQQ0PBU5Xb0FVSEFESEMaFhcQCwlfYVVRFBcDAR4DRRZORgkBQxAKEFhYXVxEV1FfR0ZORk5bXVdlSFISFwMLDQIZTh8YWVVLFBcTV19UWU5QFj0HSFtEEBoPRVlAVGtfVkZYVg4KCU9r"
+}
