@@ -17,5 +17,5 @@
     "allowImportingTsExtensions": false,
     "types": ["vite/client", "node", "vitest/globals"]
   },
-  "include": ["src", "scripts", "tests", "vite.config.ts"]
+  "include": ["src", "scripts", "server", "tests", "vite.config.ts"]
 }

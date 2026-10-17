@@ -8,3 +8,4 @@ queue/
 # live runs add more, restored from the Actions cache and never committed.
 data/cache/constants/
 .DS_Store
+server/dist/

@@ -16,23 +16,32 @@
     "pipeline": "tsx scripts/pipeline/run.ts",
     "pipeline:offline": "tsx scripts/pipeline/run.ts --offline --no-fetch",
     "build:preview": "vite build --mode single && node scripts/make-preview.mjs",
-    "test:e2e": "node tests/e2e/smoke.mjs"
+    "test:e2e": "node tests/e2e/smoke.mjs",
+    "build:server": "esbuild server/index.ts --bundle --platform=node --target=node20 --format=esm --packages=external --outfile=server/dist/index.mjs",
+    "start:server": "node server/dist/index.mjs",
+    "test:discord": "VITE_DISCORD_CLIENT_ID=123456789012345678 VITE_API_URL=http://api.example.test vite build && tsx tests/e2e/discord-smoke.ts"
   },
   "engines": {
     "node": "20.x"
   },
   "dependencies": {
+    "@discord/embedded-app-sdk": "^2.5.0",
+    "@fontsource/big-shoulders-display": "^5.3.0",
+    "@fontsource/sofia-sans": "^5.3.0",
+    "pg": "^8.23.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",
     "@types/node": "^20.19.43",
+    "@types/pg": "^8.23.1",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.6.1",
     "dotaconstants": "^10.8.0",
+    "esbuild": "^0.21.5",
     "jsdom": "^29.1.1",
     "postcss": "^8.5.30",
     "puppeteer-core": "^24.43.1",

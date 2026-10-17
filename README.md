@@ -101,3 +101,30 @@ The answer is the player's **6 main inventory slots at the end of the game**, or
 - Stage labels for the TI 2026 playoff games (Grand Final, Upper/Lower Bracket Final) were set by hand in `overrides.json` from the series results.
 
 Dota 2 is a registered trademark of Valve Corporation. This project is not affiliated with or endorsed by Valve. Match data from OpenDota.
+
+## Discord Activity
+
+The same game runs inside Discord as an Activity (like the Wordle one), with sign-in and a
+"Played in this server today" board.
+
+- **Client:** `src/discord/`. Only active when Discord launches the page (it adds `frame_id`
+  and `instance_id`); the SDK is a separate chunk the website never loads.
+- **Backend:** `server/` (Node 20, no framework). Exchanges the OAuth code, verifies Discord
+  tokens and server membership, re-scores every upload with the game's own scoring code, and
+  stores games in Postgres. Routes: `POST /token`, `GET|POST /game`, `GET /scoreboard`,
+  `GET /stats`, `GET /health`. Build `npm run build:server`, start `npm run start:server`.
+- **Env (Render web service):** `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DATABASE_URL`
+  (Neon Postgres; Render's free Postgres is deleted after 30 days), optional `SITE_URL`.
+- **Discord URL mappings** (Developer Portal → Activities → URL Mappings):
+
+  | Prefix | Target |
+  |---|---|
+  | `/` | `dota-build-daily.onrender.com` |
+  | `/api` | the API service host |
+  | `/steam` | `cdn.cloudflare.steamstatic.com` |
+  | `/discordcdn` | `cdn.discordapp.com` |
+
+- **Tests:** `tests/server.test.ts` (API), and `npm run test:discord`, which runs two players
+  through the real build against a fake Discord host (`tests/e2e/discord-host.ts`).
+- **Who can play:** until Discord verifies the app, only the developer team and app testers can
+  launch it, in servers with fewer than 25 members.

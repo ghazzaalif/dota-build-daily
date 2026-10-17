@@ -1,5 +1,5 @@
 // F6 end screen: result, the real build timeline, match facts, share, stats, countdown.
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode, type MouseEvent } from 'react';
 import { formatClock, formatCountdown, msUntilNextReset } from '../game/date';
 import type { Stats } from '../game/storage';
 import type { AnswerEntry, ItemsMap, Puzzle } from '../game/types';
@@ -21,6 +21,10 @@ interface Props {
   onClose: () => void;
   newPuzzleReady: boolean;
   onPlayNew: () => void;
+  /** Inside Discord, links must open through the client. */
+  onOpenLink?: (url: string) => void;
+  /** Server results (Discord only). */
+  board?: ReactNode;
 }
 
 export function useCountdown(now: () => Date) {
@@ -41,6 +45,11 @@ export function EndScreen(p: Props) {
     { name: match.radiantTeam, side: 'Radiant', bar: 'bg-radiant', won: radiantWon },
     { name: match.direTeam, side: 'Dire', bar: 'bg-dire', won: !radiantWon },
   ];
+  const openLink = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (!p.onOpenLink) return;
+    e.preventDefault();
+    p.onOpenLink(e.currentTarget.href);
+  };
   const link = 'inline-flex min-h-[44px] items-center gap-1.5 font-semibold underline decoration-line underline-offset-4 hover:decoration-ink';
 
   return (
@@ -82,10 +91,10 @@ export function EndScreen(p: Props) {
           ))}
         </ul>
         <div className="mt-1 flex flex-wrap gap-x-5">
-          <a href={`https://www.opendota.com/matches/${match.matchId}`} target="_blank" rel="noopener noreferrer" className={link}>
+          <a href={`https://www.opendota.com/matches/${match.matchId}`} target="_blank" rel="noopener noreferrer" onClick={openLink} className={link}>
             OpenDota <ExternalIcon className="h-3.5 w-3.5" />
           </a>
-          <a href={`https://www.dotabuff.com/matches/${match.matchId}`} target="_blank" rel="noopener noreferrer" className={link}>
+          <a href={`https://www.dotabuff.com/matches/${match.matchId}`} target="_blank" rel="noopener noreferrer" onClick={openLink} className={link}>
             Dotabuff <ExternalIcon className="h-3.5 w-3.5" />
           </a>
         </div>
@@ -94,6 +103,8 @@ export function EndScreen(p: Props) {
       <button type="button" onClick={p.onShare} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-[3px] bg-ink text-lead font-bold text-bg">
         <ShareIcon className="h-5 w-5" /> Share result
       </button>
+
+      {p.board && <div className="mt-6">{p.board}</div>}
 
       <div className="mt-6 border-t border-line pt-5">
         <StatsBlock stats={p.stats} streak={p.streak} />

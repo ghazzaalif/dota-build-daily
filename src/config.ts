@@ -29,3 +29,14 @@ export const PRICE_BAND_EDGES = [2000, 3500, 4500, 5500];
 
 export const SITE_URL = 'https://dota-build-daily.onrender.com';
 export const GAME_NAME = 'Dota Build Daily';
+
+/**
+ * Discord Activity. The client ID is public (it's in every Activity URL). The API is the
+ * small backend in server/ that exchanges OAuth codes and keeps the server scoreboard.
+ * Both can be overridden at build time with VITE_DISCORD_CLIENT_ID / VITE_API_URL.
+ * (`?.` because the server imports this file too, where import.meta.env doesn't exist.)
+ */
+export const DISCORD_CLIENT_ID: string = import.meta.env?.VITE_DISCORD_CLIENT_ID ?? '';
+export const API_URL: string = import.meta.env?.VITE_API_URL ?? 'https://dota-build-daily-api.onrender.com';
+/** How often the "played in this server" list refreshes while open. */
+export const SCOREBOARD_POLL_MS = 20_000;

@@ -11,8 +11,33 @@ import { loadPuzzle, loadStatic, type StaticData } from './data/load';
 import { addDays, clockOffsetFromHeader, puzzleDateAt } from './game/date';
 import { displayStreak, loadActiveDate, loadGame, loadSettings, loadStats, saveSettings, storageAvailable, type Settings } from './game/storage';
 import type { Puzzle } from './game/types';
+import type { ServerStats } from './discord/api';
+import { isDiscordActivity, loadSession } from './discord/client';
+import type { DiscordSession } from './discord/session';
+import { saveGame } from './game/storage';
 
-type Banner = { kind: 'late' | 'carryover' | 'storage'; text: string };
+const IN_DISCORD = typeof window !== 'undefined' && isDiscordActivity();
+
+/** Takes the server's copy when it's further along (e.g. started on another device). */
+async function mergeServerGame(session: DiscordSession, date: string) {
+  try {
+    const mine = await session.api.getGame(date);
+    const local = loadGame(date);
+    if (mine && mine.rows.length > (local?.rows.length ?? 0)) {
+      saveGame(date, {
+        rows: mine.rows,
+        hintsRevealed: mine.hintsRevealed,
+        earlyReveals: mine.earlyReveals,
+        lifeline: mine.lifeline,
+        status: mine.status,
+      });
+    }
+  } catch {
+    /* offline or API asleep: keep the local copy */
+  }
+}
+
+type Banner = { kind: 'late' | 'carryover' | 'storage' | 'discord'; text: string };
 
 export default function App() {
   const [data, setData] = useState<StaticData | null>(null);
@@ -26,6 +51,12 @@ export default function App() {
   const [offset, setOffset] = useState(0);
   const [tick, setTick] = useState(0);
   const [missing, setMissing] = useState(false);
+  const [session, setSession] = useState<DiscordSession | null>(null);
+  const [serverStats, setServerStats] = useState<ServerStats | null>(null);
+  const [discordError, setDiscordError] = useState<string | null>(null);
+  const refreshServerStats = useCallback(() => {
+    session?.api.stats().then(setServerStats).catch(() => undefined);
+  }, [session]);
 
   const now = useCallback(() => new Date(Date.now() + offset), [offset]);
   const today = useMemo(() => puzzleDateAt(now()), [now, tick]);
@@ -60,7 +91,7 @@ export default function App() {
 
   /** Chooses and loads the puzzle to show. */
   const choose = useCallback(
-    async (d: StaticData, preferToday = false) => {
+    async (d: StaticData, preferToday = false, s: DiscordSession | null = null) => {
       const nowDate = new Date(Date.now() + clockOffsetFromHeader(d.serverDate));
       const t = puzzleDateAt(nowDate);
       const next: Banner[] = storageAvailable() ? [] : [{ kind: 'storage', text: "Stats won't be saved in this browser." }];
@@ -69,6 +100,7 @@ export default function App() {
       const active = loadActiveDate();
       if (!preferToday && active && active === addDays(t, -1) && loadGame(active)?.status === 'in_progress') {
         const p = await loadPuzzle(active);
+        if (p && s) await mergeServerGame(s, p.date);
         if (p) {
           setPuzzle(p);
           setMissing(false);
@@ -90,6 +122,7 @@ export default function App() {
         setError("Today's puzzle is running late and there's no earlier puzzle to show. Check back soon.");
         return;
       }
+      if (s) await mergeServerGame(s, p.date);
       setPuzzle(p);
       setMissing(late);
       setBanners(late ? [...next, { kind: 'late', text: "Today's puzzle is running late. Here's the most recent one." }] : next);
@@ -98,14 +131,26 @@ export default function App() {
   );
 
   useEffect(() => {
-    loadStatic()
-      .then((d) => {
+    // Inside Discord, sign in first so progress from other devices can be merged before
+    // the puzzle renders. A failed sign-in still lets the player play on this device.
+    const signIn: Promise<DiscordSession | null> = IN_DISCORD
+      ? loadSession().catch((e) => {
+          console.warn('Discord sign-in failed', e);
+          setDiscordError("Couldn't sign in with Discord. You can still play; your result won't show in this server.");
+          return null;
+        })
+      : Promise.resolve(null);
+    Promise.all([loadStatic(), signIn])
+      .then(([d, s]) => {
         setOffset(clockOffsetFromHeader(d.serverDate));
         setData(d);
-        return choose(d);
+        setSession(s);
+        return choose(d, false, s);
       })
       .catch((e) => setError(String(e?.message ?? e)));
   }, [choose]);
+
+  useEffect(() => refreshServerStats(), [refreshServerStats]);
 
   // Re-evaluate the date every 30 s; pick up a late puzzle without a reload.
   useEffect(() => {
@@ -113,8 +158,8 @@ export default function App() {
     return () => clearInterval(t);
   }, []);
   useEffect(() => {
-    if (data && missing && tick) choose(data, true);
-  }, [tick, data, missing, choose]);
+    if (data && missing && tick) choose(data, true, session);
+  }, [tick, data, missing, choose, session]);
 
   // F9: tutorial on first visit only.
   useEffect(() => {
@@ -127,10 +172,10 @@ export default function App() {
   const playNew = () => {
     if (!data) return;
     setEndOpen(false);
-    choose(data, true);
+    choose(data, true, session);
   };
 
-  const stats = loadStats();
+  const stats = serverStats ?? loadStats();
 
   return (
     <div className="min-h-dvh">
@@ -157,6 +202,11 @@ export default function App() {
         </div>
       </nav>
 
+      {discordError && (
+        <div role="status" className="border-b border-line bg-panel px-4 py-2 text-center text-small">
+          {discordError}
+        </div>
+      )}
       {banners.map((b) => (
         <div key={b.kind} role="status" className="border-b border-line bg-panel px-4 py-2 text-center text-small">
           {b.kind === 'late' && <span aria-hidden="true" className="mr-2 inline-block h-2.5 w-2.5 bg-s-orange align-middle" />}
@@ -176,7 +226,7 @@ export default function App() {
         <p className="mx-auto max-w-md px-4 py-16 text-center text-small text-muted">{error}</p>
       ) : !data || !puzzle ? (
         <p className="py-24 text-center text-muted" aria-live="polite">
-          Loading today's puzzle…
+          {IN_DISCORD ? 'Connecting to Discord…' : "Loading today's puzzle…"}
         </p>
       ) : (
         <GameScreen
@@ -194,6 +244,9 @@ export default function App() {
           toast={toast}
           endOpen={endOpen}
           setEndOpen={setEndOpen}
+          session={session}
+          serverStats={serverStats}
+          onGameSynced={refreshServerStats}
         />
       )}
 
@@ -210,7 +263,9 @@ export default function App() {
           }}
         />
       )}
-      {dialog === 'stats' && <StatsDialog stats={stats} streak={displayStreak(stats, today)} saved={storageAvailable()} onClose={() => setDialog(null)} />}
+      {dialog === 'stats' && (
+        <StatsDialog stats={stats} streak={displayStreak(stats, today)} saved={!!serverStats || storageAvailable()} onClose={() => setDialog(null)} />
+      )}
       {dialog === 'settings' && <SettingsDialog settings={settings} onChange={setSettings} onClose={() => setDialog(null)} />}
       <Toast message={toastMsg} />
     </div>

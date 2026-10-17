@@ -16,6 +16,10 @@ import { HintsPanel } from './HintsPanel';
 import { CloseIcon, ItemImage } from './Icons';
 import { ItemPicker } from './ItemPicker';
 import { PuzzleHeader } from './PuzzleHeader';
+import { ServerBoard, useScoreboard } from './ServerBoard';
+import { openExternal, setPresence } from '../discord/client';
+import type { DiscordSession } from '../discord/session';
+import type { ServerStats } from '../discord/api';
 
 interface Props {
   puzzle: Puzzle;
@@ -31,6 +35,11 @@ interface Props {
   toast: (m: string) => void;
   endOpen: boolean;
   setEndOpen: (v: boolean) => void;
+  /** Set when running as a Discord Activity and signed in. */
+  session: DiscordSession | null;
+  /** Stats from the player's Discord account (falls back to this browser's stats). */
+  serverStats: ServerStats | null;
+  onGameSynced: () => void;
 }
 
 function useIsDesktop() {
@@ -61,7 +70,38 @@ export function GameScreen(p: Props) {
   const solved = solvedSlots(state.scored);
   const best = useMemo(() => bestStates(state.scored, items, answer), [state.scored, items, answer]);
   const rowFull = state.current.every(Boolean);
-  const stats = loadStats();
+  const stats = p.serverStats ?? loadStats();
+  const { session } = p;
+  const [syncSeq, setSyncSeq] = useState(0);
+  const board = useScoreboard(session, puzzle.date, syncSeq);
+
+  // Discord: upload after every submitted row or hint so the server board and other
+  // devices stay current. The server re-scores the rows itself.
+  useEffect(() => {
+    if (!session) return;
+    let cancelled = false;
+    session.api
+      .saveGame({
+        date: puzzle.date,
+        rows: state.rows,
+        hintsRevealed: state.hintsRevealed,
+        earlyReveals: state.earlyReveals,
+        lifeline: state.lifeline,
+        guildId: session.guildId,
+      })
+      .then(() => {
+        if (cancelled) return;
+        setSyncSeq((n) => n + 1);
+        p.onGameSynced();
+      })
+      .catch(() => !cancelled && p.toast("Couldn't save to Discord. Your progress is kept on this device."));
+    const result = state.status === 'won' ? `Solved in ${state.rows.length}/6` : state.status === 'lost' ? 'X/6' : `Guess ${state.rows.length + 1} of 6`;
+    setPresence(session, `${puzzle.hero.name} (${puzzle.role.label})`, `#${puzzle.puzzleNo}: ${result}`);
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, state.rows.length, state.hintsRevealed, state.earlyReveals, state.status]);
 
   useEffect(() => {
     track('puzzle_loaded', { puzzle: puzzle.puzzleNo });
@@ -128,6 +168,17 @@ export function GameScreen(p: Props) {
       colorblind: settings.colorblind,
     });
     track('share_clicked');
+    if (session) {
+      // Discord's own share dialog: posts the grid with a button that opens the Activity.
+      try {
+        const r = await session.sdk.commands.shareLink({ message: text });
+        if (r.didSendMessage) p.toast('Shared!');
+        else if (r.didCopyLink) p.toast('Link copied!');
+        return;
+      } catch {
+        /* older clients: fall back to copying the text */
+      }
+    }
     const touch = window.matchMedia('(pointer: coarse)').matches;
     if (touch && navigator.share) {
       try {
@@ -225,6 +276,7 @@ export function GameScreen(p: Props) {
             onReveal={() => dispatch({ type: 'revealHint' })}
           />
         </div>
+        {board.enabled && session && <ServerBoard entries={board.entries} error={board.error} meId={session.user.id} />}
       </main>
 
       {/* Desktop: the shop is a side panel. */}
@@ -289,6 +341,8 @@ export function GameScreen(p: Props) {
           onClose={() => p.setEndOpen(false)}
           newPuzzleReady={p.newPuzzleReady}
           onPlayNew={p.onPlayNew}
+          onOpenLink={(url) => openExternal(session, url)}
+          board={board.enabled && session ? <ServerBoard compact entries={board.entries} error={board.error} meId={session.user.id} /> : null}
         />
       )}
     </div>
