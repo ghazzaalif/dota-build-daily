@@ -1,0 +1,20 @@
+# Registers /results-channel with Discord. Run by hand (Actions → register commands → Run
+# workflow) if the API server can't (Discord sometimes blocks Render's shared IPs).
+# Needs the repository secret DISCORD_BOT_TOKEN.
+name: register commands
+on:
+  workflow_dispatch:
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/register-commands.mts
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
