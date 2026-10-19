@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 7,
+  "date": "2026-10-20",
+  "patch": "7.41",
+  "hero": {
+    "id": 28,
+    "key": "slardar",
+    "name": "Slardar"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Upper Bracket Final, game 1"
+  },
+  "hints": {
+    "allies": [
+      28,
+      80,
+      120,
+      90,
+      105
+    ],
+    "enemies": [
+      109,
+      25,
+      96,
+      85,
+      123
+    ],
+    "result": "win",
+    "durationSec": 3163,
+    "player": {
+      "name": "Noticed",
+      "team": "TEAM VISION"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "3500-4500",
+      "2000-3500",
+      "3500-4500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8958842370,
+    "radiantTeam": "Team Yandex",
+    "direTeam": "TEAM VISION",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV9aV0JlQxYHBV5BEh4UWVhdSGFVWRVeVlIMTxxJFEZUSQ8IElhbBQEPZVlZXFFyU1FfEBwYQw0PAWlXUxAMHAUFHU8cQRUPBx0YCBJcQ0FdWUtbVUgVSEAQU19VYVNOEwocCwYISkgZRlFXSRAMD1BVQlxvXl4XCUYWEERbW0hiVU4QCggGUVcZFkkSWVNUEwoPR1xOXgkDEF9tQ1FTXUVVXxAcGEMNDwFpV1MQDB8HAxxPHEEVDwcdGAgSXUBIQ0dFV1xXXgoFO1heWVxdDx0SWVtdX2QBAUYAAAkFA1Bs"
+}

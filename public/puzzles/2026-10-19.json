@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 6,
+  "date": "2026-10-19",
+  "patch": "7.41",
+  "hero": {
+    "id": 29,
+    "key": "tidehunter",
+    "name": "Tidehunter"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      29,
+      91,
+      93,
+      123,
+      62
+    ],
+    "enemies": [
+      112,
+      55,
+      21,
+      51,
+      106
+    ],
+    "result": "win",
+    "durationSec": 2308,
+    "player": {
+      "name": "DM",
+      "team": "Team Yandex"
+    },
+    "priceBands": [
+      "0-2000",
+      "2000-3500",
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8955653541,
+    "radiantTeam": "Team Liquid",
+    "direTeam": "Team Yandex",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQVhMQlxlVAsNEEkQHBBCRFxVflRaGAxXVFdHHksQXUhIEhcTWlVYFwcHSFNEV1JyRkJMQUoYGkYWDVdXY1dVDwsHGwdEFk1GCQFDEAoQVVRSXEJfXBgaRhYNV1djV1UPCwEfCQlHGh9AD19LEggUWF1ERFxYTlM7EQdfQkRXRA8dEllYVF9lAQFGAAMGAwJQHUsPWlxDFF5AF1JbRlNFclZFTENdGBpGFg1XV2NXVQ8LARQBC0caH0APX0sSCBRCR1VfRlFfWgkLCl1tUl5fQ1oSARNNU1sBMQFZEAoABxUGTXA="
+}
