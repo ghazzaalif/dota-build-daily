@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 8,
+  "date": "2026-10-21",
+  "patch": "7.41",
+  "hero": {
+    "id": 25,
+    "key": "lina",
+    "name": "Lina"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      25,
+      123,
+      109,
+      51,
+      96
+    ],
+    "enemies": [
+      9,
+      77,
+      13,
+      21,
+      19
+    ],
+    "result": "win",
+    "durationSec": 2601,
+    "player": {
+      "name": "Larl",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8958538533,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "Team Liquid",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPRUJMRFRWZwYNC05BEh4UWVhdSGFUWRpeVFUOTxxJFEZUSQ8IE09UEAsJW0ZVbUVOVEBZV0MYFEYWDVdXY1dVDwsBHwEJRxQfQA9fSxIIFE9dUU5ZblFRCgU7WFNCEBoPRVlAV2JfW0ZYVQ8LB08aVhNbSEsTABoXCg1MU0NtUVhQQkkQHRhMDQ8BaVdTEAwcCAceTx1BGg8HHRgIEktXXllRclNfXmcPAx1bEBwQQkRcVX5XUhgCVlNcC08cSRRGVEkPCBNJUAEHFElGWVFdDx0SWVtcX2sBAUYAAAQDB1Bs"
+}
