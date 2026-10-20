@@ -5,17 +5,17 @@ import { track } from './analytics';
 import { GAME_NAME } from './config';
 import { GameScreen } from './components/GameScreen';
 import { HowToPlay, SettingsDialog, StatsDialog } from './components/Dialogs';
-import { GearIcon, HelpIcon, StatsIcon } from './components/Icons';
 import { Toast } from './components/Modal';
 import { loadPuzzle, loadStatic, type StaticData } from './data/load';
 import { addDays, clockOffsetFromHeader, puzzleDateAt } from './game/date';
-import { displayStreak, loadActiveDate, loadGame, loadSettings, loadStats, saveSettings, storageAvailable, type Settings } from './game/storage';
+import { displayStreak, loadActiveDate, loadGame, loadStats, storageAvailable } from './game/storage';
 import type { Puzzle } from './game/types';
 import type { ServerStats } from './discord/api';
 import { isDiscordActivity, loadSession } from './discord/client';
 import type { DiscordSession } from './discord/session';
 import { saveGame } from './game/storage';
-import { BrandMark } from './components/BrandMark';
+import { TopBar } from './components/TopBar';
+import { useSettings } from './useSettings';
 
 const IN_DISCORD = typeof window !== 'undefined' && isDiscordActivity();
 
@@ -40,12 +40,12 @@ async function mergeServerGame(session: DiscordSession, date: string) {
 
 type Banner = { kind: 'late' | 'carryover' | 'storage' | 'discord'; text: string };
 
-export default function App() {
+export default function App({ navigate }: { navigate?: (path: string) => void } = {}) {
   const [data, setData] = useState<StaticData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
   const [banners, setBanners] = useState<Banner[]>([]);
-  const [settings, setSettings] = useState<Settings>(loadSettings);
+  const { settings, setSettings, updateSettings, reducedMotion } = useSettings();
   const [dialog, setDialog] = useState<'help' | 'stats' | 'settings' | null>(null);
   const [endOpen, setEndOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -68,27 +68,6 @@ export default function App() {
     (toast as unknown as { t?: number }).t = window.setTimeout(() => setToastMsg(null), 1800);
   }, []);
 
-  // Settings → document attributes (theme, colorblind palette, motion).
-  const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reducedMotion = settings.reducedMotion === 'on' || (settings.reducedMotion === 'system' && prefersReduced);
-  useEffect(() => {
-    const el = document.documentElement;
-    // Only clear a theme we set ourselves; a host page may set data-theme too.
-    if (settings.theme === 'system') {
-      if (el.dataset.themeOwner === 'app') {
-        el.removeAttribute('data-theme');
-        delete el.dataset.themeOwner;
-      }
-    } else {
-      el.setAttribute('data-theme', settings.theme);
-      el.dataset.themeOwner = 'app';
-    }
-    el.setAttribute('data-colorblind', String(settings.colorblind));
-    el.setAttribute('data-motion', reducedMotion ? 'reduced' : 'full');
-    saveSettings(settings);
-  }, [settings, reducedMotion]);
-
-  const updateSettings = useCallback((patch: Partial<Settings>) => setSettings((s) => ({ ...s, ...patch })), []);
 
   /** Chooses and loads the puzzle to show. */
   const choose = useCallback(
@@ -180,24 +159,15 @@ export default function App() {
 
   return (
     <div className="min-h-dvh">
-      <nav className="sticky top-0 z-30 border-b border-line bg-bg">
-        <div className="mx-auto flex h-14 max-w-[1080px] items-center gap-1 px-2 lg:px-6">
-          <p className="ml-2 mr-auto flex items-center gap-2.5">
-            <BrandMark size={26} className="shrink-0" />
-            <span className="whitespace-nowrap font-display text-body font-extrabold uppercase tracking-[0.02em] sm:text-lead">{GAME_NAME}</span>
-            {puzzle && <span className="font-display text-body font-bold tabular-nums text-muted sm:text-lead">#{puzzle.puzzleNo}</span>}
-          </p>
-          <button type="button" onClick={() => setDialog('help')} aria-label="How to play" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
-            <HelpIcon />
-          </button>
-          <button type="button" onClick={() => setDialog('stats')} aria-label="Stats" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
-            <StatsIcon />
-          </button>
-          <button type="button" onClick={() => setDialog('settings')} aria-label="Settings" className="flex h-11 w-11 items-center justify-center text-muted hover:text-ink">
-            <GearIcon />
-          </button>
-        </div>
-      </nav>
+      <TopBar
+        mode="build"
+        title={GAME_NAME}
+        puzzleNo={puzzle?.puzzleNo}
+        onHelp={() => setDialog('help')}
+        onStats={() => setDialog('stats')}
+        onSettings={() => setDialog('settings')}
+        navigate={navigate}
+      />
 
       {discordError && (
         <div role="status" className="border-b border-line bg-panel px-4 py-2 text-center text-small">

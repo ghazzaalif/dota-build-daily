@@ -1,6 +1,7 @@
 // Data loading. The SPA fetches static JSON (PRD §9); the single-file preview
 // build embeds the same files instead (see vite.config.ts).
 import embedded from 'virtual:embedded-data';
+import type { DraftPuzzle } from '../game/draft/types';
 import type { HeroesMap, ItemsMap, Puzzle, PuzzleIndex } from '../game/types';
 
 const base = import.meta.env.BASE_URL;
@@ -39,4 +40,24 @@ export async function loadStatic(): Promise<StaticData> {
 export async function loadPuzzle(date: string): Promise<Puzzle | null> {
   if (embedded) return embedded.puzzles[date] ?? null;
   return (await getJson<Puzzle>(`puzzles/${date}.json`)).data;
+}
+
+// ── Draft Daily (Draft PRD F1): /puzzles/draft/{date}.json and its own index ───────────
+
+
+export interface DraftStaticData {
+  heroes: HeroesMap;
+  index: PuzzleIndex;
+  serverDate: string | null;
+}
+
+export async function loadDraftStatic(): Promise<DraftStaticData> {
+  const [heroes, index] = await Promise.all([getJson<HeroesMap>('data/heroes.json'), getJson<PuzzleIndex>('puzzles/draft/index.json')]);
+  if (!heroes.data) throw new Error('Game data failed to load');
+  return { heroes: heroes.data, index: index.data ?? { dates: [] }, serverDate: index.date ?? heroes.date };
+}
+
+export async function loadDraftPuzzle(date: string): Promise<DraftPuzzle | null> {
+  const p = (await getJson<DraftPuzzle>(`puzzles/draft/${date}.json`)).data;
+  return p?.mode === 'draft' ? p : null;
 }

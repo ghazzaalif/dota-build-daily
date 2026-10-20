@@ -22,10 +22,14 @@ function fromBase64(b64: string): Uint8Array {
   return out;
 }
 
-export function encodeAnswer(entries: AnswerEntry[], key: string): string {
-  return toBase64(xor(new TextEncoder().encode(JSON.stringify(entries)), key));
+/** Obfuscates any JSON value with the same XOR + base64 scheme (Draft mode uses it for its secret). */
+export function encodeSecret(value: unknown, key: string): string {
+  return toBase64(xor(new TextEncoder().encode(JSON.stringify(value)), key));
 }
 
-export function decodeAnswer(encoded: string, key: string): AnswerEntry[] {
-  return JSON.parse(new TextDecoder().decode(xor(fromBase64(encoded), key))) as AnswerEntry[];
+export function decodeSecret<T>(encoded: string, key: string): T {
+  return JSON.parse(new TextDecoder().decode(xor(fromBase64(encoded), key))) as T;
 }
+
+export const encodeAnswer = (entries: AnswerEntry[], key: string): string => encodeSecret(entries, key);
+export const decodeAnswer = (encoded: string, key: string): AnswerEntry[] => decodeSecret<AnswerEntry[]>(encoded, key);

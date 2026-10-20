@@ -40,3 +40,22 @@ export const DISCORD_CLIENT_ID: string = import.meta.env?.VITE_DISCORD_CLIENT_ID
 export const API_URL: string = import.meta.env?.VITE_API_URL ?? 'https://dota-build-daily-api.onrender.com';
 /** How often the "played in this server" list refreshes while open. */
 export const SCOREBOARD_POLL_MS = 20_000;
+
+// ── Draft Daily (requirements/dota-draft-daily-prd.md §9.5) ───────────────────────────
+/** Heroes per answer (one team's picks). */
+export const TEAM_SIZE = 5;
+/** §7.2 D2: Captain's Mode totals. Checked against TI 2026 in M0 (10 picks, 14 bans). */
+export const EXPECTED_PICKS = 10;
+export const EXPECTED_BANS = 14;
+/** §7.2 D4 */
+export const DRAFT_MIN_DURATION_MIN = 15;
+/** §7.2 D10: the same hidden team is not used on consecutive days. */
+export const TEAM_COOLDOWN_DAYS = 1;
+/** §5.3: positions unlock after this many rows. 0 = shown from the start. */
+export const POSITION_HINT_AT_ROW = 1;
+/** §7.5: below this many pro games a hero's picker group comes from hero-rules / constants. */
+export const TYPICAL_POS_MIN_GAMES = 3;
+/** F1: Draft puzzle #1 is published on this UTC date (its own counter). */
+export const DRAFT_LAUNCH_DATE = '2026-10-20';
+export const DRAFT_GAME_NAME = 'Dota Draft Daily';
+export const DRAFT_PATH = '/draft';

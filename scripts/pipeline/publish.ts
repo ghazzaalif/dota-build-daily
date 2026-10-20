@@ -9,6 +9,8 @@ import type { HeroesMap, ItemsMap, Puzzle, PuzzleIndex } from '../../src/game/ty
 import type { Candidate } from './candidates';
 import { readJson, writeJson } from './opendota';
 import type { HistoryEntry } from './schedule';
+import type { DraftPuzzle } from '../../src/game/draft/types';
+import { decodeDraftSecret, type DraftHistoryEntry } from './draft';
 
 const ROOT = process.cwd();
 /** Private queue. In production this directory lives in a private repo / encrypted artifact (§8). */
@@ -128,5 +130,71 @@ export function publishUpTo(lastPublic: string): string[] {
       : [],
   };
   writeJson(join(PUBLIC_DIR, 'index.json'), index);
+  return published;
+}
+
+// ── Draft Daily (Draft PRD §8): its own private queue and public folder ─────────────────
+
+
+export const DRAFT_QUEUE_DIR = join(QUEUE_DIR, 'draft');
+export const DRAFT_PUBLIC_DIR = join(PUBLIC_DIR, 'draft');
+export const DRAFT_HISTORY_FILE = join(DRAFT_QUEUE_DIR, 'history.json');
+
+export interface QueuedDraft {
+  puzzle: DraftPuzzle;
+  candidateId: string;
+  hiddenTeam: string;
+}
+
+const draftQueuePath = (date: string) => join(DRAFT_QUEUE_DIR, `${date}.json`);
+export const loadQueuedDraft = (date: string) => readJson<QueuedDraft>(draftQueuePath(date));
+export const saveQueuedDraft = (q: QueuedDraft) => writeJson(draftQueuePath(q.puzzle.date), q);
+export function removeQueuedDraft(date: string) {
+  if (existsSync(draftQueuePath(date))) rmSync(draftQueuePath(date));
+}
+
+const datedFiles = (dir: string) =>
+  existsSync(dir)
+    ? readdirSync(dir)
+        .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+        .map((f) => f.slice(0, 10))
+        .sort()
+    : [];
+
+export const queuedDraftDates = () => datedFiles(DRAFT_QUEUE_DIR);
+
+export function loadDraftHistory(): DraftHistoryEntry[] {
+  return readJson<DraftHistoryEntry[]>(DRAFT_HISTORY_FILE) ?? [];
+}
+export function saveDraftHistory(h: DraftHistoryEntry[]) {
+  writeJson(DRAFT_HISTORY_FILE, [...h].sort((a, b) => a.date.localeCompare(b.date)));
+}
+
+/** Same safety net as Build: published drafts never change, even if the private queue is lost. */
+export function restoreDraftsFromPublic(): DraftHistoryEntry[] {
+  const out: DraftHistoryEntry[] = [];
+  for (const date of datedFiles(DRAFT_PUBLIC_DIR)) {
+    const puzzle = readJson<DraftPuzzle>(join(DRAFT_PUBLIC_DIR, `${date}.json`));
+    if (!puzzle) continue;
+    const queued = loadQueuedDraft(date);
+    const matchId = decodeDraftSecret(puzzle).match.matchId;
+    const candidateId = queued?.candidateId ?? `${matchId}:${puzzle.hiddenSide}`;
+    const hiddenTeam = queued?.hiddenTeam ?? puzzle.hints.teams.hidden;
+    if (!queued) saveQueuedDraft({ puzzle, candidateId, hiddenTeam });
+    out.push({ date, candidateId, matchId, hiddenTeam });
+  }
+  return out;
+}
+
+/** Spoiler safety: only drafts with date ≤ `lastPublic` reach /public/puzzles/draft. */
+export function publishDraftsUpTo(lastPublic: string): string[] {
+  const published: string[] = [];
+  for (const date of queuedDraftDates()) {
+    if (date > lastPublic) continue;
+    writeJson(join(DRAFT_PUBLIC_DIR, `${date}.json`), loadQueuedDraft(date)!.puzzle);
+    published.push(date);
+  }
+  const index: PuzzleIndex = { dates: datedFiles(DRAFT_PUBLIC_DIR) };
+  writeJson(join(DRAFT_PUBLIC_DIR, 'index.json'), index);
   return published;
 }

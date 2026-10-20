@@ -6,7 +6,8 @@ export type AnalyticsEvent =
   | 'hint_revealed'
   | 'puzzle_completed'
   | 'share_clicked'
-  | 'puzzle_missing';
+  | 'puzzle_missing'
+  | 'mode_switched';
 
 export function track(event: AnalyticsEvent, props?: Record<string, string | number | boolean>) {
   try {

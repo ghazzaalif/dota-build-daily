@@ -81,9 +81,21 @@ export interface ODMatch {
   series_type?: number | null;
   radiant_team?: { team_id?: number; name?: string } | null;
   dire_team?: { team_id?: number; name?: string } | null;
+  /** 2 = Captain's Mode (Draft PRD §7.2 D2). */
+  game_mode?: number;
+  /** Captain's Mode sequence (Draft mode). Missing on explorer imports. */
+  picks_bans?: ODPickBan[] | null;
   players: ODPlayer[];
   /** Present on cache files imported outside the /matches endpoint. */
   _source?: string;
+}
+
+export interface ODPickBan {
+  is_pick: boolean;
+  hero_id: number;
+  /** 0 = Radiant, 1 = Dire */
+  team: number;
+  order: number;
 }
 
 export interface ODLeagueMatch {

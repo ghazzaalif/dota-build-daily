@@ -61,6 +61,7 @@ jobs:
             data/cache/matches
             data/cache/leagues
             data/cache/constants
+            data/cache/drafts
           key: od-cache-${{ github.run_id }}
           restore-keys: od-cache-
 
@@ -71,8 +72,11 @@ jobs:
           OPENDOTA_API_KEY: ${{ secrets.OPENDOTA_API_KEY }}
         run: npx tsx scripts/pipeline/run.ts ${{ inputs.today && format('--today={0}', inputs.today) || '' }}
 
+      # The commit steps run even when the pipeline step reported an alert (non-zero exit):
+      # a Draft-mode problem must never stop Build's puzzle from going out, and vice versa.
+      # Alerts still fail the job, so GitHub still emails the owner.
       - name: Commit queue (private repo)
-        if: ${{ vars.QUEUE_REPO != '' }}
+        if: ${{ !cancelled() && vars.QUEUE_REPO != '' }}
         working-directory: queue
         run: |
           git config user.name "dbd-pipeline"
@@ -82,6 +86,7 @@ jobs:
           git push
 
       - name: Commit published puzzles (public site → triggers Render deploy)
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "dbd-pipeline"
           git config user.email "pipeline@users.noreply.github.com"

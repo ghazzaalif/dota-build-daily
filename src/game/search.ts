@@ -7,7 +7,7 @@ export interface SearchEntry {
   terms: string[];
 }
 
-const norm = (s: string) =>
+export const norm = (s: string) =>
   s
     .toLowerCase()
     .normalize('NFKD')
@@ -26,7 +26,7 @@ export function buildIndex(items: Record<string, ItemInfo>): SearchEntry[] {
 }
 
 /** Characters of q appear in t in order (e.g. "blkb" ~ "black king bar"). */
-function isSubsequence(q: string, t: string): boolean {
+export function isSubsequence(q: string, t: string): boolean {
   let i = 0;
   for (const ch of t) if (ch === q[i]) i++;
   return i === q.length;
@@ -39,7 +39,7 @@ function initials(t: string): string {
     .join('');
 }
 
-function scoreTerm(q: string, t: string, isAlias: boolean): number {
+export function scoreTerm(q: string, t: string, isAlias: boolean): number {
   if (t === q) return isAlias ? 100 : 95;
   if (t.startsWith(q)) return 80 - Math.min(t.length - q.length, 20) / 2;
   if (t.split(' ').some((w) => w.startsWith(q))) return 65;

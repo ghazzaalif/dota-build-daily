@@ -32,7 +32,13 @@ export function rankCandidates(pool: Candidate[], date: string): Candidate[] {
   );
 }
 
-export function eligibleForDate(pool: Candidate[], date: string, history: HistoryEntry[]): Candidate[] {
+export function eligibleForDate(
+  pool: Candidate[],
+  date: string,
+  history: HistoryEntry[],
+  /** Draft PRD D9: matches Draft mode has used (shared used-match ledger). */
+  blockedMatches: ReadonlySet<number> = new Set(),
+): Candidate[] {
   const within = (days: number) => history.filter((h) => h.date < date && h.date >= addDays(date, -days));
   const recentHeroes = new Set(within(HERO_COOLDOWN_DAYS).map((h) => h.heroId));
   const recentMatches = new Set(within(MATCH_COOLDOWN_DAYS).map((h) => h.matchId));
@@ -42,12 +48,18 @@ export function eligibleForDate(pool: Candidate[], date: string, history: Histor
   return pool.filter(
     (c) =>
       !usedIds.has(c.id) &&
+      !blockedMatches.has(c.matchId) && // D9 cross-mode block
       !recentHeroes.has(c.heroId) && // S7 hero cooldown
       !recentMatches.has(c.matchId) && // S7 match cooldown
       !(c.pos >= 4 && supportsThisWeek >= MAX_SUPPORT_PER_WEEK), // S8 role mix
   );
 }
 
-export function pickForDate(pool: Candidate[], date: string, history: HistoryEntry[]): Candidate | null {
-  return rankCandidates(eligibleForDate(pool, date, history), date)[0] ?? null;
+export function pickForDate(
+  pool: Candidate[],
+  date: string,
+  history: HistoryEntry[],
+  blockedMatches: ReadonlySet<number> = new Set(),
+): Candidate | null {
+  return rankCandidates(eligibleForDate(pool, date, history, blockedMatches), date)[0] ?? null;
 }
