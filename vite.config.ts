@@ -10,8 +10,8 @@ import { viteSingleFile } from 'vite-plugin-singlefile';
 // (used for the shareable preview). The normal build is the static SPA that
 // fetches /data/*.json and /puzzles/{date}.json at runtime (PRD §10).
 /**
- * Draft PRD §10: /draft must load on a direct visit or refresh. Copying the SPA shell to
- * draft/index.html and draft.html makes that work on any static host, with or without a
+ * Deep links (/play, /play/draft, legacy /draft) must load on a direct visit or refresh. Copying
+ * the SPA shell to <route>/index.html and <route>.html makes that work on any static host, with or without a
  * "/* → /index.html" rewrite rule configured on Render.
  */
 function draftDeepLink(): Plugin {
@@ -24,9 +24,13 @@ function draftDeepLink(): Plugin {
     },
     closeBundle() {
       const index = join(outDir, 'index.html');
-      mkdirSync(join(outDir, 'draft'), { recursive: true });
-      copyFileSync(index, join(outDir, 'draft', 'index.html'));
-      copyFileSync(index, join(outDir, 'draft.html'));
+      // "/" is the landing page; the game is /play and /play/draft. /draft is the old Draft
+      // address, kept so links shared before the move still load (the app rewrites the URL).
+      for (const route of ['play', 'play/draft', 'draft']) {
+        mkdirSync(join(outDir, route), { recursive: true });
+        copyFileSync(index, join(outDir, route, 'index.html'));
+        copyFileSync(index, join(outDir, `${route}.html`));
+      }
     },
   };
 }

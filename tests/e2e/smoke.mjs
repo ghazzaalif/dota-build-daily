@@ -1,6 +1,6 @@
 // E2E smoke test (PRD §10: Playwright smoke). Uses puppeteer-core + a Chromium path so it
 // runs anywhere: CHROME_PATH=/path/to/chrome BASE_URL=http://localhost:4173 node tests/e2e/smoke.mjs [outDir]
-// Plays today's puzzle: tutorial → two wrong rows → hint checks → solve → share → reload persistence.
+// Starts on the landing page ("/"), follows its Play button to /play, then plays today's puzzle: tutorial → two wrong rows → hint checks → solve → share → reload persistence.
 import puppeteer from 'puppeteer-core';
 import { mkdirSync } from 'node:fs';
 
@@ -22,10 +22,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function decodeToday(page) {
   // Read the published puzzle and decode its answer the same way the client does.
   return page.evaluate(async () => {
-    const idx = await (await fetch('puzzles/index.json')).json();
+    const idx = await (await fetch('/puzzles/index.json')).json();
     const today = new Date().toISOString().slice(0, 10);
     const date = idx.dates.includes(today) ? today : idx.dates[idx.dates.length - 1];
-    const p = await (await fetch(`puzzles/${date}.json`)).json();
+    const p = await (await fetch(`/puzzles/${date}.json`)).json();
     const key = new TextEncoder().encode(`dbd:${p.date}:${p.puzzleNo}`);
     const bin = atob(p.answer);
     const bytes = Uint8Array.from(bin, (c, i) => c.charCodeAt(0) ^ key[i % key.length]);
@@ -40,7 +40,17 @@ async function run(viewport, label) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => m.type() === 'error' && !/Failed to load resource/.test(m.text()) && errors.push(m.text()));
+  // Landing page at "/": renders, has no errors, and its Play button opens the game at /play.
   await page.goto(BASE, { waitUntil: 'networkidle0' });
+  await page.waitForSelector('.lp h1');
+  const h1 = await page.$eval('.lp h1', (e) => e.textContent);
+  if (!/Read the draft/i.test(h1)) fail(`landing h1: ${h1}`);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  if (overflow > 0) fail(`landing overflows by ${overflow}px`);
+  await page.screenshot({ path: `${OUT}/${label}-00-landing.png`, fullPage: true });
+  await page.click('.lp-hero .lp-btn.gold');
+  if (new URL(page.url()).pathname !== '/play') fail(`landing CTA went to ${page.url()}`);
+
 
   // F9: tutorial shows on first visit.
   await page.waitForSelector('[role=dialog][aria-label="How to play"]');
@@ -48,7 +58,7 @@ async function run(viewport, label) {
   await page.click('[role=dialog] button ::-p-text(Start guessing)');
 
   const { puzzle, answer } = await decodeToday(page);
-  const items = await page.evaluate(async () => (await fetch('data/items.json')).json());
+  const items = await page.evaluate(async () => (await fetch('/data/items.json')).json());
   const name = (k) => items[k].name;
   console.log(`[${label}] puzzle #${puzzle.puzzleNo} ${puzzle.hero.name}: ${answer.map((a) => a.key).join(', ')}`);
 
