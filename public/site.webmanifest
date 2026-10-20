@@ -1,7 +1,7 @@
 {
   "name": "Dota Build Daily",
   "short_name": "Build Daily",
-  "start_url": "/",
+  "start_url": "/play",
   "display": "standalone",
   "background_color": "#0E141B",
   "theme_color": "#0E141B",

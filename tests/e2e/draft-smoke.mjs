@@ -41,9 +41,10 @@ async function run(viewport, label) {
   page.on('console', (m) => m.type() === 'error' && !/Failed to load resource/.test(m.text()) && errors.push(m.text()));
   const mobile = viewport.width < 1024;
 
-  // F10 deep link: /draft loads Draft mode directly.
+  // F10 deep link: the old /draft address still loads Draft directly, and moves to /play/draft.
   await page.goto(`${BASE}/draft`, { waitUntil: 'networkidle0' });
   await page.waitForSelector('[role=dialog][aria-label="How to play Draft"]');
+  if (new URL(page.url()).pathname !== '/play/draft') fail(`legacy /draft ended at ${page.url()}`);
   await page.screenshot({ path: `${OUT}/${label}-01-tutorial.png` });
   await page.click('[role=dialog] button ::-p-text(Start drafting)');
 
@@ -148,16 +149,16 @@ async function run(viewport, label) {
   if (!copied.includes('3/6 💡0')) fail('share score');
   for (const id of secret.answer) if (copied.includes(name(id))) fail('share leaks a hero name');
   if (copied.includes(puzzle.hints.teams.hidden)) fail('share leaks a team name');
-  if (!copied.endsWith('https://dota-build-daily.onrender.com/draft')) fail('share url');
+  if (!copied.endsWith('https://dota-build-daily.onrender.com/play/draft')) fail('share url');
 
   // F10: tab shows ✓; switching to Build keeps Draft state and Build still loads.
   await page.keyboard.press('Escape');
   await sleep(200);
   const draftTab = await page.$eval('[role=tab][aria-selected=true]', (t) => t.getAttribute('aria-label'));
   if (!/Draft, finished today/.test(draftTab)) fail(`draft tab: ${draftTab}`);
-  await page.click('[role=tab][href="/"]');
+  await page.click('[role=tab][href="/play"]');
   await page.waitForSelector('[role=dialog][aria-label="How to play"]');
-  if (new URL(page.url()).pathname !== '/') fail('build tab did not go to /');
+  if (new URL(page.url()).pathname !== '/play') fail('build tab did not go to /play');
   await sleep(500);
   await page.click('[role=dialog] button ::-p-text(Start guessing)');
   await page.waitForSelector('#guesses-heading');

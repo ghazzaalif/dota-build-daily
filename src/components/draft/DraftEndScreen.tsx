@@ -10,6 +10,7 @@ import { useCountdown } from '../EndScreen';
 import { ExternalIcon, HeroImage, ShareIcon } from '../Icons';
 import { Modal } from '../Modal';
 import { DraftBoard } from './DraftBoard';
+import { PLAY_PATH } from '../../config';
 
 interface Props {
   puzzle: DraftPuzzle;
@@ -103,7 +104,7 @@ export function DraftEndScreen(p: Props) {
         <ShareIcon className="h-5 w-5" /> Share result
       </button>
 
-      <a href="/" onClick={goBuild} className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[3px] bg-raised font-semibold">
+      <a href={PLAY_PATH} onClick={goBuild} className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[3px] bg-raised font-semibold">
         {p.buildDone ? (
           <>
             <span aria-hidden="true" className="flex h-4 w-4 items-center justify-center bg-s-green text-[11px] text-[var(--s-ink)]">

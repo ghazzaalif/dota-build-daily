@@ -1,7 +1,7 @@
 // One Draft puzzle's play screen: header, board, grid, actions, hints, picker, end screen.
 import { useEffect, useMemo, useState } from 'react';
 import { playedBucket, track } from '../../analytics';
-import { MAX_ROWS, TEAM_SIZE } from '../../config';
+import { MAX_ROWS, PLAY_PATH, TEAM_SIZE } from '../../config';
 import { decodeSecret } from '../../game/answer';
 import { draftSecretKey } from '../../game/draft/date';
 import { solvedDraftSlots, unavailableHeroes, validateDraftRow } from '../../game/draft/game';
@@ -319,7 +319,7 @@ export function DraftScreen(p: Props) {
           newPuzzleReady={p.newPuzzleReady}
           onPlayNew={p.onPlayNew}
           buildDone={buildDone}
-          onGoBuild={p.navigate ? () => p.navigate!('/') : undefined}
+          onGoBuild={p.navigate ? () => p.navigate!(PLAY_PATH) : undefined}
         />
       )}
     </div>

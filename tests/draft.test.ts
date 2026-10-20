@@ -246,7 +246,7 @@ describe('F7 share', () => {
         '🟩🟨⬛⬛🟨',
         '🟩🟩🟨🟩🟨',
         '🟩🟩🟩🟩🟩',
-        'https://dota-build-daily.onrender.com/draft',
+        'https://dota-build-daily.onrender.com/play/draft',
       ].join('\n'),
     );
   });

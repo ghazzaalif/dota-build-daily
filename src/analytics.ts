@@ -7,7 +7,9 @@ export type AnalyticsEvent =
   | 'puzzle_completed'
   | 'share_clicked'
   | 'puzzle_missing'
-  | 'mode_switched';
+  | 'mode_switched'
+  // Landing page ("/"): which call to action was used. Pageviews come from Umami itself.
+  | 'landing_cta_clicked';
 
 export function track(event: AnalyticsEvent, props?: Record<string, string | number | boolean>) {
   try {

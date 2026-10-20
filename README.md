@@ -142,7 +142,27 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
 - **Who can play:** until Discord verifies the app, only the developer team and app testers can
   launch it, in servers with fewer than 25 members.
 
-## Draft Daily (`/draft`)
+## Routes and landing page
+
+| Path | Page |
+|---|---|
+| `/` | Landing page (`src/landing/`): what the game is, scoring, hints, both modes, FAQ |
+| `/play` | Build Daily |
+| `/play/draft` | Draft Daily |
+| `/draft` | Old Draft address. Still loads Draft and rewrites the URL to `/play/draft` |
+
+- The landing page is part of the same SPA (`Root.tsx` picks the page from the path), so it
+  shares the game's tokens, fonts, theme and colour-blind settings. Inside Discord the Activity
+  always opens Build, whatever the path.
+- The build copies `index.html` to `play/`, `play/draft/` and `draft/` (plus `.html` twins), so
+  every route loads on a direct visit or refresh without a Render rewrite rule.
+- **Analytics (Umami):** pageviews for every route come from the Umami script loaded by
+  `initAnalytics()`. The landing page also sends `landing_cta_clicked {target: build|draft,
+  placement: nav|hero|modes|closing}`, so the landing → play funnel is visible in Umami.
+- Build share text still links the site root (new players land on the explainer); Draft share
+  text links `/play/draft`.
+
+## Draft Daily (`/play/draft`)
 
 A second daily mode on the same site: a real Captain's Mode draft from an allowlisted
 tournament, with one team's 5 picks hidden. Guess them in pick order in 6 rows (🟩 🟨 ⬛ only).
@@ -150,7 +170,7 @@ Spec: `requirements/dota-draft-daily-prd.md` (v1.0).
 
 - **Client:** `src/draft/DraftApp.tsx` (lazy chunk, ~13 KB gz), `src/components/draft/`,
   `src/game/draft/` (scoring, hints, reducer, share, storage under `dbd:draft:v1:*`).
-  `/` stays Build Daily; **Build | Draft** tabs on both pages. Discord runs Build only.
+  `/play` is Build Daily; **Build | Draft** tabs on both pages, the logo links back to `/`. Discord runs Build only.
 - **Pipeline:** `scripts/pipeline/draft.ts` (filters D1–D10, answer, validation, scheduling),
   `typicalPos.ts` (picker grouping), `ledger.ts` (a match used by one mode is never used by the
   other; Build reserves first). Same `run.ts` job, own queue in `queue/draft/`, published to
@@ -160,8 +180,8 @@ Spec: `requirements/dota-draft-daily-prd.md` (v1.0).
   `data/cache/drafts/` (Actions cache). The repo seeds 38 TI 2026 playoff drafts
   (`ti2026-playoffs.txt`, decoded by `npx tsx scripts/pipeline/import-draft-seed.ts`).
   Hand-edited nicknames and fallback positions live in `data/hero-rules.json`.
-- **Deep links:** the build copies `index.html` to `draft/index.html` and `draft.html`, so
-  `/draft` loads on refresh without host config. Adding a Render rewrite `/*` → `/index.html`
+- **Deep links:** the build copies `index.html` to `play/draft/index.html` and `play/draft.html`
+  (and the legacy `draft/`), so `/play/draft` loads on refresh without host config. Adding a Render rewrite `/*` → `/index.html`
   is still a good idea.
 - **Tests:** `tests/draft.test.ts` (Appendix A, reducer, hints, share, storage, search),
   `tests/draft-pipeline.test.ts` (seed, filters, board order, D8–D10, ledger, validation),

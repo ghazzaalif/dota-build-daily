@@ -58,4 +58,8 @@ export const TYPICAL_POS_MIN_GAMES = 3;
 /** F1: Draft puzzle #1 is published on this UTC date (its own counter). */
 export const DRAFT_LAUNCH_DATE = '2026-10-20';
 export const DRAFT_GAME_NAME = 'Dota Draft Daily';
-export const DRAFT_PATH = '/draft';
+/** Routes: "/" is the landing page, the game lives under /play (Build) and /play/draft. */
+export const PLAY_PATH = '/play';
+export const DRAFT_PATH = '/play/draft';
+/** Where Draft lived before the landing page took "/". Old share links still open Draft. */
+export const LEGACY_DRAFT_PATH = '/draft';
