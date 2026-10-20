@@ -1,6 +1,6 @@
 // One puzzle's play screen: header, grid, actions, hints, picker, end screen.
 import { useEffect, useMemo, useState } from 'react';
-import { track } from '../analytics';
+import { playedBucket, track } from '../analytics';
 import { BUILD_SIZE, MAX_ROWS } from '../config';
 import { answerKey, decodeAnswer } from '../game/answer';
 import { solvedSlots, validateRow } from '../game/game';
@@ -105,7 +105,7 @@ export function GameScreen(p: Props) {
   }, [session, state.rows.length, state.hintsRevealed, state.earlyReveals, state.status]);
 
   useEffect(() => {
-    track('puzzle_loaded', { puzzle: puzzle.puzzleNo });
+    track('puzzle_loaded', { mode: 'build', puzzle: puzzle.puzzleNo, played: playedBucket(stats.played) });
   }, [puzzle.puzzleNo]);
 
   // Open the end screen right away when returning to a finished puzzle.

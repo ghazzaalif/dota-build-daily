@@ -1,6 +1,6 @@
 // One Draft puzzle's play screen: header, board, grid, actions, hints, picker, end screen.
 import { useEffect, useMemo, useState } from 'react';
-import { track } from '../../analytics';
+import { playedBucket, track } from '../../analytics';
 import { MAX_ROWS, TEAM_SIZE } from '../../config';
 import { decodeSecret } from '../../game/answer';
 import { draftSecretKey } from '../../game/draft/date';
@@ -74,7 +74,7 @@ export function DraftScreen(p: Props) {
   const known = solved.map((s, i) => (s || finished || state.lifeline?.slot === i ? secret.answer[i] : null));
 
   useEffect(() => {
-    track('puzzle_loaded', { mode: 'draft', puzzle: puzzle.puzzleNo });
+    track('puzzle_loaded', { mode: 'draft', puzzle: puzzle.puzzleNo, played: playedBucket(stats.played) });
   }, [puzzle.puzzleNo]);
 
   useEffect(() => {
