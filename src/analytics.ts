@@ -18,3 +18,22 @@ export function track(event: AnalyticsEvent, props?: Record<string, string | num
   }
   if (import.meta.env.DEV) console.debug('[analytics]', event, props ?? '');
 }
+
+// Loads Umami Cloud when VITE_UMAMI_WEBSITE_ID is set at build time (Render env var).
+export function initAnalytics() {
+  const id = import.meta.env.VITE_UMAMI_WEBSITE_ID;
+  if (!id || import.meta.env.DEV) return;
+  const s = document.createElement('script');
+  s.defer = true;
+  s.src = import.meta.env.VITE_UMAMI_SRC || 'https://cloud.umami.is/script.js';
+  s.dataset.websiteId = id;
+  document.head.appendChild(s);
+}
+
+// Bucketed days-played, a cookie-free proxy for returning players (D7 metric).
+export function playedBucket(played: number): string {
+  if (played <= 0) return '0';
+  if (played === 1) return '1';
+  if (played < 7) return '2-6';
+  return '7+';
+}
