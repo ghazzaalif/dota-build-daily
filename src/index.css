@@ -34,6 +34,11 @@
   --s-ink: #0b1116;
   --brand-tile: #e2ae48;
   --brand-bowl: #4fa35a;
+  /* Draft mode: hero primary attribute labels (text only). */
+  --attr-str: #f07a62;
+  --attr-agi: #6cc47a;
+  --attr-int: #6fb2f0;
+  --attr-all: #cfa8ec;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
@@ -57,6 +62,10 @@
     --s-ink: #ffffff;
     --brand-tile: #0e141b;
     --brand-bowl: #3d8a47;
+    --attr-str: #b23a22;
+    --attr-agi: #2b7a38;
+    --attr-int: #1f63a8;
+    --attr-all: #7a3fa6;
     color-scheme: light;
   }
 }
@@ -78,6 +87,10 @@
   --s-ink: #ffffff;
   --brand-tile: #0e141b;
   --brand-bowl: #3d8a47;
+  --attr-str: #b23a22;
+  --attr-agi: #2b7a38;
+  --attr-int: #1f63a8;
+  --attr-all: #7a3fa6;
   color-scheme: light;
 }
 

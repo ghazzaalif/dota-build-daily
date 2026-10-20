@@ -1,0 +1,491 @@
+{
+  "_comment": "Hand-maintained (Draft PRD §9.3). 'aliases': hero key -> nicknames for picker search. 'defaultPos': picker group for heroes with fewer than TYPICAL_POS_MIN_GAMES pro games on the current patch (never used for scoring). 'exclude': hero keys never shown in the picker.",
+  "aliases": {
+    "antimage": [
+      "am",
+      "magina"
+    ],
+    "bloodseeker": [
+      "bs",
+      "blood"
+    ],
+    "crystal_maiden": [
+      "cm",
+      "rylai"
+    ],
+    "drow_ranger": [
+      "drow",
+      "traxex"
+    ],
+    "earthshaker": [
+      "es",
+      "shaker"
+    ],
+    "juggernaut": [
+      "jugg",
+      "yurnero"
+    ],
+    "mirana": [
+      "potm"
+    ],
+    "morphling": [
+      "morph"
+    ],
+    "nevermore": [
+      "sf",
+      "shadow fiend"
+    ],
+    "phantom_lancer": [
+      "pl"
+    ],
+    "pudge": [
+      "butcher"
+    ],
+    "sand_king": [
+      "sk",
+      "sandking"
+    ],
+    "storm_spirit": [
+      "storm"
+    ],
+    "vengefulspirit": [
+      "venge",
+      "vs"
+    ],
+    "windrunner": [
+      "wr",
+      "windranger",
+      "windrunner"
+    ],
+    "zuus": [
+      "zeus"
+    ],
+    "kunkka": [
+      "kunk",
+      "admiral"
+    ],
+    "shadow_shaman": [
+      "shaman",
+      "rhasta",
+      "ss"
+    ],
+    "slardar": [
+      "slar"
+    ],
+    "tidehunter": [
+      "tide"
+    ],
+    "witch_doctor": [
+      "wd"
+    ],
+    "enigma": [
+      "nigma"
+    ],
+    "tinker": [
+      "tink"
+    ],
+    "necrolyte": [
+      "necro",
+      "necrophos"
+    ],
+    "warlock": [
+      "wl",
+      "lock"
+    ],
+    "beastmaster": [
+      "bm",
+      "beast"
+    ],
+    "queenofpain": [
+      "qop",
+      "queen"
+    ],
+    "venomancer": [
+      "veno"
+    ],
+    "faceless_void": [
+      "void",
+      "fv"
+    ],
+    "skeleton_king": [
+      "wk",
+      "wraith",
+      "skeleton king"
+    ],
+    "death_prophet": [
+      "dp"
+    ],
+    "phantom_assassin": [
+      "pa",
+      "mortred"
+    ],
+    "templar_assassin": [
+      "ta",
+      "lanaya"
+    ],
+    "dragon_knight": [
+      "dk"
+    ],
+    "rattletrap": [
+      "clock",
+      "cw",
+      "clockwerk"
+    ],
+    "leshrac": [
+      "lesh"
+    ],
+    "furion": [
+      "np",
+      "prophet",
+      "furion"
+    ],
+    "life_stealer": [
+      "ls",
+      "naix",
+      "lifestealer"
+    ],
+    "dark_seer": [
+      "ds",
+      "seer"
+    ],
+    "clinkz": [
+      "bone"
+    ],
+    "omniknight": [
+      "omni"
+    ],
+    "enchantress": [
+      "ench",
+      "bambi"
+    ],
+    "huskar": [
+      "husk"
+    ],
+    "night_stalker": [
+      "ns",
+      "balanar"
+    ],
+    "broodmother": [
+      "brood"
+    ],
+    "bounty_hunter": [
+      "bh",
+      "bounty"
+    ],
+    "jakiro": [
+      "thd",
+      "jak"
+    ],
+    "batrider": [
+      "bat"
+    ],
+    "spectre": [
+      "spec"
+    ],
+    "ancient_apparition": [
+      "aa"
+    ],
+    "doom_bringer": [
+      "doom"
+    ],
+    "spirit_breaker": [
+      "sb",
+      "bara"
+    ],
+    "gyrocopter": [
+      "gyro"
+    ],
+    "alchemist": [
+      "alch",
+      "gg"
+    ],
+    "invoker": [
+      "voker",
+      "invo"
+    ],
+    "silencer": [
+      "sil"
+    ],
+    "obsidian_destroyer": [
+      "od",
+      "outworld"
+    ],
+    "brewmaster": [
+      "brew",
+      "panda"
+    ],
+    "shadow_demon": [
+      "sd"
+    ],
+    "lone_druid": [
+      "ld",
+      "sylla"
+    ],
+    "chaos_knight": [
+      "ck"
+    ],
+    "treant": [
+      "tree",
+      "treant"
+    ],
+    "ogre_magi": [
+      "ogre",
+      "om"
+    ],
+    "undying": [
+      "dirge"
+    ],
+    "rubick": [
+      "rub"
+    ],
+    "disruptor": [
+      "disr",
+      "thrall"
+    ],
+    "nyx_assassin": [
+      "nyx"
+    ],
+    "naga_siren": [
+      "naga"
+    ],
+    "keeper_of_the_light": [
+      "kotl",
+      "keeper"
+    ],
+    "wisp": [
+      "io",
+      "wisp"
+    ],
+    "visage": [
+      "vis"
+    ],
+    "medusa": [
+      "dusa"
+    ],
+    "troll_warlord": [
+      "troll"
+    ],
+    "centaur": [
+      "cent",
+      "centaur"
+    ],
+    "magnataur": [
+      "magnus",
+      "mag"
+    ],
+    "shredder": [
+      "timber",
+      "timbersaw"
+    ],
+    "bristleback": [
+      "bb",
+      "bristle"
+    ],
+    "skywrath_mage": [
+      "sky",
+      "skywrath"
+    ],
+    "abaddon": [
+      "aba",
+      "abba"
+    ],
+    "elder_titan": [
+      "et",
+      "titan"
+    ],
+    "legion_commander": [
+      "lc",
+      "legion"
+    ],
+    "ember_spirit": [
+      "ember",
+      "xin"
+    ],
+    "earth_spirit": [
+      "earth",
+      "kaolin"
+    ],
+    "abyssal_underlord": [
+      "ul",
+      "underlord",
+      "pitlord"
+    ],
+    "terrorblade": [
+      "tb"
+    ],
+    "winter_wyvern": [
+      "ww",
+      "wyvern"
+    ],
+    "arc_warden": [
+      "arc",
+      "zet"
+    ],
+    "monkey_king": [
+      "mk",
+      "monkey"
+    ],
+    "dark_willow": [
+      "willow",
+      "dw"
+    ],
+    "pangolier": [
+      "pango"
+    ],
+    "grimstroke": [
+      "grim"
+    ],
+    "hoodwink": [
+      "hood"
+    ],
+    "void_spirit": [
+      "void spirit",
+      "inai"
+    ],
+    "snapfire": [
+      "snap"
+    ],
+    "ringmaster": [
+      "rm",
+      "ring"
+    ],
+    "dawnbreaker": [
+      "dawn",
+      "db"
+    ],
+    "primal_beast": [
+      "pb",
+      "primal"
+    ]
+  },
+  "defaultPos": {
+    "abaddon": 5,
+    "abyssal_underlord": 3,
+    "alchemist": 1,
+    "ancient_apparition": 5,
+    "antimage": 1,
+    "arc_warden": 2,
+    "axe": 3,
+    "bane": 5,
+    "batrider": 3,
+    "beastmaster": 3,
+    "bloodseeker": 1,
+    "bounty_hunter": 4,
+    "brewmaster": 3,
+    "bristleback": 3,
+    "broodmother": 2,
+    "centaur": 3,
+    "chaos_knight": 1,
+    "chen": 5,
+    "clinkz": 4,
+    "crystal_maiden": 5,
+    "dark_seer": 3,
+    "dark_willow": 4,
+    "dawnbreaker": 3,
+    "dazzle": 5,
+    "death_prophet": 2,
+    "disruptor": 5,
+    "doom_bringer": 3,
+    "dragon_knight": 2,
+    "drow_ranger": 1,
+    "earth_spirit": 4,
+    "earthshaker": 4,
+    "elder_titan": 4,
+    "ember_spirit": 2,
+    "enchantress": 5,
+    "enigma": 3,
+    "faceless_void": 1,
+    "furion": 3,
+    "grimstroke": 5,
+    "gyrocopter": 1,
+    "hoodwink": 4,
+    "huskar": 2,
+    "invoker": 2,
+    "jakiro": 5,
+    "juggernaut": 1,
+    "keeper_of_the_light": 5,
+    "kez": 1,
+    "kunkka": 2,
+    "largo": 3,
+    "legion_commander": 3,
+    "leshrac": 2,
+    "lich": 5,
+    "life_stealer": 1,
+    "lina": 2,
+    "lion": 5,
+    "lone_druid": 1,
+    "luna": 1,
+    "lycan": 1,
+    "magnataur": 3,
+    "marci": 4,
+    "mars": 3,
+    "medusa": 1,
+    "meepo": 1,
+    "mirana": 4,
+    "monkey_king": 1,
+    "morphling": 1,
+    "muerta": 1,
+    "naga_siren": 1,
+    "necrolyte": 2,
+    "nevermore": 2,
+    "night_stalker": 3,
+    "nyx_assassin": 4,
+    "obsidian_destroyer": 2,
+    "ogre_magi": 5,
+    "omniknight": 5,
+    "oracle": 5,
+    "pangolier": 2,
+    "phantom_assassin": 1,
+    "phantom_lancer": 1,
+    "phoenix": 4,
+    "primal_beast": 3,
+    "puck": 2,
+    "pudge": 4,
+    "pugna": 5,
+    "queenofpain": 2,
+    "rattletrap": 4,
+    "razor": 2,
+    "riki": 1,
+    "ringmaster": 5,
+    "rubick": 5,
+    "sand_king": 3,
+    "shadow_demon": 5,
+    "shadow_shaman": 5,
+    "shredder": 3,
+    "silencer": 4,
+    "skeleton_king": 1,
+    "skywrath_mage": 4,
+    "slardar": 3,
+    "slark": 1,
+    "snapfire": 4,
+    "sniper": 1,
+    "spectre": 1,
+    "spirit_breaker": 4,
+    "storm_spirit": 2,
+    "sven": 1,
+    "techies": 4,
+    "templar_assassin": 2,
+    "terrorblade": 1,
+    "tidehunter": 3,
+    "tinker": 2,
+    "tiny": 4,
+    "treant": 5,
+    "troll_warlord": 1,
+    "tusk": 4,
+    "undying": 5,
+    "ursa": 1,
+    "vengefulspirit": 4,
+    "venomancer": 4,
+    "viper": 2,
+    "visage": 4,
+    "void_spirit": 2,
+    "warlock": 5,
+    "weaver": 1,
+    "windrunner": 4,
+    "winter_wyvern": 5,
+    "wisp": 5,
+    "witch_doctor": 5,
+    "zuus": 2
+  },
+  "exclude": []
+}

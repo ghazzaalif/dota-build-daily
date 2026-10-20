@@ -23,11 +23,19 @@ export interface ItemInfo {
 
 export type ItemsMap = Record<string, ItemInfo>;
 
+export type HeroAttr = 'str' | 'agi' | 'int' | 'all';
+
 export interface HeroInfo {
   id: number;
   key: string;
   name: string;
   img: string;
+  /** Draft mode only (PRD Draft §9.2); optional so older heroes.json files still load. */
+  attr?: HeroAttr;
+  attackType?: 'melee' | 'ranged';
+  /** Most common pro position on the current patch (picker grouping only, never scoring). */
+  typicalPos?: 1 | 2 | 3 | 4 | 5;
+  aliases?: string[];
 }
 
 export type HeroesMap = Record<string, HeroInfo>;

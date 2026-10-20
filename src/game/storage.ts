@@ -76,7 +76,7 @@ export function storageAvailable(): boolean {
   return available;
 }
 
-function read<T>(key: string): T | null {
+export function read<T>(key: string): T | null {
   try {
     const raw = storageAvailable() ? localStorage.getItem(key) : memory[key];
     return raw ? (JSON.parse(raw) as T) : null;
@@ -85,7 +85,7 @@ function read<T>(key: string): T | null {
   }
 }
 
-function write(key: string, value: unknown) {
+export function write(key: string, value: unknown) {
   const raw = JSON.stringify(value);
   try {
     if (storageAvailable()) localStorage.setItem(key, raw);

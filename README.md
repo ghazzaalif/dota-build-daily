@@ -141,3 +141,32 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
   through the real build against a fake Discord host (`tests/e2e/discord-host.ts`).
 - **Who can play:** until Discord verifies the app, only the developer team and app testers can
   launch it, in servers with fewer than 25 members.
+
+## Draft Daily (`/draft`)
+
+A second daily mode on the same site: a real Captain's Mode draft from an allowlisted
+tournament, with one team's 5 picks hidden. Guess them in pick order in 6 rows (🟩 🟨 ⬛ only).
+Spec: `requirements/dota-draft-daily-prd.md` (v1.0).
+
+- **Client:** `src/draft/DraftApp.tsx` (lazy chunk, ~13 KB gz), `src/components/draft/`,
+  `src/game/draft/` (scoring, hints, reducer, share, storage under `dbd:draft:v1:*`).
+  `/` stays Build Daily; **Build | Draft** tabs on both pages. Discord runs Build only.
+- **Pipeline:** `scripts/pipeline/draft.ts` (filters D1–D10, answer, validation, scheduling),
+  `typicalPos.ts` (picker grouping), `ledger.ts` (a match used by one mode is never used by the
+  other; Build reserves first). Same `run.ts` job, own queue in `queue/draft/`, published to
+  `public/puzzles/draft/`. If a live Draft and a not-yet-public Build puzzle ever share a match,
+  the Build one is re-picked (and vice versa), so D9 heals itself.
+- **Data:** `picks_bans` comes with `/matches/{id}`; drafts are kept small in
+  `data/cache/drafts/` (Actions cache). The repo seeds 38 TI 2026 playoff drafts
+  (`ti2026-playoffs.txt`, decoded by `npx tsx scripts/pipeline/import-draft-seed.ts`).
+  Hand-edited nicknames and fallback positions live in `data/hero-rules.json`.
+- **Deep links:** the build copies `index.html` to `draft/index.html` and `draft.html`, so
+  `/draft` loads on refresh without host config. Adding a Render rewrite `/*` → `/index.html`
+  is still a good idea.
+- **Tests:** `tests/draft.test.ts` (Appendix A, reducer, hints, share, storage, search),
+  `tests/draft-pipeline.test.ts` (seed, filters, board order, D8–D10, ledger, validation),
+  `tests/e2e/draft-smoke.mjs` (360 px + desktop play-through).
+- **M0 findings (TI 2026, 147 matches):** every match is Captain's Mode with 10 picks + 14 bans
+  (`EXPECTED_PICKS` / `EXPECTED_BANS` confirmed). The role heuristic resolved all 294 team-games
+  with live `net_worth`. In the 38 playoff games, 8 sides are rejected by D5 (a `leaver_status`
+  flag in pro games), leaving 60 candidates. The 20-puzzle fairness review is still open.
