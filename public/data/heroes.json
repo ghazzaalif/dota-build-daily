@@ -52,7 +52,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crystal_maiden.png",
     "attr": "int",
     "attackType": "ranged",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": [
       "cm",
       "rylai"
@@ -78,7 +78,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earthshaker.png",
     "attr": "str",
     "attackType": "melee",
-    "typicalPos": 4,
+    "typicalPos": 2,
     "aliases": [
       "es",
       "shaker"
@@ -175,7 +175,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/razor.png",
     "attr": "agi",
     "attackType": "ranged",
-    "typicalPos": 2,
+    "typicalPos": 1,
     "aliases": []
   },
   "16": {
@@ -185,7 +185,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sand_king.png",
     "attr": "all",
     "attackType": "melee",
-    "typicalPos": 3,
+    "typicalPos": 2,
     "aliases": [
       "sk",
       "sandking"
@@ -230,7 +230,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/vengefulspirit.png",
     "attr": "agi",
     "attackType": "ranged",
-    "typicalPos": 4,
+    "typicalPos": 1,
     "aliases": [
       "venge",
       "vs"
@@ -292,7 +292,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lion.png",
     "attr": "int",
     "attackType": "ranged",
-    "typicalPos": 4,
+    "typicalPos": 5,
     "aliases": []
   },
   "27": {
@@ -577,7 +577,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dazzle.png",
     "attr": "all",
     "attackType": "ranged",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": []
   },
   "51": {
@@ -654,7 +654,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/clinkz.png",
     "attr": "agi",
     "attackType": "ranged",
-    "typicalPos": 4,
+    "typicalPos": 1,
     "aliases": [
       "bone"
     ]
@@ -751,7 +751,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/jakiro.png",
     "attr": "int",
     "attackType": "ranged",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": [
       "thd",
       "jak"
@@ -908,7 +908,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lycan.png",
     "attr": "str",
     "attackType": "melee",
-    "typicalPos": 1,
+    "typicalPos": 3,
     "aliases": []
   },
   "78": {
@@ -931,7 +931,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_demon.png",
     "attr": "int",
     "attackType": "ranged",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": [
       "sd"
     ]
@@ -978,7 +978,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/treant.png",
     "attr": "str",
     "attackType": "melee",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": [
       "tree",
       "treant"
@@ -1189,7 +1189,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tusk.png",
     "attr": "str",
     "attackType": "melee",
-    "typicalPos": 4,
+    "typicalPos": 5,
     "aliases": []
   },
   "101": {
@@ -1409,7 +1409,7 @@
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/hoodwink.png",
     "attr": "agi",
     "attackType": "ranged",
-    "typicalPos": 5,
+    "typicalPos": 4,
     "aliases": [
       "hood"
     ]
