@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 10,
+  "date": "2026-10-23",
+  "patch": "7.41",
+  "hero": {
+    "id": 106,
+    "key": "ember_spirit",
+    "name": "Ember Spirit"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      106,
+      19,
+      155,
+      9,
+      85
+    ],
+    "enemies": [
+      53,
+      28,
+      13,
+      14,
+      112
+    ],
+    "result": "win",
+    "durationSec": 3060,
+    "player": {
+      "name": "gpk~",
+      "team": "BETBOOM TEAM"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8955383956,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "BETBOOM TEAM",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQVhMQVZlU18LFhcYHhJGX0BUY0hREQAFBVIfSEEQW1dPDwsSRlNKW25RCgY7SVNeVVMPHRJZW15fYlUHQF4LAAcASwFKEkZXShgLEhcKDUxTQ21RWFBCSRAfGEVZCQc3X1ESCAcUAAFQHkgYWlUdQF4YUFxTVUZuW0RcVGVTURZASBhGWV9TflRTDwgBCwgEGU4fGFlVSxQXE0JIVEFfQlgBEEYWEERbW0hiVU4QCQgFCFYfSEEQW1dPDwsSQlFHW0NZCgc7WV1CVxQBE0REX1ZpVFNGWFYDAgVPaw=="
+}
