@@ -19,7 +19,7 @@
     "test:e2e": "node tests/e2e/smoke.mjs",
     "build:server": "esbuild server/index.ts --bundle --platform=node --target=node20 --format=esm --packages=external --outfile=server/dist/index.mjs",
     "start:server": "node server/dist/index.mjs",
-    "test:discord": "VITE_DISCORD_CLIENT_ID=123456789012345678 VITE_API_URL=http://api.example.test vite build && tsx tests/e2e/discord-smoke.ts"
+    "test:discord": "VITE_DISCORD_CLIENT_ID=123456789012345678 VITE_API_URL=http://api.example.test VITE_UMAMI_WEBSITE_ID=test-site vite build && tsx tests/e2e/discord-smoke.ts"
   },
   "engines": {
     "node": "20.x"

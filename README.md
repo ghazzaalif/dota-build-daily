@@ -123,6 +123,8 @@ The same game runs inside Discord as an Activity (like the Wordle one), with sig
   | `/api` | the API service host |
   | `/steam` | `cdn.cloudflare.steamstatic.com` |
   | `/discordcdn` | `cdn.discordapp.com` |
+  | `/umami-js` | `cloud.umami.is` (analytics script) |
+  | `/umami-api` | `gateway.umami.is` (analytics events) |
 
 - **Results card:** when someone finishes, the bot posts a card (avatars + colour grids, never
   items) in the channel the game was opened in, and edits that same message as more people

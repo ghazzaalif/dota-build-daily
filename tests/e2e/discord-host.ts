@@ -47,6 +47,8 @@ const discord: DiscordApi = {
 };
 
 export const store = new MemoryStore();
+/** Requests that reached the (fake) Umami gateway through the proxy path. */
+export const umamiHits: string[] = [];
 /** Fake bot that was never added to the test server, so the end screen shows the "add the bot" notice. */
 export const fakeBot: BotApi & { posts: string[] } = {
   posts: [],
@@ -119,6 +121,20 @@ export const server = createServer((req, res) => {
     return;
   }
   if (url.pathname.startsWith('/api/')) return void api(req, res);
+  // Umami through the Discord proxy: a stub tracker that sends one pageview to the mapped gateway.
+  if (url.pathname === '/umami-js/script.js') {
+    res.writeHead(200, { 'content-type': 'text/javascript' }).end(
+      `(function(){var s=document.currentScript;window.__umami={id:s.dataset.websiteId,host:s.dataset.hostUrl,tag:s.dataset.tag,excludeSearch:s.dataset.excludeSearch};` +
+        `window.umami={track:function(n,d){fetch(s.dataset.hostUrl+'/api/send',{method:'POST',body:JSON.stringify({name:n,data:d})})}};` +
+        `fetch(s.dataset.hostUrl+'/api/send',{method:'POST',body:JSON.stringify({url:location.pathname})});})();`,
+    );
+    return;
+  }
+  if (url.pathname.startsWith('/umami-api/')) {
+    umamiHits.push(url.pathname);
+    res.writeHead(200, { 'content-type': 'application/json' }).end('{}');
+    return;
+  }
   if (url.pathname.startsWith('/steam/') || url.pathname.startsWith('/discordcdn/')) {
     res.writeHead(404).end(); // no internet here; the game shows text tiles instead
     return;

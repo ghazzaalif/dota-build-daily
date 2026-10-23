@@ -12,7 +12,7 @@ import puppeteer, { type Frame, type Page } from 'puppeteer-core';
 import { answerKey, decodeAnswer } from '../../src/game/answer';
 import { puzzleDateAt } from '../../src/game/date';
 import type { ItemsMap, Puzzle } from '../../src/game/types';
-import { PLAYERS, server, store } from './discord-host';
+import { PLAYERS, server, store, umamiHits } from './discord-host';
 
 const fail = (m: string): never => {
   throw new Error(m);
@@ -72,7 +72,11 @@ try {
 
   // Images point at the Steam CDN in the code; inside Discord they must go via /steam.
   if (!requested.some((u) => new URL(u).host === new URL(base).host && u.includes('/steam/apps/dota2/images/'))) fail(`item images were not routed through /steam: ${requested.filter((u) => /steam|images|\.png/.test(u)).slice(0, 4).join(' ')}`);
-  const direct = requested.filter((u) => /steamstatic\.com|fonts\.(googleapis|gstatic)\.com/.test(u));
+  // Umami loads through the Discord proxy paths, tagged, without the launch query string.
+  const um = await a.frame.evaluate(() => (window as unknown as { __umami?: Record<string, string> }).__umami);
+  if (!um || um.id !== 'test-site' || um.tag !== 'discord' || um.excludeSearch !== 'true' || !um.host?.endsWith('/umami-api')) fail(`umami in Discord: ${JSON.stringify(um)}`);
+  if (!umamiHits.includes('/umami-api/api/send')) fail(`umami gateway not reached via proxy: ${JSON.stringify(umamiHits)}`);
+  const direct = requested.filter((u) => /steamstatic\.com|fonts\.(googleapis|gstatic)\.com|umami\.is/.test(u));
   if (direct.length) fail(`requests escaped the proxy: ${direct.slice(0, 3).join(', ')}`);
 
   await playRow(a.frame, WRONG);

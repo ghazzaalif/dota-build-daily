@@ -4,6 +4,7 @@
 //
 // Outside Discord none of this runs and the website behaves exactly as before.
 import { DiscordSDK, patchUrlMappings } from '@discord/embedded-app-sdk';
+import { UMAMI_DISCORD_MAPPINGS } from '../analytics';
 import { API_URL, DISCORD_CLIENT_ID } from '../config';
 import type { BoardEntry, DiscordUserLite, GameUpload, MyGame, ResultsStatus, ServerStats } from './api';
 
@@ -12,6 +13,7 @@ export const URL_MAPPINGS = [
   { prefix: '/steam', target: 'cdn.cloudflare.steamstatic.com' },
   { prefix: '/discordcdn', target: 'cdn.discordapp.com' },
   { prefix: '/api', target: new URL(API_URL).host },
+  ...UMAMI_DISCORD_MAPPINGS,
 ];
 
 export interface DiscordSession {
