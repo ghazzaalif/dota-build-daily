@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 11,
+  "date": "2026-10-24",
+  "patch": "7.41",
+  "hero": {
+    "id": 47,
+    "key": "viper",
+    "name": "Viper"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      47,
+      145,
+      155,
+      86,
+      112
+    ],
+    "enemies": [
+      29,
+      26,
+      85,
+      49,
+      91
+    ],
+    "result": "win",
+    "durationSec": 2503,
+    "player": {
+      "name": "gpk~",
+      "team": "BETBOOM TEAM"
+    },
+    "priceBands": [
+      "0-2000",
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "5500+",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8956877335,
+    "radiantTeam": "BETBOOM TEAM",
+    "direTeam": "Iron Wing",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQV9aV0ZlRUMBAwBJEBwQQkRcVX5XVxgLAlNTGRZJEllTVBMKD19VXVRuFw4FQ1dCEBoPRVlAV2dfUhNeVF0DTxxJFEZUSQ8IFlJEQxYLB1tcVW1GRFpVDx4WTlhcATEBWRAKAwYUCU0BSRZRVEhGWEZJU15VU3JQXkltTVtCWQVASBhGWV9TflRTDwgFDgADGU4fGFlVSxQXE0NGU1BTEx1GFg1XV2NXVQ8LARUGBUcdSkYJAUMQChBFTEVRQ1tXGB0TEAsJX2FVURQXAwIaB0ln"
+}
