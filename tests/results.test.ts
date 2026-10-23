@@ -57,8 +57,14 @@ class FakeBot implements BotApi {
   log: { op: 'create' | 'edit'; channel: string; id: string; msg: OutgoingMessage }[] = [];
   deleted = new Set<string>();
   n = 0;
+  botGuilds = new Set([GUILD]);
+  hidden = new Set<string>();
   async channelGuild(c: string) {
+    if (this.hidden.has(c)) return null;
     return c === CH_OTHER_SERVER ? '900000000000000099' : GUILD;
+  }
+  async inGuild(g: string) {
+    return this.botGuilds.has(g);
   }
   async createMessage(channel: string, msg: OutgoingMessage) {
     const id = `m${++this.n}`;
@@ -241,5 +247,57 @@ describe('when Discord is temporarily blocking us', () => {
     errSpy.mockRestore();
     expect(bot.log).toHaveLength(1);
     expect(bot.log[0]).toMatchObject({ op: 'create', channel: CH_OPEN });
+  });
+});
+
+describe('results status (why a card did or did not post)', () => {
+  const content = { puzzle: async (d: string) => loadPuzzle(d), items: async () => items };
+
+  it('ok when the bot is in the server and can see the channel', async () => {
+    const pub = createResultsPublisher({ store: new MemoryStore(), content, bot: new FakeBot(), retryMs: [] });
+    expect(await pub.status(GUILD, CH_OPEN)).toEqual({ state: 'ok', fixedChannel: false });
+  });
+
+  it('no_bot when the bot was never added to the server (Discord answers 403)', async () => {
+    const bot = new FakeBot();
+    bot.botGuilds.clear();
+    const pub = createResultsPublisher({ store: new MemoryStore(), content, bot, retryMs: [] });
+    expect((await pub.status(GUILD, CH_OPEN)).state).toBe('no_bot');
+  });
+
+  it('no_channel_access when the channel is private to the bot; reports a pinned channel', async () => {
+    const bot = new FakeBot();
+    bot.hidden.add(CH_FIXED);
+    const store = new MemoryStore();
+    await store.setResultsChannel(GUILD, CH_FIXED);
+    const pub = createResultsPublisher({ store, content, bot, retryMs: [] });
+    expect(await pub.status(GUILD, CH_OPEN)).toEqual({ state: 'no_channel_access', fixedChannel: true });
+  });
+
+  it('post_failed carries the last Discord error until a post succeeds', async () => {
+    const bot = new FakeBot();
+    const store = new MemoryStore();
+    await store.upsertUser({ id: '1', username: 'a', globalName: 'A', avatar: null });
+    await store.addGuildMember(GUILD, '1');
+    await store.saveGame({ userId: '1', date: DATE, puzzleNo: puzzle.puzzleNo, rows: [ANSWER], states: [Array(6).fill('green')], status: 'won', hintsRevealed: 0, earlyReveals: 0, lifeline: null });
+    const create = bot.createMessage.bind(bot);
+    let fail = true;
+    bot.createMessage = async (c, m) => {
+      if (fail) throw new Error('post in 7: 403 {"message": "Missing Permissions", "code": 50013}');
+      return create(c, m);
+    };
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const pub = createResultsPublisher({ store, content, bot, retryMs: [] });
+    await pub.publish(GUILD, DATE, CH_OPEN);
+    expect(await pub.status(GUILD, CH_OPEN)).toMatchObject({ state: 'post_failed', error: expect.stringContaining('Missing Permissions') });
+    fail = false;
+    await pub.publish(GUILD, DATE, CH_OPEN);
+    expect((await pub.status(GUILD, CH_OPEN)).state).toBe('ok');
+    errSpy.mockRestore();
+  });
+
+  it('no_channel outside a server channel (DMs)', async () => {
+    const pub = createResultsPublisher({ store: new MemoryStore(), content, bot: new FakeBot(), retryMs: [] });
+    expect((await pub.status(GUILD, null)).state).toBe('no_channel');
   });
 });

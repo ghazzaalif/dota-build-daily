@@ -5,7 +5,7 @@
 // Outside Discord none of this runs and the website behaves exactly as before.
 import { DiscordSDK, patchUrlMappings } from '@discord/embedded-app-sdk';
 import { API_URL, DISCORD_CLIENT_ID } from '../config';
-import type { BoardEntry, DiscordUserLite, GameUpload, MyGame, ServerStats } from './api';
+import type { BoardEntry, DiscordUserLite, GameUpload, MyGame, ResultsStatus, ServerStats } from './api';
 
 /** Prefixes must match the URL mappings in the Discord Developer Portal. */
 export const URL_MAPPINGS = [
@@ -43,6 +43,9 @@ export class ApiClient {
   }
   scoreboard(guildId: string, date: string) {
     return this.call<{ entries: BoardEntry[] }>(`/scoreboard?guild_id=${guildId}&date=${encodeURIComponent(date)}`).then((r) => r.entries);
+  }
+  resultsStatus(guildId: string, channelId: string | null) {
+    return this.call<ResultsStatus>(`/results-status?guild_id=${guildId}${channelId ? `&channel_id=${channelId}` : ''}`);
   }
   stats() {
     return this.call<{ stats: ServerStats }>('/stats').then((r) => r.stats);

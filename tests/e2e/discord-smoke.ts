@@ -95,6 +95,12 @@ try {
   await sleep(500);
   const endBoard = await a.frame.$eval('[role=dialog]', (d) => d.textContent ?? '');
   if (!endBoard.includes('Played in this server today') || !endBoard.includes('Ghazza')) fail('end screen board missing');
+  // The bot isn't in this (fake) server: the end screen says so and links to adding it.
+  await a.frame.waitForSelector('[role=dialog] button ::-p-text(Add the bot to this server)', { timeout: 5000 });
+  await a.frame.click('[role=dialog] button ::-p-text(Add the bot to this server)');
+  await sleep(300);
+  const ext = (await cmds(a.page)).filter((c) => c.cmd === 'OPEN_EXTERNAL_LINK').pop();
+  if (!ext?.args.url.includes('guild_id=900000000000000001') || !ext.args.url.includes('scope=bot')) fail(`bot install link: ${JSON.stringify(ext)}`);
   await a.page.screenshot({ path: `${OUT}/discord-a-end.png` });
   console.log('✓ player A: sign-in, uploads, win, share dialog, presence, image proxy');
 

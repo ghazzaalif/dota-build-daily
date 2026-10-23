@@ -10,6 +10,8 @@ import type { Store } from './store';
 export interface BotApi {
   /** The server a channel belongs to, or null if the bot can't see it. */
   channelGuild(channelId: string): Promise<string | null>;
+  /** Whether the bot has been added to this server. */
+  inGuild(guildId: string): Promise<boolean>;
   createMessage(channelId: string, msg: OutgoingMessage): Promise<string>;
   /** false when the message no longer exists (someone deleted it). */
   editMessage(channelId: string, messageId: string, msg: OutgoingMessage): Promise<boolean>;
@@ -23,6 +25,16 @@ export interface OutgoingMessage {
 }
 
 export const LAUNCH_BUTTON_ID = 'launch';
+
+/** Whether the card can be posted for this server, and if not, what the server needs to fix. */
+export type ResultsState = 'ok' | 'no_channel' | 'no_bot' | 'no_channel_access' | 'post_failed';
+export interface ResultsStatus {
+  state: ResultsState;
+  /** True when an admin pinned a channel with /results-channel. */
+  fixedChannel: boolean;
+  /** Discord's error for the last failed post in this server, if any. */
+  error?: string;
+}
 
 /** "A", "A and B", "A, B and C", "A, B, C and 4 others" */
 export function namesLine(names: string[]): string {
@@ -41,6 +53,8 @@ const RETRY_MS = [1, 3, 10, 30, 60].map((m) => m * 60_000);
 export function createResultsPublisher(deps: { store: Store; content: Content; bot: BotApi; retryMs?: number[] }) {
   const retryMs = deps.retryMs ?? RETRY_MS;
   const queues = new Map<string, Promise<void>>();
+  /** Last post failure per server (cleared on success), shown to players via status(). */
+  const lastError = new Map<string, string>();
   const channelGuilds = new Map<string, string | null>();
 
   async function channelInGuild(channelId: string, guildId: string) {
@@ -79,9 +93,21 @@ export function createResultsPublisher(deps: { store: Store; content: Content; b
     };
 
     const existing = await deps.store.getPost(guildId, date, channelId);
-    if (existing && (await deps.bot.editMessage(channelId, existing, msg))) return;
+    if (existing && (await deps.bot.editMessage(channelId, existing, msg))) return void lastError.delete(guildId);
     const id = await deps.bot.createMessage(channelId, msg);
     await deps.store.savePost(guildId, date, channelId, id);
+    lastError.delete(guildId);
+  }
+
+  async function status(guildId: string, openedIn: string | null): Promise<ResultsStatus> {
+    const fixed = await deps.store.getResultsChannel(guildId);
+    const channelId = fixed ?? openedIn;
+    const base = { fixedChannel: !!fixed };
+    if (!channelId) return { ...base, state: 'no_channel' };
+    if (!(await deps.bot.inGuild(guildId))) return { ...base, state: 'no_bot' };
+    if (!(await channelInGuild(channelId, guildId))) return { ...base, state: 'no_channel_access' };
+    const err = lastError.get(guildId);
+    return err ? { ...base, state: 'post_failed', error: err } : { ...base, state: 'ok' };
   }
 
   /** Queued per server and day so two people finishing at once can't post two cards. */
@@ -90,6 +116,7 @@ export function createResultsPublisher(deps: { store: Store; content: Content; b
     const next = (queues.get(key) ?? Promise.resolve())
       .then(() => publishNow(guildId, date, openedIn))
       .catch((e) => {
+        lastError.set(guildId, e instanceof Error ? e.message.slice(0, 300) : String(e));
         const wait = retryMs[attempt];
         console.error(`results card for ${key} failed${wait !== undefined ? `; retrying in ${Math.round(wait / 60_000)} min` : ''}:`, e);
         if (wait !== undefined) setTimeout(() => void publish(guildId, date, openedIn, attempt + 1), wait).unref?.();
@@ -99,5 +126,5 @@ export function createResultsPublisher(deps: { store: Store; content: Content; b
     return next;
   }
 
-  return { publish };
+  return { publish, status };
 }

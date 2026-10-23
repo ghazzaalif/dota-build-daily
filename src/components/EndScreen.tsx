@@ -25,6 +25,8 @@ interface Props {
   onOpenLink?: (url: string) => void;
   /** Server results (Discord only). */
   board?: ReactNode;
+  /** Why the results card wasn't posted, when it wasn't (Discord only). */
+  notice?: ReactNode;
 }
 
 export function useCountdown(now: () => Date) {
@@ -104,6 +106,7 @@ export function EndScreen(p: Props) {
         <ShareIcon className="h-5 w-5" /> Share result
       </button>
 
+      {p.notice && <div className="mt-4">{p.notice}</div>}
       {p.board && <div className="mt-6">{p.board}</div>}
 
       <div className="mt-6 border-t border-line pt-5">

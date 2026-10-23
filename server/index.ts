@@ -30,7 +30,12 @@ const DISCORD = env('DISCORD_API_BASE', 'https://discord.com/api/v10').replace(/
 const RELAY_KEY = env('DISCORD_RELAY_KEY');
 
 /** Last Discord API answer, shown on /health so blocks are easy to spot. */
-const health = { bot: !!BOT_TOKEN, viaRelay: !DISCORD.startsWith('https://discord.com'), commandRegistered: false, lastDiscord: null as null | { status: number; path: string; at: string } };
+const health = {
+  bot: !!BOT_TOKEN,
+  viaRelay: !DISCORD.startsWith('https://discord.com'),
+  commandRegistered: false,
+  lastDiscord: null as null | { status: number; path: string; at: string; code?: number; message?: string },
+};
 
 /**
  * All Discord API calls. Short 429s are waited out; Render's shared free IPs sometimes get
@@ -42,6 +47,11 @@ async function discordFetch(path: string, init: RequestInit = {}, attempt = 0): 
   if (RELAY_KEY) headers.set('x-relay-key', RELAY_KEY);
   const res = await fetch(`${DISCORD}${path}`, { ...init, headers });
   health.lastDiscord = { status: res.status, path: path.replace(/\d{15,}/g, ':id').split('?')[0], at: new Date().toISOString() };
+  if (!res.ok) {
+    // Discord's JSON error code says why (50001 Missing Access, 50013 Missing Permissions, …).
+    const b = (await res.clone().json().catch(() => null)) as { code?: number; message?: string } | null;
+    if (b) Object.assign(health.lastDiscord, { code: b.code, message: b.message?.slice(0, 120) });
+  }
   if (res.status === 429 && attempt < 2) {
     const body = (await res.clone().json().catch(() => ({}))) as { retry_after?: number };
     const wait = body.retry_after ?? Number(res.headers.get('retry-after') ?? NaN);
@@ -104,6 +114,11 @@ const bot: BotApi = {
       return null;
     }
     return ((await res.json()) as { guild_id?: string }).guild_id ?? null;
+  },
+  async inGuild(guildId) {
+    const res = await botFetch(`/guilds/${guildId}`);
+    if (res.status === 429 || res.status >= 500) throw new Error(`guild ${guildId}: ${res.status}`);
+    return res.ok;
   },
   async createMessage(channelId, m) {
     const res = await botFetch(`/channels/${channelId}/messages`, { method: 'POST', body: messageForm(m) });

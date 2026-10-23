@@ -26,6 +26,8 @@ export type GameAction =
   | { type: 'clearAll' }
   | { type: 'move'; slot: number; dir: -1 | 1 }
   | { type: 'swap'; from: number; to: number }
+  /** Put an item into a specific slot (dragged from an earlier row or the item tree). */
+  | { type: 'place'; slot: number; key: string }
   | { type: 'submit' }
   | { type: 'revealHint' }
   | { type: 'setKeepGreens'; value: boolean };
@@ -145,6 +147,19 @@ export function gameReducer(ctx: GameContext) {
         if (isLocked(s, from) || isLocked(s, to)) return s;
         const current = [...s.current];
         [current[from], current[to]] = [current[to], current[from]];
+        return { ...s, current };
+      }
+
+      case 'place': {
+        const { slot, key } = action;
+        if (!playing || slot < 0 || slot >= BUILD_SIZE || isLocked(s, slot) || !ctx.items[key]?.eligible) return s;
+        if (s.lifeline?.key === key) return s; // the lifeline item stays in its locked slot
+        const current = [...s.current];
+        const from = current.indexOf(key);
+        if (from === slot) return s;
+        // Already in the row: move it, and the item it lands on takes its old slot.
+        if (from !== -1) current[from] = current[slot];
+        current[slot] = key;
         return { ...s, current };
       }
 

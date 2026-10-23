@@ -14,7 +14,8 @@ import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = fileURLToPath(new URL('.', import.meta.url));
-import { createApp, type DiscordApi } from '../../server/app';
+import { createApp, type Content, type DiscordApi } from '../../server/app';
+import { createResultsPublisher, type BotApi } from '../../server/results';
 import { MemoryStore } from '../../server/store';
 import type { ItemsMap, Puzzle } from '../../src/game/types';
 
@@ -46,10 +47,27 @@ const discord: DiscordApi = {
 };
 
 export const store = new MemoryStore();
-const api = createApp({
-  store,
-  discord,
-  content: {
+/** Fake bot that was never added to the test server, so the end screen shows the "add the bot" notice. */
+export const fakeBot: BotApi & { posts: string[] } = {
+  posts: [],
+  async channelGuild() {
+    return null;
+  },
+  async inGuild() {
+    return false;
+  },
+  async createMessage(c) {
+    this.posts.push(c);
+    return 'm1';
+  },
+  async editMessage() {
+    return true;
+  },
+  async fetchImage() {
+    return null;
+  },
+};
+const content: Content = {
     async puzzle(d) {
       const f = join(PUBLIC, 'puzzles', `${d}.json`);
       return existsSync(f) ? (JSON.parse(readFileSync(f, 'utf8')) as Puzzle) : null;
@@ -57,8 +75,8 @@ const api = createApp({
     async items() {
       return JSON.parse(readFileSync(join(PUBLIC, 'data', 'items.json'), 'utf8')) as ItemsMap;
     },
-  },
-});
+};
+const api = createApp({ store, discord, content, results: createResultsPublisher({ store, content, bot: fakeBot, retryMs: [] }) });
 
 const HOST_PAGE = (as: string) => `<!doctype html><meta charset="utf-8"><title>Fake Discord</title>
 <style>html,body{margin:0;height:100%;background:#313338}iframe{border:0;width:100%;height:100%}</style>

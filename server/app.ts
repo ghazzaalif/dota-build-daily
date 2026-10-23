@@ -26,7 +26,10 @@ export interface AppDeps {
   /** Origins allowed to call the API directly (Discord proxies requests same-origin). */
   corsOrigins?: string[];
   /** Posts/edits the results card when someone finishes (needs the bot). */
-  results?: { publish(guildId: string, date: string, channelId: string | null): Promise<void> };
+  results?: {
+    publish(guildId: string, date: string, channelId: string | null): Promise<void>;
+    status(guildId: string, channelId: string | null): Promise<import('./results').ResultsStatus>;
+  };
   /** Discord interactions endpoint (signature-checked). */
   interactions?: (raw: Buffer, headers: IncomingMessage['headers']) => Promise<{ status: number; body: unknown }>;
   /** Extra non-secret status for GET /health. */
@@ -186,6 +189,16 @@ export function createApp(deps: AppDeps) {
         states: r.game.states, // colors only, never item keys
       }));
       return send(res, 200, { entries: sortBoard(entries).map(({ name: _n, ...e }) => e) });
+    }
+
+    if (method === 'GET' && path === '/results-status') {
+      const { token } = await authUser(req);
+      const guildId = query.get('guild_id') ?? '';
+      const channelId = query.get('channel_id');
+      if (!/^\d{5,25}$/.test(guildId) || (channelId && !/^\d{5,25}$/.test(channelId))) throw new HttpError(400, 'guild_id is required');
+      if (!(await inGuild(token, guildId))) throw new HttpError(403, 'You are not in that server');
+      if (!deps.results) return send(res, 200, { state: 'off', fixedChannel: false });
+      return send(res, 200, await deps.results.status(guildId, channelId || null));
     }
 
     if (method === 'GET' && path === '/stats') {

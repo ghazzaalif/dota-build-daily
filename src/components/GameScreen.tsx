@@ -15,11 +15,14 @@ import { Grid } from './Grid';
 import { HintsPanel } from './HintsPanel';
 import { CloseIcon, ItemImage } from './Icons';
 import { ItemPicker } from './ItemPicker';
+import { ItemTree } from './ItemTree';
+import { Modal } from './Modal';
 import { PuzzleHeader } from './PuzzleHeader';
 import { ServerBoard, useScoreboard } from './ServerBoard';
 import { openExternal, setPresence } from '../discord/client';
 import type { DiscordSession } from '../discord/session';
-import type { ServerStats } from '../discord/api';
+import type { ResultsStatus, ServerStats } from '../discord/api';
+import { ResultsNotice } from './ResultsNotice';
 
 interface Props {
   puzzle: Puzzle;
@@ -62,6 +65,7 @@ export function GameScreen(p: Props) {
   const [selected, setSelected] = useState<number | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [animate, setAnimate] = useState(false);
+  const [treeKey, setTreeKey] = useState<string | null>(null);
   const desktop = useIsDesktop();
 
   const playing = state.status === 'in_progress';
@@ -103,6 +107,20 @@ export function GameScreen(p: Props) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, state.rows.length, state.hintsRevealed, state.earlyReveals, state.status]);
+
+  // Discord: once finished, ask whether the results card could be posted in this server.
+  const [resultsStatus, setResultsStatus] = useState<ResultsStatus | null>(null);
+  useEffect(() => {
+    if (!session?.guildId || state.status === 'in_progress' || !syncSeq) return;
+    let cancelled = false;
+    session.api
+      .resultsStatus(session.guildId, session.channelId)
+      .then((r) => !cancelled && setResultsStatus(r))
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [session, state.status, syncSeq]);
 
   useEffect(() => {
     track('puzzle_loaded', { mode: 'build', puzzle: puzzle.puzzleNo, played: playedBucket(stats.played) });
@@ -216,6 +234,7 @@ export function GameScreen(p: Props) {
       onSubmit={submit}
       onClose={onClose}
       autoFocus={desktop}
+      onTree={setTreeKey}
     />
   );
 
@@ -234,6 +253,14 @@ export function GameScreen(p: Props) {
           animateLastRow={animate && !p.reducedMotion}
           onSlotTap={onSlotTap}
           onSwap={(from, to) => dispatch({ type: 'swap', from, to })}
+          onPlace={(slot, key) => {
+            setSelected(null);
+            dispatch({ type: 'place', slot, key });
+          }}
+          onAddItem={(key) => {
+            setSelected(null);
+            dispatch({ type: 'add', key });
+          }}
           onMove={(slot, dir) => {
             dispatch({ type: 'move', slot, dir });
             setSelected(slot + dir);
@@ -327,6 +354,26 @@ export function GameScreen(p: Props) {
         </div>
       )}
 
+      {treeKey && items[treeKey] && (
+        <Modal title="Item tree" onClose={() => setTreeKey(null)}>
+          <ItemTree
+            items={items}
+            start={treeKey}
+            scored={state.scored}
+            inRow={state.current}
+            onAdd={
+              playing
+                ? (key) => {
+                    setSelected(null);
+                    dispatch({ type: 'add', key });
+                    setTreeKey(null);
+                  }
+                : undefined
+            }
+          />
+        </Modal>
+      )}
+
       {p.endOpen && finished && (
         <EndScreen
           puzzle={puzzle}
@@ -344,6 +391,9 @@ export function GameScreen(p: Props) {
           onPlayNew={p.onPlayNew}
           onOpenLink={(url) => openExternal(session, url)}
           board={board.enabled && session ? <ServerBoard compact entries={board.entries} error={board.error} meId={session.user.id} /> : null}
+          notice={
+            session?.guildId ? <ResultsNotice status={resultsStatus} guildId={session.guildId} onOpenLink={(url) => openExternal(session, url)} /> : null
+          }
         />
       )}
     </div>

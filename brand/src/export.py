@@ -33,7 +33,7 @@ mk = Image.new('RGBA', (512, 512), INK); m = png('dbd-symbol.svg', 300, 300); mk
 # Social preview (link cards): horizontal lockup on ink
 og = Image.new('RGBA', (1200, 630), INK); lk = png('dbd-horizontal.svg', 960); og.alpha_composite(lk, ((1200 - lk.width) // 2, (630 - lk.height) // 2 - 20)); og.convert('RGB').save(f'{W}/og-image.png')
 json.dump({
-    'name': 'Dota Build Daily', 'short_name': 'Build Daily', 'start_url': '/', 'display': 'standalone',
+    'name': 'Dota Build Daily', 'short_name': 'Build Daily', 'start_url': '/play', 'display': 'standalone',
     'background_color': INK, 'theme_color': INK,
     'icons': [{'src': '/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
               {'src': '/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},

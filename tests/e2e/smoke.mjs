@@ -111,6 +111,45 @@ async function run(viewport, label) {
   if (!tiles2.some((t) => t.includes('wrong slot'))) fail('expected yellow tiles in row 2');
   await page.screenshot({ path: `${OUT}/${label}-03-two-rows.png`, fullPage: true });
 
+  // Item tree: tapping a guessed tile opens its recipe tree; 🟧 tiles list their candidates.
+  const orangeIdx = tiles1.findIndex((t) => t.includes('shares'));
+  await page.click(`[aria-label="Guess 1"] button:nth-of-type(${(orangeIdx === -1 ? 0 : orangeIdx) + 1})`);
+  await page.waitForSelector('section[aria-label="Item tree"]', { timeout: 3000 });
+  const treeText = await page.$eval('section[aria-label="Item tree"]', (s) => s.textContent);
+  if (orangeIdx !== -1 && !/haven't found yet/.test(treeText)) fail(`orange tree text: ${treeText}`);
+  if (!/Made from|Builds into|Items that use|No recipe/.test(treeText)) fail(`tree has no recipe: ${treeText}`);
+  await page.screenshot({ path: `${OUT}/${label}-03b-item-tree.png`, fullPage: true });
+  await page.click('section[aria-label="Item tree"] button[aria-label="Close item tree"]');
+
+  // Drag a 🟨 tile from row 2 into its right slot in the row being built (mouse, or press-and-hold on touch).
+  const yi = tiles2.findIndex((t) => t.includes('wrong slot'));
+  const yKey = [...answerKeys].reverse()[yi];
+  const target = answerKeys.indexOf(yKey);
+  await page.click('main button ::-p-text(Clear row)');
+  await page.$eval('[aria-label="Guess 2"] button', (e) => e.scrollIntoView({ block: 'center' }));
+  await sleep(100);
+  const box = async (sel) => {
+    const b = await (await page.$(sel)).boundingBox();
+    return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+  };
+  const from = await box(`[aria-label="Guess 2"] button:nth-of-type(${yi + 1})`);
+  const to = await box(`[data-drop-slot="${target}"]`);
+  if (mobile) {
+    await page.touchscreen.touchStart(from.x, from.y);
+    await sleep(400); // hold
+    for (let i = 1; i <= 8; i++) await page.touchscreen.touchMove(from.x + ((to.x - from.x) * i) / 8, from.y + ((to.y - from.y) * i) / 8);
+    await page.touchscreen.touchEnd();
+  } else {
+    await page.mouse.move(from.x, from.y);
+    await page.mouse.down();
+    for (let i = 1; i <= 8; i++) await page.mouse.move(from.x + ((to.x - from.x) * i) / 8, from.y + ((to.y - from.y) * i) / 8);
+    await page.mouse.up();
+  }
+  await sleep(200);
+  const dropped = await page.$eval(`[data-drop-slot="${target}"]`, (b) => b.getAttribute('aria-label'));
+  if (!dropped.includes(name(yKey))) fail(`drag from row 2 didn't land: slot ${target + 1} is "${dropped}"`);
+  if (await page.$('section[aria-label="Item tree"]')) fail('the drag also opened the item tree');
+
   // Keep greens: greens from row 2 are pre-filled into row 3.
   // Clear and play the real build.
   await page.click('main button ::-p-text(Clear row)');

@@ -4,7 +4,7 @@ import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { buildIndex, searchItems } from '../game/search';
 import type { Category, ItemsMap, TileState } from '../game/types';
 import { SYMBOL } from './Grid';
-import { CloseIcon, Coin, ItemImage, SearchIcon } from './Icons';
+import { CloseIcon, Coin, ItemImage, SearchIcon, TreeIcon } from './Icons';
 
 export const CATEGORY_ORDER: { id: Category; label: string }[] = [
   { id: 'boots', label: 'Boots' },
@@ -33,9 +33,11 @@ interface Props {
   rowFull: boolean;
   onClose?: () => void;
   autoFocus?: boolean;
+  /** Opens the item's recipe tree. */
+  onTree?: (key: string) => void;
 }
 
-export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, rowFull, onClose, autoFocus }: Props) {
+export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, rowFull, onClose, autoFocus, onTree }: Props) {
   const index = useMemo(() => buildIndex(items), [items]);
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState<Category | 'all'>('all');
@@ -80,13 +82,13 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
     const state = best[key];
     const used = inRow.includes(key);
     return (
-      <li key={key}>
+      <li key={key} className="flex items-center">
         <button
           type="button"
           onClick={() => add(key)}
           disabled={used}
           aria-label={`${item.name}, ${item.cost} gold${state ? `, ${state === 'grey' ? 'not in build' : state}` : ''}${used ? ', in row' : ''}`}
-          className="group flex min-h-[48px] w-full items-center gap-2.5 rounded-[3px] px-1.5 py-1 text-left hover:bg-raised disabled:cursor-default disabled:hover:bg-transparent"
+          className="group flex min-h-[48px] min-w-0 flex-1 items-center gap-2.5 rounded-[3px] px-1.5 py-1 text-left hover:bg-raised disabled:cursor-default disabled:hover:bg-transparent"
         >
           <span className="relative shrink-0">
             <ItemImage
@@ -115,6 +117,17 @@ export function ItemPicker({ items, best, inRow, onAdd, onBackspace, onSubmit, r
             </span>
           </span>
         </button>
+        {onTree && (
+          <button
+            type="button"
+            onClick={() => onTree(key)}
+            aria-label={`${item.name}: item tree`}
+            title="Item tree"
+            className="flex h-11 w-9 shrink-0 items-center justify-center rounded-[3px] text-muted hover:bg-raised hover:text-ink"
+          >
+            <TreeIcon className="h-4 w-4" />
+          </button>
+        )}
       </li>
     );
   };

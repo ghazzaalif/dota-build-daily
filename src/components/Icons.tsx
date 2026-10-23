@@ -24,6 +24,8 @@ export const LockIcon = svg('M7 11V7a5 5 0 0 1 10 0v4M5 11h14v10H5z');
 export const SearchIcon = svg('m21 21-4.3-4.3M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z');
 export const BulbIcon = svg('M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2Z');
 export const ShareIcon = svg('M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13');
+/** Item recipe tree: one item at the top branching into three. */
+export const TreeIcon = svg('M12 3v6M5 21v-6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6M12 9v12M9 3h6M3 21h4M10 21h4M17 21h4');
 export const ExternalIcon = svg('M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6');
 
 export function Coin({ className = 'h-3 w-3' }: P) {

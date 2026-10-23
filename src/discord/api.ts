@@ -39,6 +39,13 @@ export interface BoardEntry {
   states: TileState[][];
 }
 
+/** Whether this server gets the auto-posted results card (see server/results.ts). */
+export interface ResultsStatus {
+  state: 'ok' | 'off' | 'no_channel' | 'no_bot' | 'no_channel_access' | 'post_failed';
+  fixedChannel: boolean;
+  error?: string;
+}
+
 export interface ServerStats {
   played: number;
   wins: number;
