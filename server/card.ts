@@ -1,11 +1,15 @@
 // The results card posted in Discord (like Wordle's): one panel per player with their
 // avatar, name, score and colour grid. Colours only, never items. Drawn as SVG, rendered
-// to PNG with resvg using the same fonts as the game.
+// to PNG with resvg.
+//
+// All text is converted to outlines here (opentype.js, the game's own fonts) instead of
+// being left to resvg's font lookup: on the server that lookup fell back to a wide system
+// font, which pushed the title off the card. Outlines also let the card be sized to fit.
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import opentype from 'opentype.js';
 import { MARK_BODY, MARK_BOWL } from '../src/brand/mark';
 import type { TileState } from '../src/game/types';
-import { woffToSfnt } from './woff';
 
 export interface CardPlayer {
   name: string;
@@ -46,7 +50,56 @@ const ROWS = 6;
 const COLS = 6;
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
-const clip = (s: string, n: number) => ([...s].length > n ? [...s].slice(0, n - 1).join('') + '…' : s);
+
+// --- text as outlines -----------------------------------------------------------------
+let fonts: { display: opentype.Font; body: opentype.Font } | null = null;
+function loadFonts() {
+  if (fonts) return fonts;
+  const req = createRequire(import.meta.url);
+  const load = (f: string) => {
+    const b = readFileSync(req.resolve(f));
+    return opentype.parse(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+  };
+  fonts = {
+    display: load('@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff'),
+    body: load('@fontsource/sofia-sans/files/sofia-sans-latin-700-normal.woff'),
+  };
+  return fonts;
+}
+
+type Face = 'display' | 'body';
+/** Drops characters the font can't draw (emoji, CJK…), which would otherwise render as boxes. */
+const drawable = (face: Face, text: string) => [...text].filter((ch) => loadFonts()[face].charToGlyph(ch).index !== 0).join('');
+export const textWidth = (face: Face, text: string, size: number, tracking = 0) =>
+  loadFonts()[face].getAdvanceWidth(text, size, { kerning: true }) + tracking * Math.max(0, [...text].length - 1);
+
+/** Shortens text with an ellipsis until it fits maxWidth. */
+function fit(face: Face, text: string, size: number, maxWidth: number): string {
+  if (textWidth(face, text, size) <= maxWidth) return text;
+  const chars = [...text];
+  while (chars.length > 1 && textWidth(face, chars.join('') + '…', size) > maxWidth) chars.pop();
+  return chars.join('') + '…';
+}
+
+/** `text` as an SVG path with its baseline at y; anchor 'middle' centres it on x. */
+function textPath(face: Face, text: string, x: number, y: number, size: number, fill: string, anchor: 'start' | 'middle' = 'start', tracking = 0): string {
+  const font = loadFonts()[face];
+  const w = textWidth(face, text, size, tracking);
+  let cx = anchor === 'middle' ? x - w / 2 : x;
+  const parts: string[] = [];
+  for (const ch of text) {
+    parts.push(font.getPath(ch, cx, y, size).toPathData(2));
+    cx += font.getAdvanceWidth(ch, size) + tracking;
+  }
+  return `<path fill="${fill}" d="${parts.join('')}"/>`;
+}
+
+const TITLE_SIZE = 30;
+const TITLE_TRACKING = 1;
+const TITLE_X = PAD + 38; // after the mark
+const TITLE_GAP = 11; // between "DAILY" and the number (the font's own space is very narrow)
+const titleWidth = (puzzleNo: number) =>
+  textWidth('display', 'DOTA BUILD DAILY', TITLE_SIZE, TITLE_TRACKING) + TITLE_GAP + textWidth('display', `#${puzzleNo}`, TITLE_SIZE, TITLE_TRACKING);
 
 function panel(p: CardPlayer, i: number, x: number, y: number): string {
   const cx = x + PANEL_W / 2;
@@ -55,7 +108,7 @@ function panel(p: CardPlayer, i: number, x: number, y: number): string {
     ? `<clipPath id="a${i}"><circle cx="${cx}" cy="${cy}" r="32"/></clipPath>
        <image href="data:image/png;base64,${p.avatar.toString('base64')}" x="${cx - 32}" y="${cy - 32}" width="64" height="64" clip-path="url(#a${i})" preserveAspectRatio="xMidYMid slice"/>`
     : `<circle cx="${cx}" cy="${cy}" r="32" fill="${C.raised}"/>
-       <text x="${cx}" y="${cy + 10}" text-anchor="middle" font-family="Big Shoulders Display" font-weight="800" font-size="30" fill="${C.ink}">${esc([...p.name][0]?.toUpperCase() ?? '?')}</text>`;
+       ${textPath('display', ([...drawable('display', p.name).trim()][0] ?? '?').toUpperCase(), cx, cy + 10, 30, C.ink, 'middle')}`;
   const score = p.status === 'won' ? `${p.states.length}/6` : p.status === 'lost' ? 'X/6' : `${p.states.length}/6…`;
   const gridW = COLS * TILE + (COLS - 1) * TILE_GAP;
   const gx = x + (PANEL_W - gridW) / 2;
@@ -76,23 +129,25 @@ function panel(p: CardPlayer, i: number, x: number, y: number): string {
   return `<g>
     <rect x="${x + 0.5}" y="${y + 0.5}" width="${PANEL_W - 1}" height="${PANEL_H - 1}" rx="14" fill="${C.panel}" stroke="${C.line}"/>
     ${avatar}
-    <text x="${cx}" y="${y + 106}" text-anchor="middle" font-family="Sofia Sans" font-weight="700" font-size="15" fill="${C.ink}">${esc(clip(p.name, 12))}</text>
-    <text x="${cx}" y="${y + 123}" text-anchor="middle" font-family="Sofia Sans" font-weight="700" font-size="13" fill="${p.status === 'won' ? C.green : C.muted}">${score}</text>
+    ${textPath('body', fit('body', drawable('body', p.name).trim() || 'Player', 15, PANEL_W - 16), cx, y + 106, 15, C.ink, 'middle')}
+    ${textPath('body', score, cx, y + 123, 13, p.status === 'won' ? C.green : C.muted, 'middle')}
     ${tiles.join('')}
   </g>`;
 }
 
-export function cardSize(n: number): { width: number; height: number } {
+export function cardSize(n: number, puzzleNo = 0): { width: number; height: number } {
   const shown = Math.min(n, MAX_SHOWN);
   const cols = Math.max(1, Math.min(shown, PER_ROW));
   const rows = Math.max(1, Math.ceil(shown / PER_ROW));
-  const width = Math.max(360, PAD * 2 + cols * PANEL_W + (cols - 1) * GAP);
+  const width = Math.ceil(Math.max(360, PAD * 2 + cols * PANEL_W + (cols - 1) * GAP, TITLE_X + titleWidth(puzzleNo) + PAD));
   const height = HEADER + rows * PANEL_H + (rows - 1) * GAP + PAD + (n > MAX_SHOWN ? 24 : 0);
   return { width, height };
 }
 
 export function cardSvg(input: CardInput): string {
-  const { width, height } = cardSize(input.players.length);
+  const { width, height } = cardSize(input.players.length, input.puzzleNo);
+  const goldPart = 'DOTA BUILD DAILY';
+  const numberX = TITLE_X + textWidth('display', goldPart, TITLE_SIZE, TITLE_TRACKING) + TITLE_GAP;
   const shown = input.players.slice(0, MAX_SHOWN);
   const panels = shown.map((p, i) => {
     const row = Math.floor(i / PER_ROW);
@@ -106,28 +161,18 @@ export function cardSvg(input: CardInput): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <rect width="${width}" height="${height}" rx="18" fill="${C.bg}"/>
   <g transform="translate(${PAD - 4} 22) scale(${34 / 256})"><path fill="${C.gold}" d="${MARK_BODY}"/><path fill="${C.green}" d="${MARK_BOWL}"/></g>
-  <text x="${PAD + 38}" y="50" font-family="Big Shoulders Display" font-weight="800" font-size="30" letter-spacing="1"><tspan fill="${C.gold}">DOTA BUILD DAILY</tspan><tspan fill="${C.ink}"> #${input.puzzleNo}</tspan></text>
+  <desc>${esc(`Dota Build Daily #${input.puzzleNo}: ${input.players.map((p) => p.name).join(', ')}`)}</desc>
+  ${textPath('display', goldPart, TITLE_X, 50, TITLE_SIZE, C.gold, 'start', TITLE_TRACKING)}
+  ${textPath('display', `#${input.puzzleNo}`, numberX, 50, TITLE_SIZE, C.ink, 'start', TITLE_TRACKING)}
   ${panels.join('\n')}
-  ${more > 0 ? `<text x="${width / 2}" y="${height - PAD + 4}" text-anchor="middle" font-family="Sofia Sans" font-weight="700" font-size="14" fill="${C.muted}">+${more} more</text>` : ''}
+  ${more > 0 ? textPath('body', `+${more} more`, width / 2, height - PAD + 4, 14, C.muted, 'middle') : ''}
 </svg>`;
-}
-
-let fonts: Buffer[] | null = null;
-function loadFonts(): Buffer[] {
-  if (fonts) return fonts;
-  const req = createRequire(import.meta.url);
-  fonts = [
-    '@fontsource/big-shoulders-display/files/big-shoulders-display-latin-800-normal.woff',
-    '@fontsource/sofia-sans/files/sofia-sans-latin-700-normal.woff',
-  ].map((f) => woffToSfnt(readFileSync(req.resolve(f))));
-  return fonts;
 }
 
 export async function renderCard(input: CardInput): Promise<Buffer> {
   const { Resvg } = await import('@resvg/resvg-js');
   const svg = cardSvg(input);
-  // fontBuffers works at runtime (resvg-js ≥ 2.5) but is missing from its type definitions.
-  const font = { fontBuffers: loadFonts(), loadSystemFonts: false, defaultFontFamily: 'Sofia Sans' };
-  const r = new Resvg(svg, { fitTo: { mode: 'zoom', value: 2 }, font: font as { loadSystemFonts: boolean } });
+  // No <text> is left in the SVG, so resvg needs no fonts at all.
+  const r = new Resvg(svg, { fitTo: { mode: 'zoom', value: 2 }, font: { loadSystemFonts: false } });
   return r.render().asPng();
 }

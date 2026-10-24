@@ -8,7 +8,7 @@ import { createServer, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { join } from 'node:path';
 import { createApp, type DiscordApi } from '../server/app';
-import { cardSvg, renderCard } from '../server/card';
+import { cardSize, cardSvg, renderCard, textWidth } from '../server/card';
 import { createInteractions, verifySignature } from '../server/interactions';
 import { createResultsPublisher, namesLine, type BotApi, type OutgoingMessage } from '../server/results';
 import { MemoryStore } from '../server/store';
@@ -98,8 +98,16 @@ describe('results card image', () => {
     expect(svg).toContain('#7');
     expect(svg).toContain('&#60;b&#62;&#38;&#34;x&#34;');
     for (const k of ANSWER) expect(svg).not.toContain(k);
+    expect(svg).not.toContain('<text'); // all text is outlines, so no font lookup can go wrong
     const png = await renderCard({ puzzleNo: 7, players });
     expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
+  });
+
+  it('sizes the card so the title always fits', () => {
+    for (const n of [1, 2]) {
+      const w = cardSize(n, 9999).width;
+      expect(w).toBeGreaterThanOrEqual(28 + 38 + textWidth('display', 'DOTA BUILD DAILY', 30, 1) + textWidth('display', '#9999', 30, 1) + 28);
+    }
   });
 
   it('names line', () => {
