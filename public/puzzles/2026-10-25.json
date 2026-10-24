@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 12,
+  "date": "2026-10-25",
+  "patch": "7.41",
+  "hero": {
+    "id": 33,
+    "key": "enigma",
+    "name": "Enigma"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      33,
+      36,
+      51,
+      91,
+      17
+    ],
+    "enemies": [
+      109,
+      107,
+      108,
+      9,
+      123
+    ],
+    "result": "win",
+    "durationSec": 4493,
+    "player": {
+      "name": "Davai",
+      "team": "Nigma Galaxy"
+    },
+    "priceBands": [
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "2000-3500",
+      "5500+",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8957527957,
+    "radiantTeam": "Team Yandex",
+    "direTeam": "Nigma Galaxy",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPU1xMUV5lWlsKBTtYU0IQGg9FWUBXZl9SEF5TUQ4ETR5ND1pVVBAPGEJaDRQFSW1XR1dfVRIBEEFTXFc3BwcYCAIKAhlMHFYQXl9IEF5AC1lGUUBfQ1RvTl1HXxMeRhYNV1djV1UPCwMfBQFHHUlGCQFDEAoQQl9QRkhealheXRARRhYQRFtbSGJVThAPCQcAXR9IQRBbV08PCxJMQFZbX1c7AAhTXFsQGg9FWUBXZl9SEF5RXAMCTR5ND1pVVBAPGEJbCBQBSG1VVlFIExwPRlxXVGEBAUYABgELAlBs"
+}
