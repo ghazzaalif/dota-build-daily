@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 13,
+  "date": "2026-10-26",
+  "patch": "7.41",
+  "hero": {
+    "id": 91,
+    "key": "wisp",
+    "name": "Io"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      91,
+      13,
+      96,
+      123,
+      112
+    ],
+    "enemies": [
+      55,
+      62,
+      26,
+      25,
+      69
+    ],
+    "result": "win",
+    "durationSec": 2858,
+    "player": {
+      "name": "Kiritych~",
+      "team": "BETBOOM TEAM"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "5500+",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8956821666,
+    "radiantTeam": "BETBOOM TEAM",
+    "direTeam": "Iron Wing",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPWVVBX2lVV2wQCgFlVl9fX0NQREJAFBYTRw0PAWlXUxAMGQYCUB5NGFpWHUBeGFBcU1VGbltEXFFlU1IWQEgYRllfU35UUw8IBwgCBhlOHxhZVUsUFxNdR11aVl9aFkBIGEZZX1N+VFMPCAcMBAYZTh8YWVVLFBcTQ0xGV1RYUEZORk5bXVdlSFISFwMPDAlOSBlGUVdJEAwPVkJIU0JfQ2wHEA1OEBwQQkRcVX5XVRgLAVZQU0ceSxBdSEgSFxBFSllWFgdGFhBEW1tIYlVOEAwICQFVHzk="
+}
