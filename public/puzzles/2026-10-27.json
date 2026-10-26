@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 14,
+  "date": "2026-10-27",
+  "patch": "7.41",
+  "hero": {
+    "id": 109,
+    "key": "terrorblade",
+    "name": "Terrorblade"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Lower Bracket Final, game 1"
+  },
+  "hints": {
+    "allies": [
+      109,
+      112,
+      120,
+      119,
+      108
+    ],
+    "enemies": [
+      11,
+      106,
+      98,
+      9,
+      53
+    ],
+    "result": "win",
+    "durationSec": 2245,
+    "player": {
+      "name": "Yatoro",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "4500-5500",
+      "3500-4500",
+      "5500+",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8960365292,
+    "radiantTeam": "Team Yandex",
+    "direTeam": "Team Spirit",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV9aV0VlRUYBAwBJEBwQQkRcVX5XVBgLBlNWGRZJEllTVBMKD19WVEVVRk5GTltdV2VIUhIXCgQCTBgfQA9fSxIIFEVEQl9bVFtfUTsSDVFXEh4UWVhdSGFSWRMOVVBXDU8cSRRGVEkPCBVJWlUAC0YWEERbW0hiVU4QDQsEBV0fSEEQW1dPDwsST0dDTlRGAg4dGB4SRl9AVGNIURUAAANTVhkWSRJZU1QTCg9VRV9QQAEQO1lAWUYUARNERF9SaVRXRlhVAwEIT2s="
+}
