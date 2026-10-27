@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 15,
+  "date": "2026-10-28",
+  "patch": "7.41",
+  "hero": {
+    "id": 21,
+    "key": "windrunner",
+    "name": "Windranger"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      21,
+      91,
+      155,
+      123,
+      58
+    ],
+    "enemies": [
+      9,
+      135,
+      53,
+      100,
+      19
+    ],
+    "result": "win",
+    "durationSec": 3268,
+    "player": {
+      "name": "医者watson`",
+      "team": "Team Yandex"
+    },
+    "priceBands": [
+      "5500+",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8955549026,
+    "radiantTeam": "Team Yandex",
+    "direTeam": "Team Liquid",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPXFpCXlRUWEdGTkZOW11XZUhSEhcLDgpMGR9AD19LEggURURCX1tbW19QOxINUVcSHhRZWF1IYV1ZEw9VUFMNTxxJFEZUSQ8IGlhdVAcJO1FbXlVpT1BCDx4aTlhYATEBWRAKAwMYBk0BSRpRVExGWEZdQFVTQkhDb05AUU4TGUYWDVdXY1dVDwsBFQYJRx1ORgkBQxAKEEVMRVFDW1sYHRcQCwlfYVVRFBcDBBUERRZKFw8HHRgIEkBXXVhVXxAUGEVcCQc3X1ESCAUfAQJQbw=="
+}
