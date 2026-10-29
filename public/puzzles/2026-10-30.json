@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 17,
+  "date": "2026-10-30",
+  "patch": "7.41",
+  "hero": {
+    "id": 74,
+    "key": "invoker",
+    "name": "Invoker"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      74,
+      11,
+      2,
+      112,
+      9
+    ],
+    "enemies": [
+      73,
+      51,
+      108,
+      50,
+      107
+    ],
+    "result": "win",
+    "durationSec": 3672,
+    "player": {
+      "name": "CHIRA_JUNIOR",
+      "team": "Team Yandex"
+    },
+    "priceBands": [
+      "2000-3500",
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8957890399,
+    "radiantTeam": "Nigma Galaxy",
+    "direTeam": "Team Yandex",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPXFVZVl9Ibl8FDwlfQBIeFFlYXUhgVVkTDVNTUEceSxBdSEgSFxFESFBBAQ47WF1fRkUPHRJZWl1fYlIHQF4CBQdPGlYTW0hKEgATVQgDB1FtW1tYSm5STEESFhNDDQ8BaVdTEAwcAwAYThxBE1wBG0YAEFdHWEpYQg8fEk5YWgExAVkQCgMAFQZNAUgSUVRORlhGSVpVV0ZeRVlOWBIWE0MNDwFpV1MQDB8AARhOHEETXAEbRgAQQldQX1RDRVZCGB0VEAsJX2FVURQXAwUeCk1n"
+}
