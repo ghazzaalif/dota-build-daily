@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 18,
+  "date": "2026-10-31",
+  "patch": "7.41",
+  "hero": {
+    "id": 18,
+    "key": "sven",
+    "name": "Sven"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Playoffs"
+  },
+  "hints": {
+    "allies": [
+      18,
+      9,
+      96,
+      59,
+      79
+    ],
+    "enemies": [
+      54,
+      51,
+      55,
+      103,
+      53
+    ],
+    "result": "win",
+    "durationSec": 2501,
+    "player": {
+      "name": "skiter",
+      "team": "Team Falcons"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8955796155,
+    "radiantTeam": "Team Falcons",
+    "direTeam": "Nigma Galaxy",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQV9aVkNlRUoBAwBJEBwQQkRcVX5WUhgLDFdaGRZJEllTVBMKD1FdW1JTOwkNVFVvUFdfExwPR1hXVGsBAUYAAwIBBlAdSw9YVEMTAkYKBUhCX11YDx0SWVpcX2JdB0BeCwEGBksBShJGVkgYCxoDEAFbRlVAaU5DWVkRHRhFUQkHN19REggHGwQBUB9KGFpdHUBeGEFRRldDWFMPHxNOWFUBMQFZEAoDDh4JTQFIE1FUQUZYRklFWVRCclNcRF1aGB0aEAsJX2FVURQXAwEdBkxn"
+}
