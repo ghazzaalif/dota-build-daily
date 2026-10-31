@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 19,
+  "date": "2026-11-01",
+  "patch": "7.41",
+  "hero": {
+    "id": 11,
+    "key": "nevermore",
+    "name": "Shadow Fiend"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Lower Bracket Final, game 2"
+  },
+  "hints": {
+    "allies": [
+      11,
+      123,
+      120,
+      51,
+      96
+    ],
+    "enemies": [
+      53,
+      128,
+      69,
+      85,
+      79
+    ],
+    "result": "win",
+    "durationSec": 2059,
+    "player": {
+      "name": "Yatoro",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "0-2000",
+      "4500-5500",
+      "3500-4500",
+      "5500+",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8960411225,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "Team Yandex",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQV5aVUNlRUsBAwBJEBwQQkRcVH5VUhgLC1NVGRZJEllTVBMLD11QSVpmCwQ7V1NUXFNeQhMBEkVTXFw3BwcYCAYEAFAdSg9bVEMTA0YPBVRGURAaD0VYQFViX1IbXlNUCAVNHk0PWlRUEgsYWUwWEA1ZU15XaV1YWkgSHRhFUAkHN19REggHHwkIUBxKGFpcHUBeGEFZXkBIQ25IVFZfExVGFg1XV2NXVQ8LABgHAEcdQkYJAUMQChBRX1RQWVVDZVJLDRZGFhBEW1tIYlROEgsLCAxUHzk="
+}
