@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 20,
+  "date": "2026-11-02",
+  "patch": "7.41",
+  "hero": {
+    "id": 96,
+    "key": "centaur",
+    "name": "Centaur Warrunner"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      96,
+      11,
+      106,
+      21,
+      103
+    ],
+    "enemies": [
+      83,
+      56,
+      107,
+      36,
+      26
+    ],
+    "result": "win",
+    "durationSec": 5678,
+    "player": {
+      "name": "Noticed",
+      "team": "TEAM VISION"
+    },
+    "priceBands": [
+      "3500-4500",
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8943477775,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "Team Falcons",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPXV5ZRUFlXUIGQEgYRllfU35UUg8KAwsHBxlOHxhZVUsUFxNTQVlcURAcRhYNV1djV1UPCwAeCAtHHktGCQFDEAoQVEFQUkZvWVNcVzsABUgQHBBCRFxUflVRGAgBU1NcRx5LEF1ISBMXElpfU0IQQEgYRllfU35UUg8KAQoLBxlOHxhZVUsUFxNSX1VeVlNDOwEWVUhZV0QPHRNZWV9fYVUHQF4JBAcGSwFKE0ZVSxgIEhMLCl5tR1NdSEMTARJGU19VNwcHGAgEBgAeTGw="
+}
