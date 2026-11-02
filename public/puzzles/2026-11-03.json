@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 21,
+  "date": "2026-11-03",
+  "patch": "7.41",
+  "hero": {
+    "id": 29,
+    "key": "tidehunter",
+    "name": "Tidehunter"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Upper Bracket Final, game 2"
+  },
+  "hints": {
+    "allies": [
+      29,
+      48,
+      128,
+      112,
+      62
+    ],
+    "enemies": [
+      53,
+      28,
+      13,
+      119,
+      84
+    ],
+    "result": "win",
+    "durationSec": 2685,
+    "player": {
+      "name": "DM",
+      "team": "Team Yandex"
+    },
+    "priceBands": [
+      "0-2000",
+      "2000-3500",
+      "2000-3500",
+      "4500-5500",
+      "3500-4500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8958950792,
+    "radiantTeam": "TEAM VISION",
+    "direTeam": "Team Yandex",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQVlMQ1ZlUF4LFhcYHhJGX0BUYkhTEQABCVcfSEEQW1dPDwsTTl9dSVdSFgMQX1ZvRURMQUIPHBFOW1wBMQFZEAoFDx1MHVYSWF9LE15ABlZbXlkUARNFRF1WaVdSRlhdDwZNHk0PWlRUEgkYQVkNFAVJbVdHV19VEwESR1NfVDcHBxgIAQQGHUwdVhJYX0sTXkAGVlNTWWlGWF9Kb1FbQBNIQBBTX1VhU04TCxwJAgtPHR9AD19LEggUWF1FRF1STlduFwEBSkZVQBQBE0VEXVZpV1JGWFYJCwNPaw=="
+}
