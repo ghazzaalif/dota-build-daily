@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 22,
+  "date": "2026-11-04",
+  "patch": "7.41",
+  "hero": {
+    "id": 120,
+    "key": "pangolier",
+    "name": "Pangolier"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      120,
+      18,
+      33,
+      119,
+      112
+    ],
+    "enemies": [
+      6,
+      13,
+      96,
+      105,
+      85
+    ],
+    "result": "win",
+    "durationSec": 4566,
+    "player": {
+      "name": "Topson",
+      "team": "LGD Gaming"
+    },
+    "priceBands": [
+      "4500-5500",
+      "5500+",
+      "5500+",
+      "5500+",
+      "3500-4500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8943332564,
+    "radiantTeam": "LGD Gaming",
+    "direTeam": "Team Resilience",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPXlJZUUZTXFc7AQtIVxIeFFlYXEhjUVkQCFZTXA1PHEkURlRIDwoWXltBFAcWSVdCEBoPRVhAVWdfURBeUFAKCk0eTQ9aVFQSDhhdRAEQE1JXXF9fQ1ZuT1xdVFkQSEAQU19VYVNOEwsfCQYITx4fQA9fSxIIFExTSF5DVVZtUAgDAF8QHBBCRFxUflVXGAgBVFFRRx5LEF1ISBMXElpPXl4NBA1fQBIeFFlYXEhjUVkQCFdXXQpPHEkURlRIDwoWW0FBBRcIThAcEEJEXFR+VVcYCAFdUlZHbw=="
+}
