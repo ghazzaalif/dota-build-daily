@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 23,
+  "date": "2026-11-05",
+  "patch": "7.41",
+  "hero": {
+    "id": 112,
+    "key": "winter_wyvern",
+    "name": "Winter Wyvern"
+  },
+  "role": {
+    "pos": 5,
+    "label": "Hard Support"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      112,
+      19,
+      25,
+      98,
+      100
+    ],
+    "enemies": [
+      21,
+      107,
+      9,
+      119,
+      155
+    ],
+    "result": "win",
+    "durationSec": 4369,
+    "player": {
+      "name": "kaori",
+      "team": "Aurora Gaming"
+    },
+    "priceBands": [
+      "2000-3500",
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "2000-3500",
+      "2000-3500"
+    ]
+  },
+  "match": {
+    "matchId": 8943097729,
+    "radiantTeam": "GamerLegion",
+    "direTeam": "Aurora Gaming",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPU11EXl4YHhEQCwlfYVVRFBcAAhkFSBZJEQ8HHRgIElVaRFxcSEJqWVNDAUBIGEZZX1N+VFIPCgQNBQIZTh8YWVVLFBcTU0FRVlFtWA0MA2VQUUAUARNFRF1QaVdQRlhWDQsCTxpWE1pISRcAEEYIFg1XU0RXaV5SVF1EUEgQH0YWDVdXY1dVDwsCGAgERx5IRgkBQxAKEEFERVJFb1dWU1cBQEgYRllfU35UUg8KBgMFBBlOHxhZVUsUFxNFX1FDX15sBg0LTkESHhRZWFxIY1BZEAlQUVQIT20="
+}
