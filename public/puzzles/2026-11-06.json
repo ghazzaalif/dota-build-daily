@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 24,
+  "date": "2026-11-06",
+  "patch": "7.41",
+  "hero": {
+    "id": 56,
+    "key": "clinkz",
+    "name": "Clinkz"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      56,
+      83,
+      128,
+      120,
+      58
+    ],
+    "enemies": [
+      21,
+      17,
+      28,
+      121,
+      85
+    ],
+    "result": "win",
+    "durationSec": 2446,
+    "player": {
+      "name": "skiter",
+      "team": "Team Falcons"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "3500-4500",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8947983249,
+    "radiantTeam": "Vici Gaming",
+    "direTeam": "Team Falcons",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV5aVURlRkYBAwBJEBwQQkRcVH5VVRgIAFNRGRZJEllTVBMLD1RTSV1YBRYLSBAcEEJEXFR+VVUYCAxXWhkWSRJZU1QTCw9eQ1ZeXQILAUgQHBBCRFxUflVVGAgFUFtTRx5LEF1ISBMXEl5PQEYNAQVUV29CX0ZUEwESQlNfUTcHBxgIAQQBHUwdVhJdX0sWXkARVkZZX1dZVG5eU1NKRlEWQEgYRllfU35UUg8KBwMDBxlOHxhZVUsUFxNCXVhTSFcWSEAQU19VYVNOEwsfAgMLT2k="
+}
