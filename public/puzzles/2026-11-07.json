@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 25,
+  "date": "2026-11-07",
+  "patch": "7.41",
+  "hero": {
+    "id": 17,
+    "key": "storm_spirit",
+    "name": "Storm Spirit"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      17,
+      85,
+      6,
+      119,
+      60
+    ],
+    "enemies": [
+      67,
+      34,
+      55,
+      71,
+      112
+    ],
+    "result": "win",
+    "durationSec": 3054,
+    "player": {
+      "name": "Larl",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "4500-5500",
+      "5500+",
+      "3500-4500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8943143428,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "Xtreme Gaming",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQV5aVUVlRkcBAwBJEBwQQkRcVH5VVBgIAVBSGRZJEllTVBMLD1JbW1FeOwkNVFVvUFdfEx0PRF5XV2YBAUYAAwQAA1AdSg9bUkMQD0YRFFJXQlcUARNFRF1SaVdWRlhVDQUFTxpWE1pISRUAEFEBFAVJRlFGWV8THQ9EXldXZgEBRgADCQABUB1KD1tSQxAPRgkFQ1NvU1hJbkJMXlBfEBlGFg1XV2NXVQ8LAxwEA0ceTkYJAUMQChBYWF1dRFZeX0AXSEAQU19VYVNOEwsfBQQMT2g="
+}
