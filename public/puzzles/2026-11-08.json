@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 26,
+  "date": "2026-11-08",
+  "patch": "7.41",
+  "hero": {
+    "id": 43,
+    "key": "death_prophet",
+    "name": "Death Prophet"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      43,
+      100,
+      53,
+      107,
+      9
+    ],
+    "enemies": [
+      30,
+      29,
+      25,
+      51,
+      67
+    ],
+    "result": "win",
+    "durationSec": 2954,
+    "player": {
+      "name": "Collapse",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500",
+      "2000-3500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8944819470,
+    "radiantTeam": "Team Liquid",
+    "direTeam": "Team Spirit",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQVlMQ11lUFkLFhcYHhJGX0BUYkhTGgAGBFUfSEEQW1dPDwsTT1xZWVlpDwsKXW1SU0QPHRNZWVVfYVMHQF4LAQcLSwFKE0ZVQRgIFA8DHVttUVxSckJQQ1ddGB4UEAsJX2FVURQXAAcZBUUWSRQPBx0YCBJBXkRHUF5vX09TRABASBhGWV9TflRSDwoJAwQFGU4fGFlVSxQXE1NBWVZREBpGFg1XV2NXVQ8LAxwCAEceTUYJAUMQChBBRF9VckdZUVdERk5GTltdV2VIUhMXAgAOAEs5"
+}
