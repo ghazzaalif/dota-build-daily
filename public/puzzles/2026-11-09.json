@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 27,
+  "date": "2026-11-09",
+  "patch": "7.41",
+  "hero": {
+    "id": 107,
+    "key": "earth_spirit",
+    "name": "Earth Spirit"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      107,
+      85,
+      56,
+      69,
+      26
+    ],
+    "enemies": [
+      12,
+      126,
+      96,
+      123,
+      112
+    ],
+    "result": "win",
+    "durationSec": 2477,
+    "player": {
+      "name": "Malr1ne",
+      "team": "Team Falcons"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8946285985,
+    "radiantTeam": "Team Falcons",
+    "direTeam": "GamerLegion",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQkFEQlBObUEBERdfXhIeFFlYXEhjXFkQDVNSXUceSxBdSEgTFxJbVlNUDz0PU1xXbVRMQxMBEk1TX1I3BwcYCAEGBRtMHVYSUl9LFV5AF1JbRlNFclZETEJdGB4VEAsJX2FVURQXAAYUAkQWSRUPBx0YCBJZV1RQbkxeXWVBVgoFARgeEkZfQFRiSFMbAAMOVVIZFkkSWVNUEwsPUlVVXVMXFgtUVxIeFFlYXEhjXFkQDVZTVglPHEkURlRIDwobT15DDQ8FTldvQVVIQUVIQhsWEEMNDwFpV1MQDB8FAB5NZA=="
+}
