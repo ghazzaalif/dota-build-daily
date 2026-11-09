@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 28,
+  "date": "2026-11-10",
+  "patch": "7.41",
+  "hero": {
+    "id": 25,
+    "key": "lina",
+    "name": "Lina"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      25,
+      5,
+      18,
+      120,
+      51
+    ],
+    "enemies": [
+      21,
+      49,
+      65,
+      79,
+      9
+    ],
+    "result": "win",
+    "durationSec": 2640,
+    "player": {
+      "name": "Malr1ne",
+      "team": "Team Falcons"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "2000-3500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8943072784,
+    "radiantTeam": "Team Falcons",
+    "direTeam": "LGD Gaming",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPRUNMR1VWbVoLDRBJEBwQQkRcVH5UUxgIDlFUGRZJEllTVBMLD0RcTltVBRYBZUFTV0ZZVEMPHRJOW1UBMQFZEAoDBxQETAFKElFXQUZYRklCWFdESBMdD0VZV1drAQFGAAMGAgVQHUoPWlVDEAJGGwVJWlFtV0NVbkZQSVsQFEYWDVdXY1dVDwsAGgYHRx5DRgkBQxAKEFJMVl5DExwYRlEJBzdfURIIBB8EBFAdSxhZXR1AXhhBWFdTXUJFRFJbGB4aEAsJX2FVURQXAwcfAE1n"
+}
