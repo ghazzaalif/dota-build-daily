@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 29,
+  "date": "2026-11-11",
+  "patch": "7.41",
+  "hero": {
+    "id": 109,
+    "key": "terrorblade",
+    "name": "Terrorblade"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      109,
+      64,
+      106,
+      86,
+      108
+    ],
+    "enemies": [
+      11,
+      13,
+      120,
+      9,
+      58
+    ],
+    "result": "win",
+    "durationSec": 2384,
+    "player": {
+      "name": "Yatoro",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "4500-5500",
+      "5500+",
+      "3500-4500",
+      "3500-4500",
+      "5500+",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8948235815,
+    "radiantTeam": "Team Resilience",
+    "direTeam": "Team Spirit",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPXFBDRVAYHhsQCwlfYVVRFBcJCBxMHUEQUgEbRgAQQ1lXSVgTARNFU19cNwcHGAgBBAIeTB1WE1pfSxteQAxPQEJbVUxfVHJBWFFXG0hAEFNfVWFTThMLHAYIDU8VH0APX0sSCBRPXVBOWm5RW1cDPQZbQBIeFFlYXEhiVFkQA1VbUQhPHEkURlRIDwsTWF5WCwYQUl1CXBQBE0VEXFRpV1pGWFYKBQdPGlYTWkhIEwAQWxEWEF9AVl5PDx0TWVhcX2FcB0BeCAAEA0tw"
+}
