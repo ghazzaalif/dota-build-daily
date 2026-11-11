@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 30,
+  "date": "2026-11-12",
+  "patch": "7.41",
+  "hero": {
+    "id": 28,
+    "key": "slardar",
+    "name": "Slardar"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      28,
+      6,
+      85,
+      96,
+      119
+    ],
+    "enemies": [
+      58,
+      54,
+      107,
+      129,
+      9
+    ],
+    "result": "win",
+    "durationSec": 2867,
+    "player": {
+      "name": "Fayde",
+      "team": "GamerLegion"
+    },
+    "priceBands": [
+      "0-2000",
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8946228708,
+    "radiantTeam": "Team Falcons",
+    "direTeam": "GamerLegion",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV5aVEBlR0IBAwBJEBwQQkRcVH5UURgJA1xaGRZJEllTVBMLD1NeU11bRk5GTltdV2VIUhMXBgQCThwfQA9fSxIIFE9dUE5abVFaXgM9BltAEh4UWVhcSGJXWREKVVZQDU8cSRRGVEgPCxBSUkIUDQtUEBwQQkRcVH5UURgJAV1RVkceSxBdSEgTFxNcT19cDQQNX0ASHhRZWFxIYldZEQpWU1IITxxJFEZUSA8LEE1aXgA9E1tZVUAUARNFRFxXaVZTRlhWAgMGT2s="
+}
