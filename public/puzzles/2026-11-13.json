@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 31,
+  "date": "2026-11-13",
+  "patch": "7.41",
+  "hero": {
+    "id": 114,
+    "key": "monkey_king",
+    "name": "Monkey King"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      114,
+      79,
+      77,
+      25,
+      123
+    ],
+    "enemies": [
+      89,
+      74,
+      2,
+      3,
+      9
+    ],
+    "result": "win",
+    "durationSec": 2377,
+    "player": {
+      "name": "m1CKe",
+      "team": "Team Liquid"
+    },
+    "priceBands": [
+      "4500-5500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "5500+",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8944525313,
+    "radiantTeam": "Team Liquid",
+    "direTeam": "Team Yandex",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQ1BJWFJUUFRGTkZOW11XZUhSExcJAwNOHR9AD19LEggUQFBfWVARFhFFDQ8BaVdTEAwcAwEbTB9BEVoBG0YAEEVeQkRcUFlUbElQVBQWAUgQHBBCRFxUflRQGAkAUlpURx5LEF1ISBMXE15VXVoBGztRW15VaU9QQw8dEU5aXAExAVkQCgMOHQBMAUoRUVZIRlhGSVlRVl8PHRNZWF5fYFQHQF4LCwcBSwFKE0ZUShgJEwYOBVlZb1lfQ1ZuT1BBGB8TEAsJX2FVURQXAwIcAE5n"
+}
