@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 32,
+  "date": "2026-11-14",
+  "patch": "7.41",
+  "hero": {
+    "id": 55,
+    "key": "dark_seer",
+    "name": "Dark Seer"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      55,
+      27,
+      131,
+      107,
+      54
+    ],
+    "enemies": [
+      9,
+      96,
+      17,
+      90,
+      114
+    ],
+    "result": "win",
+    "durationSec": 2802,
+    "player": {
+      "name": "33",
+      "team": "Iron Wing"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "2000-3500"
+    ]
+  },
+  "match": {
+    "matchId": 8946337070,
+    "radiantTeam": "Team Liquid",
+    "direTeam": "Iron Wing",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPWVRBXGtVVW0QCgFlVl9fX0NQRUJDFhYRRg0PAWlXUxAMGAgFUB1PGFhXHUBeGFVFU0RJWFBDblNIVlMSBxcYHhJGX0BUYkhSFgACA1ZaGRZJEllTVBMLD1JGX19eBRE7WUBfSF9IQxMBE0BTXlc3BwcYCAEHBxlMHVYTX19KEF5ABlZTU1lpRlhfSm5WW0EQSEAQU19VYVNOEwscCQAKTh4fQA9fSxIIFF5ZWFtQR2VURwUQABgeEkZfQFRiSFIWAAEAUloZFkkSWVNUEwsPU1hTXVlGTkZOW11XZUhSExcDAQgETzk="
+}
