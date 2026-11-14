@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 33,
+  "date": "2026-11-15",
+  "patch": "7.41",
+  "hero": {
+    "id": 145,
+    "key": "kez",
+    "name": "Kez"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      145,
+      77,
+      123,
+      131,
+      107
+    ],
+    "enemies": [
+      36,
+      27,
+      155,
+      3,
+      17
+    ],
+    "result": "win",
+    "durationSec": 3264,
+    "player": {
+      "name": "Pure",
+      "team": "Iron Wing"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "5500+",
+      "5500+",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8943038404,
+    "radiantTeam": "Nigma Galaxy",
+    "direTeam": "Iron Wing",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPXFBKVGpJX1IdBxYYHhJGX0BUYkhSFwAFBlYfSEEQW1dPDwsTSVRGVV9SEA0WGB4SRl9AVGJIUhcAAgNVUxkWSRJZU1QTCw9TWVtQWDsJDVRVb1BXXxMdD0VcV1ZgAQFGAAMHAAdQHUoPWlBDEQlGERNTVERtVEFYX0YTGRhHWgkHN19REggEHQgJUB1OGFhWHUBeGEFbU1JEEx0PRVxXVmABAUYAAAYKBlAdSg9aUEMRCUYFFl9TRFdEclJDREUXFhFHDQ8BaVdTEAweAAccTGg="
+}
