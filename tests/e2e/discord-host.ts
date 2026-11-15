@@ -47,6 +47,8 @@ const discord: DiscordApi = {
 };
 
 export const store = new MemoryStore();
+/** Simulates Render's free instance waking up: the next N API requests get its HTML loading page. */
+export const waking = { requests: 0 };
 /** Requests that reached the (fake) Umami gateway through the proxy path. */
 export const umamiHits: string[] = [];
 /** Fake bot that was never added to the test server, so the end screen shows the "add the bot" notice. */
@@ -120,7 +122,14 @@ export const server = createServer((req, res) => {
     res.writeHead(200, { 'content-type': 'text/html' }).end(HOST_PAGE(url.searchParams.get('as') ?? 'a'));
     return;
   }
-  if (url.pathname.startsWith('/api/')) return void api(req, res);
+  if (url.pathname.startsWith('/api/')) {
+    if (waking.requests > 0) {
+      waking.requests--;
+      res.writeHead(200, { 'content-type': 'text/html' }).end('<html><body>SERVICE WAKING UP … APPLICATION LOADING</body></html>');
+      return;
+    }
+    return void api(req, res);
+  }
   // Umami through the Discord proxy: a stub tracker that sends one pageview to the mapped gateway.
   if (url.pathname === '/umami-js/script.js') {
     res.writeHead(200, { 'content-type': 'text/javascript' }).end(

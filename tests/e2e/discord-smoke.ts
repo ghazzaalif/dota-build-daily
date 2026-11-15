@@ -12,7 +12,7 @@ import puppeteer, { type Frame, type Page } from 'puppeteer-core';
 import { answerKey, decodeAnswer } from '../../src/game/answer';
 import { puzzleDateAt } from '../../src/game/date';
 import type { ItemsMap, Puzzle } from '../../src/game/types';
-import { PLAYERS, server, store, umamiHits } from './discord-host';
+import { PLAYERS, server, store, umamiHits, waking } from './discord-host';
 
 const fail = (m: string): never => {
   throw new Error(m);
@@ -61,8 +61,13 @@ async function playRow(frame: Frame, keys: string[]) {
 }
 
 try {
-  // Player A signs in and plays.
+  // Player A signs in and plays. The API is "asleep" at first: its first 3 requests get
+  // Render's loading page, and sign-in must wait it out instead of failing.
+  waking.requests = 3;
   const a = await open('a');
+  for (let t = 0; t < 40 && !(await cmds(a.page)).some((c) => c.cmd === 'AUTHENTICATE'); t++) await sleep(500);
+  if (waking.requests !== 0) fail('sign-in never reached the waking API');
+  if (await a.frame.$('::-p-text(Couldn\'t sign in)')) fail('sign-in failed while the API was waking');
   const tut = await a.frame.$('[role=dialog] button ::-p-text(Start guessing)');
   if (tut) await tut.click();
   await sleep(500);

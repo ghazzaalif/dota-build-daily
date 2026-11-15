@@ -55,6 +55,8 @@ export default function App({ navigate }: { navigate?: (path: string) => void } 
   const [session, setSession] = useState<DiscordSession | null>(null);
   const [serverStats, setServerStats] = useState<ServerStats | null>(null);
   const [discordError, setDiscordError] = useState<string | null>(null);
+  const [waking, setWaking] = useState(false);
+  const [retrying, setRetrying] = useState(false);
   const refreshServerStats = useCallback(() => {
     session?.api.stats().then(setServerStats).catch(() => undefined);
   }, [session]);
@@ -114,11 +116,13 @@ export default function App({ navigate }: { navigate?: (path: string) => void } 
     // Inside Discord, sign in first so progress from other devices can be merged before
     // the puzzle renders. A failed sign-in still lets the player play on this device.
     const signIn: Promise<DiscordSession | null> = IN_DISCORD
-      ? loadSession().catch((e) => {
-          console.warn('Discord sign-in failed', e);
-          setDiscordError("Couldn't sign in with Discord. You can still play; your result won't show in this server.");
-          return null;
-        })
+      ? loadSession(() => setWaking(true))
+          .catch((e) => {
+            console.warn('Discord sign-in failed', e);
+            setDiscordError("Couldn't sign in with Discord. You can still play; your result won't show in this server.");
+            return null;
+          })
+          .finally(() => setWaking(false))
       : Promise.resolve(null);
     Promise.all([loadStatic(), signIn])
       .then(([d, s]) => {
@@ -170,8 +174,30 @@ export default function App({ navigate }: { navigate?: (path: string) => void } 
       />
 
       {discordError && (
-        <div role="status" className="border-b border-line bg-panel px-4 py-2 text-center text-small">
-          {discordError}
+        <div role="status" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-b border-line bg-panel px-4 py-2 text-center text-small">
+          <span>{waking ? 'Waking up the game server. This can take up to a minute…' : discordError}</span>
+          {!waking && (
+            <button
+              type="button"
+              disabled={retrying}
+              onClick={() => {
+                setRetrying(true);
+                loadSession(() => setWaking(true))
+                  .then((s) => {
+                    setSession(s);
+                    setDiscordError(null);
+                  })
+                  .catch((e) => console.warn('Discord sign-in retry failed', e))
+                  .finally(() => {
+                    setWaking(false);
+                    setRetrying(false);
+                  });
+              }}
+              className="h-9 rounded-[3px] bg-ink px-3 font-bold text-bg disabled:opacity-50"
+            >
+              {retrying ? 'Signing in…' : 'Try again'}
+            </button>
+          )}
         </div>
       )}
       {banners.map((b) => (
@@ -193,7 +219,7 @@ export default function App({ navigate }: { navigate?: (path: string) => void } 
         <p className="mx-auto max-w-md px-4 py-16 text-center text-small text-muted">{error}</p>
       ) : !data || !puzzle ? (
         <p className="py-24 text-center text-muted" aria-live="polite">
-          {IN_DISCORD ? 'Connecting to Discord…' : "Loading today's puzzle…"}
+          {IN_DISCORD ? (waking ? 'Waking up the game server. This can take up to a minute…' : 'Connecting to Discord…') : "Loading today's puzzle…"}
         </p>
       ) : (
         <GameScreen

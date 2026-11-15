@@ -18,4 +18,5 @@ export function openExternal(s: DiscordSession | null, url: string) {
   else window.open(url, '_blank', 'noopener');
 }
 
-export const loadSession = () => import('./session').then((m) => m.startDiscordSession());
+/** Loads the SDK chunk and signs in. `onWaking` fires while the (sleeping) API server wakes up. */
+export const loadSession = (onWaking?: () => void) => import('./session').then((m) => m.startDiscordSession(onWaking));

@@ -25,11 +25,49 @@ export interface DiscordSession {
   api: ApiClient;
 }
 
+/**
+ * The API runs on a free Render instance that sleeps when idle. While it wakes (up to about a
+ * minute), requests get Render's "Application loading" HTML page or a 502/503/504 instead of
+ * JSON. Treat those, and network errors, as "waking" and retry instead of failing.
+ */
+export const WAKE_TIMEOUT_MS = 90_000;
+const WAKE_DELAYS_MS = [1500, 2500, 4000, 6000];
+
+function isWakingResponse(res: Response): boolean {
+  if ([502, 503, 504].includes(res.status)) return true;
+  // Render's wake-up page is HTML, often with status 200; our API only ever answers JSON.
+  return !(res.headers.get('content-type') ?? '').includes('application/json');
+}
+
+export async function apiFetch(
+  url: string,
+  init: RequestInit,
+  opts: { onWaking?: () => void; timeoutMs?: number; sleep?: (ms: number) => Promise<void> } = {},
+): Promise<Response> {
+  const sleep = opts.sleep ?? ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
+  const deadline = Date.now() + (opts.timeoutMs ?? WAKE_TIMEOUT_MS);
+  for (let attempt = 0; ; attempt++) {
+    let res: Response | null = null;
+    try {
+      res = await fetch(url, init);
+      if (!isWakingResponse(res)) return res;
+    } catch (e) {
+      if (Date.now() >= deadline) throw e;
+    }
+    if (Date.now() >= deadline) {
+      if (res) return res;
+      throw new Error('The game server did not wake up in time');
+    }
+    opts.onWaking?.();
+    await sleep(WAKE_DELAYS_MS[Math.min(attempt, WAKE_DELAYS_MS.length - 1)]);
+  }
+}
+
 export class ApiClient {
   constructor(private token: string) {}
 
   private async call<T>(path: string, init: RequestInit = {}): Promise<T> {
-    const res = await fetch(`${API_URL}${path}`, {
+    const res = await apiFetch(`${API_URL}${path}`, {
       ...init,
       headers: { 'content-type': 'application/json', authorization: `Bearer ${this.token}`, ...(init.headers ?? {}) },
     });
@@ -57,8 +95,11 @@ export class ApiClient {
 let pending: Promise<DiscordSession> | null = null;
 const HANDSHAKE_TIMEOUT_MS = 15_000;
 
-/** Hand-shake + sign-in. Safe to call more than once; the work happens once. */
-export function startDiscordSession(): Promise<DiscordSession> {
+/**
+ * Hand-shake + sign-in. Safe to call more than once; the work happens once, unless it failed,
+ * in which case the next call tries again. `onWaking` fires while the API server wakes up.
+ */
+export function startDiscordSession(onWaking?: () => void): Promise<DiscordSession> {
   if (pending) return pending;
   pending = (async () => {
     if (!DISCORD_CLIENT_ID) throw new Error('Discord client ID is not configured');
@@ -80,11 +121,12 @@ export function startDiscordSession(): Promise<DiscordSession> {
       scope: ['identify', 'guilds'],
     });
 
-    const tokenRes = await fetch(`${API_URL}/token`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ code }),
-    });
+    // The sign-in code is single-use, but a sleeping server never received it, so retrying is safe.
+    const tokenRes = await apiFetch(
+      `${API_URL}/token`,
+      { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code }) },
+      { onWaking },
+    );
     if (!tokenRes.ok) throw new Error(`Sign-in failed (HTTP ${tokenRes.status})`);
     const { access_token } = (await tokenRes.json()) as { access_token: string };
 
@@ -105,5 +147,6 @@ export function startDiscordSession(): Promise<DiscordSession> {
       api: new ApiClient(access_token),
     };
   })();
+  pending.catch(() => (pending = null));
   return pending;
 }
