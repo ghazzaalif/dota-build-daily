@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 34,
+  "date": "2026-11-16",
+  "patch": "7.41",
+  "hero": {
+    "id": 36,
+    "key": "necrolyte",
+    "name": "Necrophos"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      36,
+      25,
+      85,
+      96,
+      119
+    ],
+    "enemies": [
+      19,
+      123,
+      2,
+      62,
+      46
+    ],
+    "result": "win",
+    "durationSec": 2215,
+    "player": {
+      "name": "Kiritych~",
+      "team": "BETBOOM TEAM"
+    },
+    "priceBands": [
+      "4500-5500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500",
+      "3500-4500",
+      "2000-3500"
+    ]
+  },
+  "match": {
+    "matchId": 8943055466,
+    "radiantTeam": "OG",
+    "direTeam": "BETBOOM TEAM",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQ1BJWFdUUFFGTkZOW11XZUhSExcIAglOGB9AD19LEggUQFBfWVAUFhFADQ8BaVdTEAwcAgYbTBpBEV8BG0YAEFhXV19FEwETQlNeUTcHBxgIAQQFGEwdVhNdX0oWXkAXUltGU0VyVkRMQ1IYHxYQCwlfYVVRFBcACBkISxZIFg8HHRgIEkdaWVhcTEVTZUBXARIQX0ASHhRZWFxIYlNZEQ5WUlwPTxxJFEZUSA8LFE5BVRIHCGVQX11CXhMdD0VfV1ZnAQFGAAABBgFQbA=="
+}
