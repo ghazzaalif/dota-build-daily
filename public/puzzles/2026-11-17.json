@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 35,
+  "date": "2026-11-17",
+  "patch": "7.41",
+  "hero": {
+    "id": 11,
+    "key": "nevermore",
+    "name": "Shadow Fiend"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      11,
+      123,
+      29,
+      106,
+      100
+    ],
+    "enemies": [
+      112,
+      48,
+      13,
+      86,
+      55
+    ],
+    "result": "win",
+    "durationSec": 2171,
+    "player": {
+      "name": "m1CKe",
+      "team": "Team Liquid"
+    },
+    "priceBands": [
+      "3500-4500",
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8944752572,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "Team Liquid",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPSFBeWVZlUlsAPQ9bS1EQGg9FWEBUZF9QF15VVANPHEkURlRIDwsVWF9cCglGFhBEW1tIYlROEw0CAQwZTh8YWVVLFBcTWVhDRVNQVAoHO0pbW1cUARNFRFxSaVZWRlhVCAoETxpWE1pISBUAEVcIAwdRbVtbWEpuU0xDFRYRQQ0PAWlXUxAMHAQFHUwbQRFeARtGABBXQFNMRVRfblRIWkFGTkZOW11XZUhSExcADwgASEgZRlFXSRAMD0JQWVBZU1AXSEAQU19VYVNOEwsfAQADTmg="
+}
