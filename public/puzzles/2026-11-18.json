@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 36,
+  "date": "2026-11-18",
+  "patch": "7.41",
+  "hero": {
+    "id": 106,
+    "key": "ember_spirit",
+    "name": "Ember Spirit"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      106,
+      11,
+      27,
+      50,
+      155
+    ],
+    "enemies": [
+      7,
+      119,
+      21,
+      38,
+      138
+    ],
+    "result": "win",
+    "durationSec": 3227,
+    "player": {
+      "name": "lorenof",
+      "team": "Nigma Galaxy"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8943244303,
+    "radiantTeam": "Nigma Galaxy",
+    "direTeam": "OG",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPQkFEQ1FObEABERdfXhIeFFlYXEhiXVkRDFNbV0ceSxBdSEgTFxNaVlJVDz0PU1xXbVRMQxMBE0xTXlM3BwcYCAEGBhhMHVYTU19KFF5AF1JbRlNFclZETENcGB8UEAsJX2FVURQXAwIcBUUWSBQPBx0YCBJZV1RQbkxfXGVAVwoFARgeEkZfQFRiSFIaAAECV1QZFkkSWVNUEwsPQ11cQVMXCgFIEBwQQkRcVH5UWxgJBFJVVEceSxBdSEgTFxNXWUdXFgsKX21TXURIEx0PRVFXVmUBAUYAAQIDD1Bs"
+}
