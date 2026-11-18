@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 37,
+  "date": "2026-11-19",
+  "patch": "7.41",
+  "hero": {
+    "id": 19,
+    "key": "tiny",
+    "name": "Tiny"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      19,
+      107,
+      135,
+      123,
+      9
+    ],
+    "enemies": [
+      114,
+      25,
+      120,
+      91,
+      3
+    ],
+    "result": "win",
+    "durationSec": 3170,
+    "player": {
+      "name": "Ghost",
+      "team": "GamerLegion"
+    },
+    "priceBands": [
+      "4500-5500",
+      "5500+",
+      "3500-4500",
+      "4500-5500",
+      "5500+",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8944676424,
+    "radiantTeam": "Vici Gaming",
+    "direTeam": "GamerLegion",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPWVBfQVZVXRVIQBBTX1VhU04TCxwCCApOGx9AD19LEggUXlhdW1RLZVZTAwdGFhBEW1tIYlROEwMLBwRdH0hBEFtXTw8LE09dWFlYaA8LCl1tUlNEDx0TWVhUX2BSB0BeCwoCAUsBShNGVEAYCRUDEAFbRlVAaU5DWFkTFRhHXgkHN19REggEHwUJUB1CGFhSHUBeGEFHW1BZblNBWFdRERtGFg1XV2NXVQ8LAxsDC0cfTEYJAUMQChBFTEVQQ1haGB8VEAsJX2FVURQXAwgdBURn"
+}
