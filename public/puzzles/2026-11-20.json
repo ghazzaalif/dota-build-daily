@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 38,
+  "date": "2026-11-20",
+  "patch": "7.41",
+  "hero": {
+    "id": 96,
+    "key": "centaur",
+    "name": "Centaur Warrunner"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      96,
+      85,
+      53,
+      49,
+      131
+    ],
+    "enemies": [
+      11,
+      106,
+      2,
+      123,
+      3
+    ],
+    "result": "win",
+    "durationSec": 2526,
+    "player": {
+      "name": "Collapse",
+      "team": "Team Spirit"
+    },
+    "priceBands": [
+      "2000-3500",
+      "4500-5500",
+      "2000-3500",
+      "3500-4500",
+      "3500-4500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8944475884,
+    "radiantTeam": "Team Spirit",
+    "direTeam": "Aurora Gaming",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPWVRBX29VVWcQCgFlVl9fX0NQRUJAEhYRTA0PAWlXUxAMGwUBUB5LGFhdHUBeGFpVU0RZEx0PRllXVmsBAUYAAwIAAFAdSg9ZVUMRAkYACFNcWxAaD0VYQFdjX1AaXlNXAwRNHk0PWlRUEAoYRlQQCwlbRlVtRU5UQVlXQhgfGhALCV9hVVEUFwAJGwJNFkgaDwcdGAgSUFpMUlpyWVlUVGcGAxYYHhJGX0BUYkhREgABCVdUGRZJEllTVBMLD15fTkZLOw0WWBAcEEJEXFR+V1MYCQpXVlRHbw=="
+}
