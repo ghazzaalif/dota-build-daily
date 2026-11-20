@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 39,
+  "date": "2026-11-21",
+  "patch": "7.41",
+  "hero": {
+    "id": 6,
+    "key": "drow_ranger",
+    "name": "Drow Ranger"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      6,
+      74,
+      119,
+      103,
+      96
+    ],
+    "enemies": [
+      106,
+      9,
+      85,
+      155,
+      11
+    ],
+    "result": "win",
+    "durationSec": 2959,
+    "player": {
+      "name": "ssnovv1",
+      "team": "HULIGANI"
+    },
+    "priceBands": [
+      "4500-5500",
+      "3500-4500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8946227017,
+    "radiantTeam": "HULIGANI",
+    "direTeam": "OG",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPXFBDRlAYHxsQCwlfYVVRFBcAAR8BTBZIGw8HHRgIElpDX0NYTlNfX2xJDQkBGB4SRl9AVGJIURMAAgtTVBkWSRJZU1QTCw9QXVtQUjsJDVRVb1BXXxMdD0ZYV1ZqAQFGAAMFCwZQHUoPWVRDEQNGABFORlVAUEFIEwEQRVNeXDcHBxgIAgIEHUwdVhBaX0obXkAXW0ZRXF9OEx0PRlhXVmoBAUYAAAIEBVAdSg9ZVEMRA0YFFl9TRFdEclJDREYTFhFNDQ8BaVdTEAwfCQQbT2w="
+}

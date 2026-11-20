@@ -2,7 +2,7 @@
   "abyssal_blade": {
     "id": 208,
     "name": "Abyssal Blade",
-    "cost": 6250,
+    "cost": 6150,
     "category": "weapons",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/abyssal_blade.png",
     "aliases": [
@@ -11,13 +11,13 @@
     ],
     "components": [
       "basher",
-      "sange"
+      "dragon_lance"
     ],
     "significantComponents": [
       "basher",
-      "sange",
+      "dragon_lance",
       "mithril_hammer",
-      "ogre_axe"
+      "blade_of_alacrity"
     ],
     "eligible": true
   },
@@ -42,7 +42,7 @@
   "aether_lens": {
     "id": 232,
     "name": "Aether Lens",
-    "cost": 2275,
+    "cost": 2100,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/aether_lens.png",
     "aliases": [
@@ -240,7 +240,7 @@
   "blade_mail": {
     "id": 127,
     "name": "Blade Mail",
-    "cost": 2400,
+    "cost": 2350,
     "category": "armor",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/blade_mail.png",
     "aliases": [
@@ -292,7 +292,7 @@
   "bloodthorn": {
     "id": 250,
     "name": "Bloodthorn",
-    "cost": 6400,
+    "cost": 6250,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/bloodthorn.png",
     "aliases": [
@@ -301,8 +301,7 @@
     ],
     "components": [
       "orchid",
-      "oblivion_staff",
-      "javelin"
+      "oblivion_staff"
     ],
     "significantComponents": [
       "orchid",
@@ -339,7 +338,7 @@
   "butterfly": {
     "id": 139,
     "name": "Butterfly",
-    "cost": 5450,
+    "cost": 5000,
     "category": "weapons",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/butterfly.png",
     "aliases": [
@@ -348,12 +347,11 @@
     ],
     "components": [
       "eagle",
-      "claymore",
-      "talisman_of_evasion"
+      "talisman_of_evasion",
+      "quarterstaff"
     ],
     "significantComponents": [
       "eagle",
-      "claymore",
       "talisman_of_evasion"
     ],
     "eligible": true
@@ -411,11 +409,13 @@
     ],
     "components": [
       "vanguard",
+      "buckler",
       "helm_of_iron_will"
     ],
     "significantComponents": [
       "vanguard",
-      "vitality_booster"
+      "vitality_booster",
+      "buckler"
     ],
     "eligible": true
   },
@@ -442,7 +442,7 @@
   "dagon": {
     "id": 104,
     "name": "Dagon",
-    "cost": 3050,
+    "cost": 3000,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/dagon.png",
     "aliases": [
@@ -540,7 +540,7 @@
   "dragon_lance": {
     "id": 236,
     "name": "Dragon Lance",
-    "cost": 1900,
+    "cost": 2000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/dragon_lance.png",
     "aliases": [
@@ -694,7 +694,7 @@
   "greater_crit": {
     "id": 141,
     "name": "Daedalus",
-    "cost": 5100,
+    "cost": 5200,
     "category": "weapons",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/greater_crit.png",
     "aliases": [
@@ -716,7 +716,7 @@
   "guardian_greaves": {
     "id": 231,
     "name": "Guardian Greaves",
-    "cost": 4450,
+    "cost": 4350,
     "category": "boots",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/guardian_greaves.png",
     "aliases": [
@@ -783,12 +783,13 @@
     ],
     "components": [
       "echo_sabre",
-      "diadem"
+      "dragon_lance"
     ],
     "significantComponents": [
       "echo_sabre",
+      "dragon_lance",
+      "blade_of_alacrity",
       "broadsword",
-      "diadem",
       "ogre_axe"
     ],
     "eligible": true
@@ -796,7 +797,7 @@
   "heart": {
     "id": 114,
     "name": "Heart of Tarrasque",
-    "cost": 5100,
+    "cost": 5300,
     "category": "armor",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/heart.png",
     "aliases": [
@@ -816,7 +817,7 @@
   "heavens_halberd": {
     "id": 210,
     "name": "Heaven's Halberd",
-    "cost": 3400,
+    "cost": 2400,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/heavens_halberd.png",
     "aliases": [
@@ -824,12 +825,11 @@
       "hh"
     ],
     "components": [
-      "talisman_of_evasion",
-      "splintmail",
-      "ring_of_health"
+      "ogre_axe",
+      "helm_of_iron_will"
     ],
     "significantComponents": [
-      "talisman_of_evasion"
+      "ogre_axe"
     ],
     "eligible": true
   },
@@ -892,7 +892,7 @@
   "hurricane_pike": {
     "id": 263,
     "name": "Hurricane Pike",
-    "cost": 4450,
+    "cost": 4550,
     "category": "armor",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/hurricane_pike.png",
     "aliases": [
@@ -957,7 +957,7 @@
   "kaya": {
     "id": 259,
     "name": "Kaya",
-    "cost": 2100,
+    "cost": 2000,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/kaya.png",
     "aliases": [
@@ -975,7 +975,7 @@
   "kaya_and_sange": {
     "id": 273,
     "name": "Kaya and Sange",
-    "cost": 4200,
+    "cost": 4000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/kaya_and_sange.png",
     "aliases": [
@@ -1045,7 +1045,6 @@
     ],
     "components": [
       "mithril_hammer",
-      "javelin",
       "gloves"
     ],
     "significantComponents": [
@@ -1077,7 +1076,7 @@
   "manta": {
     "id": 147,
     "name": "Manta Style",
-    "cost": 4650,
+    "cost": 4550,
     "category": "armor",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/manta.png",
     "aliases": [
@@ -1097,7 +1096,7 @@
   "mask_of_madness": {
     "id": 172,
     "name": "Mask of Madness",
-    "cost": 1900,
+    "cost": 1800,
     "category": "accessories",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/mask_of_madness.png",
     "aliases": [
@@ -1105,12 +1104,10 @@
       "madness"
     ],
     "components": [
-      "broadsword",
-      "lifesteal"
+      "lifesteal",
+      "quarterstaff"
     ],
-    "significantComponents": [
-      "broadsword"
-    ],
+    "significantComponents": [],
     "eligible": true
   },
   "mekansm": {
@@ -1135,7 +1132,7 @@
   "meteor_hammer": {
     "id": 223,
     "name": "Meteor Hammer",
-    "cost": 2850,
+    "cost": 2750,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/meteor_hammer.png",
     "aliases": [
@@ -1185,7 +1182,7 @@
     "components": [
       "demon_edge",
       "blitz_knuckles",
-      "javelin"
+      "quarterstaff"
     ],
     "significantComponents": [
       "demon_edge",
@@ -1253,7 +1250,7 @@
   "octarine_core": {
     "id": 235,
     "name": "Octarine Core",
-    "cost": 4900,
+    "cost": 5100,
     "category": "magical",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/octarine_core.png",
     "aliases": [
@@ -1315,7 +1312,7 @@
   "pavise": {
     "id": 1128,
     "name": "Pavise",
-    "cost": 1350,
+    "cost": 1250,
     "category": "support",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/pavise.png",
     "aliases": [
@@ -1480,26 +1477,6 @@
     ],
     "eligible": true
   },
-  "revenants_brooch": {
-    "id": 911,
-    "name": "Revenant's Brooch",
-    "cost": 3300,
-    "category": "magical",
-    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/revenants_brooch.png",
-    "aliases": [
-      "brooch",
-      "revenant"
-    ],
-    "components": [
-      "lesser_crit",
-      "voodoo_mask"
-    ],
-    "significantComponents": [
-      "lesser_crit",
-      "claymore"
-    ],
-    "eligible": true
-  },
   "rod_of_atos": {
     "id": 206,
     "name": "Rod of Atos",
@@ -1522,7 +1499,7 @@
   "sange": {
     "id": 162,
     "name": "Sange",
-    "cost": 2100,
+    "cost": 2000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/sange.png",
     "aliases": [
@@ -1540,7 +1517,7 @@
   "sange_and_yasha": {
     "id": 154,
     "name": "Sange and Yasha",
-    "cost": 4200,
+    "cost": 4000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/sange_and_yasha.png",
     "aliases": [
@@ -1934,8 +1911,7 @@
     ],
     "components": [
       "oblivion_staff",
-      "chainmail",
-      "orb_of_venom"
+      "chainmail"
     ],
     "significantComponents": [
       "oblivion_staff",
@@ -1967,7 +1943,7 @@
   "yasha": {
     "id": 170,
     "name": "Yasha",
-    "cost": 2100,
+    "cost": 2000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/yasha.png",
     "aliases": [
@@ -1985,7 +1961,7 @@
   "yasha_and_kaya": {
     "id": 277,
     "name": "Yasha and Kaya",
-    "cost": 4200,
+    "cost": 4000,
     "category": "artifacts",
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/yasha_and_kaya.png",
     "aliases": [
@@ -2131,7 +2107,7 @@
   "chasm_stone": {
     "id": 1872,
     "name": "Chasm Stone",
-    "cost": 800,
+    "cost": 900,
     "category": null,
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/chasm_stone.png",
     "aliases": [],
@@ -2295,17 +2271,6 @@
     "significantComponents": [],
     "eligible": false
   },
-  "javelin": {
-    "id": 7,
-    "name": "Javelin",
-    "cost": 900,
-    "category": null,
-    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/javelin.png",
-    "aliases": [],
-    "components": [],
-    "significantComponents": [],
-    "eligible": false
-  },
   "lifesteal": {
     "id": 26,
     "name": "Morbid Mask",
@@ -2415,6 +2380,17 @@
     "cost": 1200,
     "category": null,
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/point_booster.png",
+    "aliases": [],
+    "components": [],
+    "significantComponents": [],
+    "eligible": false
+  },
+  "quarterstaff": {
+    "id": 10,
+    "name": "Quarterstaff",
+    "cost": 900,
+    "category": null,
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/quarterstaff.png",
     "aliases": [],
     "components": [],
     "significantComponents": [],
@@ -2612,7 +2588,7 @@
   "urn_of_shadows": {
     "id": 92,
     "name": "Urn of Shadows",
-    "cost": 825,
+    "cost": 875,
     "category": null,
     "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/urn_of_shadows.png",
     "aliases": [],
