@@ -1,0 +1,189 @@
+{
+  "mode": "draft",
+  "puzzleNo": 35,
+  "date": "2026-11-23",
+  "patch": "7.41",
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hiddenSide": "dire",
+  "hiddenHadFirstPick": true,
+  "draft": [
+    {
+      "order": 0,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 13
+    },
+    {
+      "order": 1,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 25
+    },
+    {
+      "order": 2,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 53
+    },
+    {
+      "order": 3,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 21
+    },
+    {
+      "order": 4,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 123
+    },
+    {
+      "order": 5,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 107
+    },
+    {
+      "order": 6,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 83
+    },
+    {
+      "order": 7,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 1
+    },
+    {
+      "order": 8,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 96
+    },
+    {
+      "order": 9,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 3
+    },
+    {
+      "order": 10,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 112
+    },
+    {
+      "order": 11,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 38
+    },
+    {
+      "order": 12,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 85
+    },
+    {
+      "order": 13,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 2
+    },
+    {
+      "order": 14,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 3
+    },
+    {
+      "order": 15,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 7
+    },
+    {
+      "order": 16,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 11
+    },
+    {
+      "order": 17,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 4
+    },
+    {
+      "order": 18,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 39
+    },
+    {
+      "order": 19,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 33
+    },
+    {
+      "order": 20,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 106
+    },
+    {
+      "order": 21,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 155
+    },
+    {
+      "order": 22,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 5
+    },
+    {
+      "order": 23,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 18
+    }
+  ],
+  "hints": {
+    "positions": [
+      4,
+      1,
+      5,
+      2,
+      3
+    ],
+    "teams": {
+      "hidden": "OG",
+      "enemy": "HULIGANI"
+    },
+    "result": "win",
+    "durationSec": 3655,
+    "players": [
+      "TIMS",
+      "Natsumi",
+      "skem",
+      "Yopaj-",
+      "Raven"
+    ],
+    "attributes": [
+      "int",
+      "agi",
+      "int",
+      "int",
+      "int"
+    ]
+  },
+  "secret": "H0AFVBcFBBRWAGkJAhocBQQBAQMWAgJIV1FnSFAMBwBZWhIITQ9cUFlRW3NXF15aXQ5SQ1dXTAoDHBBETFVYTFxHblZUCUBeGCwnLS8ze3x5EBoPVVhfV2dfUlhGWEZ1I1AcGw=="
+}

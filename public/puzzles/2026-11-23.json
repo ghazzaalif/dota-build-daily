@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 41,
+  "date": "2026-11-23",
+  "patch": "7.41",
+  "hero": {
+    "id": 120,
+    "key": "pangolier",
+    "name": "Pangolier"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      120,
+      25,
+      55,
+      21,
+      100
+    ],
+    "enemies": [
+      2,
+      73,
+      9,
+      74,
+      123
+    ],
+    "result": "win",
+    "durationSec": 3791,
+    "player": {
+      "name": "Xm",
+      "team": "Vici Gaming"
+    },
+    "priceBands": [
+      "2000-3500",
+      "4500-5500",
+      "4500-5500",
+      "2000-3500",
+      "3500-4500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8944742846,
+    "radiantTeam": "GamerLegion",
+    "direTeam": "Vici Gaming",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPU11EXFgYGBMQCwlfYVVRFBcAARkKThZPEw8HHRgIEkFeREdQXm1UT1VDAEBIGEZZX1N+VFIPCAELBgUZTh8YWVVLFBcTXk5GUkhdXwE9B1VAVRAaD0VYQFdgX1cTXlBTCgpNHk0PWlRUEAkYVVQLDDteW0NZFAETRURfVmlRUkZYVgIEBU8aVhNaSEsRABZfEQ4IU1RZV0QPHRNZW15fZ1QHQF4JBwYHSwFKE0ZXShgOEwALF0pXQkFTXxMdD0ZaV1FiAQFGAAEHBAFQbA=="
+}
