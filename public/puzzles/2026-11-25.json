@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 43,
+  "date": "2026-11-25",
+  "patch": "7.41",
+  "hero": {
+    "id": 18,
+    "key": "sven",
+    "name": "Sven"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      18,
+      112,
+      28,
+      106,
+      21
+    ],
+    "enemies": [
+      80,
+      13,
+      78,
+      119,
+      103
+    ],
+    "result": "win",
+    "durationSec": 2286,
+    "player": {
+      "name": "m1CKe",
+      "team": "Team Liquid"
+    },
+    "priceBands": [
+      "0-2000",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8943148045,
+    "radiantTeam": "Vici Gaming",
+    "direTeam": "Team Liquid",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV5aV0dlQEEBAwBJEBwQQkRcVH5XVhgOAFNaGRZJEllTVBMLD1BZW1dYOwkNVFVvUFdfEx0PRlxXUWABAUYAAwIHAlAdSg9ZUEMWCUYFFl9TRFdEclJDREYXFhZHDQ8BaVdTEAwcBAQfTxlBFlgBG0YAEFhTRF1eXkMQGRhAWgkHN19REggHGgEDUB5OGF9WHUBeGEFRRldDWFIPHhdOXV4BMQFZEAoDDxQGTAFJF1FRSkZYRklFWVRCclNdRFxeGBgREAsJX2FVURQXAwMfC0hn"
+}

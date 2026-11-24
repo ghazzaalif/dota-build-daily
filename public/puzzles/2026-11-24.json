@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 42,
+  "date": "2026-11-24",
+  "patch": "7.41",
+  "hero": {
+    "id": 107,
+    "key": "earth_spirit",
+    "name": "Earth Spirit"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      107,
+      26,
+      112,
+      25,
+      145
+    ],
+    "enemies": [
+      6,
+      96,
+      36,
+      51,
+      123
+    ],
+    "result": "win",
+    "durationSec": 2388,
+    "player": {
+      "name": "33",
+      "team": "Iron Wing"
+    },
+    "priceBands": [
+      "0-2000",
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "3500-4500"
+    ]
+  },
+  "match": {
+    "matchId": 8946735226,
+    "radiantTeam": "Team Yandex",
+    "direTeam": "Iron Wing",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQV5aV0ZlQEABAwBJEBwQQkRcVH5XVxgOBVZWGRZJEllTVBMLD0FEU0ZbED0SX0FDV1oPHRNZW1lfZ1cHQF4LAgIHSwFKE0ZXTRgOEAYOBVlZb1lfQ1ZuT1NGGBgQEAsJX2FVURQXAAIaB0kWTxAPBx0YCBJBXkRHUF5tU09VQABASBhGWV9TflRSDwgFDQwKGU4fGFlVSxQXE15ORlVIXVwBPQdVQFUQGg9FWEBXZ19XEF5QVQ8ETR5ND1pUVBAOGEFeEAsJW0ZVbUVOVEFZV0YYGBAQCwlfYVVRFBcDAh8LSWc="
+}
