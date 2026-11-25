@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 44,
+  "date": "2026-11-26",
+  "patch": "7.41",
+  "hero": {
+    "id": 53,
+    "key": "furion",
+    "name": "Nature's Prophet"
+  },
+  "role": {
+    "pos": 1,
+    "label": "Carry"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      53,
+      39,
+      100,
+      123,
+      96
+    ],
+    "enemies": [
+      11,
+      17,
+      28,
+      86,
+      85
+    ],
+    "result": "win",
+    "durationSec": 2828,
+    "player": {
+      "name": "ssnovv1",
+      "team": "HULIGANI"
+    },
+    "priceBands": [
+      "5500+",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8944475901,
+    "radiantTeam": "Vici Gaming",
+    "direTeam": "HULIGANI",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPXFtCXlpUXUZGTkZOW11XZUhSExcLBA9JGB9AD19LEggURURDX1tVW1pROxINUVcSHhRZWFxIYVNZFg5VUFICTxxJFEZUSA8IFFhBQBAHFlxeSRAaD0VYQFdlX1cWXlNRAgJNHk0PWlRUEAwYVlgFAQ9lWVlcUXJTUF8QGhhAXQkHN19REggHGgYAUB5NGF9RHUBeGEFRRldDWFIPHhROXVkBMQFZEAoABhwHTAFJFFFRTUZYRltBQ1NDQUUTARBCU1lRNwcHGAgCAAYUTGw="
+}
