@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 45,
+  "date": "2026-11-27",
+  "patch": "7.41",
+  "hero": {
+    "id": 69,
+    "key": "doom_bringer",
+    "name": "Doom"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      69,
+      123,
+      3,
+      19,
+      145
+    ],
+    "enemies": [
+      6,
+      13,
+      155,
+      27,
+      103
+    ],
+    "result": "win",
+    "durationSec": 2681,
+    "player": {
+      "name": "33",
+      "team": "Iron Wing"
+    },
+    "priceBands": [
+      "4500-5500",
+      "3500-4500",
+      "4500-5500",
+      "3500-4500",
+      "2000-3500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8943278347,
+    "radiantTeam": "BETBOOM TEAM",
+    "direTeam": "Iron Wing",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPQ1BJW1ZUV1BGTkZOW11XZUhSExcDBgoESEgZRlFXSRAMD1NdTFFcZV9cCgU7WFNCEBoPRVhAV2RfVxdeU1AKAE0eTQ9aVFQQDRhHXQ0UBUltV0dXX1UTARBDU1lQNwcHGAgBBQMeTB1WEFxfTRdeQBFWRllfV1lUbl5RUkpAUBZASBhGWV9TflRSDwgGAwQCGU4fGFlVSxQXE0VfU0FfWGoGDQtOQRIeFFlYXEhhUlkWD1ZSUg1PHEkURlRIDwgVVUJQFhUMX15dW1hKblNBW1lRFhlGFg1XV2NXVQ8LAxkKDkdp"
+}
