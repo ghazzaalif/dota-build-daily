@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 46,
+  "date": "2026-11-28",
+  "patch": "7.41",
+  "hero": {
+    "id": 128,
+    "key": "snapfire",
+    "name": "Snapfire"
+  },
+  "role": {
+    "pos": 2,
+    "label": "Mid"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      128,
+      25,
+      55,
+      112,
+      62
+    ],
+    "enemies": [
+      36,
+      49,
+      21,
+      119,
+      85
+    ],
+    "result": "win",
+    "durationSec": 4092,
+    "player": {
+      "name": "CHIRA_JUNIOR",
+      "team": "Team Yandex"
+    },
+    "priceBands": [
+      "2000-3500",
+      "3500-4500",
+      "4500-5500",
+      "4500-5500",
+      "4500-5500",
+      "5500+"
+    ]
+  },
+  "match": {
+    "matchId": 8948533452,
+    "radiantTeam": "LGD Gaming",
+    "direTeam": "Team Yandex",
+    "playerSide": "dire"
+  },
+  "answer": "PxlGUVdJEAwPU11EXFMYGBQQCwlfYVVRFBcAARsARRZPFA8HHRgIElBaTFJacllRVFNpBgMWGB4SRl9AVGJIURoABQFRVRkWSRJZU1QTCw9BUFNCVxc9A09TQlYUARNFRF9daVFVRlhVAwcDTxpWE1pISxoAFkUUCgFIVxIeFFlYXEhhXVkWDFZQUAhPHEkURlRIDwgaSFFQFgcXUldCEBoPRVhAV2tfVxReUF0KCk0eTQ9aVFQQAhhGVxQLAUgQHBBCRFxUfldbGA4FVlddR28="
+}
