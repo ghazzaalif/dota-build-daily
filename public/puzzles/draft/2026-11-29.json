@@ -1,0 +1,189 @@
+{
+  "mode": "draft",
+  "puzzleNo": 41,
+  "date": "2026-11-29",
+  "patch": "7.41",
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hiddenSide": "radiant",
+  "hiddenHadFirstPick": true,
+  "draft": [
+    {
+      "order": 0,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 53
+    },
+    {
+      "order": 1,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 90
+    },
+    {
+      "order": 2,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 80
+    },
+    {
+      "order": 3,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 83
+    },
+    {
+      "order": 4,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 55
+    },
+    {
+      "order": 5,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 74
+    },
+    {
+      "order": 6,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 96
+    },
+    {
+      "order": 7,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 1
+    },
+    {
+      "order": 8,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 9
+    },
+    {
+      "order": 9,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 106
+    },
+    {
+      "order": 10,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 19
+    },
+    {
+      "order": 11,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 33
+    },
+    {
+      "order": 12,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 137
+    },
+    {
+      "order": 13,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 2
+    },
+    {
+      "order": 14,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 3
+    },
+    {
+      "order": 15,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 60
+    },
+    {
+      "order": 16,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 21
+    },
+    {
+      "order": 17,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 4
+    },
+    {
+      "order": 18,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 54
+    },
+    {
+      "order": 19,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 11
+    },
+    {
+      "order": 20,
+      "type": "ban",
+      "team": "hidden",
+      "heroId": 109
+    },
+    {
+      "order": 21,
+      "type": "ban",
+      "team": "enemy",
+      "heroId": 18
+    },
+    {
+      "order": 22,
+      "type": "pick",
+      "team": "hidden",
+      "slot": 5
+    },
+    {
+      "order": 23,
+      "type": "pick",
+      "team": "enemy",
+      "heroId": 12
+    }
+  ],
+  "hints": {
+    "positions": [
+      2,
+      5,
+      4,
+      3,
+      1
+    ],
+    "teams": {
+      "hidden": "GamerLegion",
+      "enemy": "OG"
+    },
+    "result": "win",
+    "durationSec": 2069,
+    "players": [
+      "RCY",
+      "Bignum",
+      "Speeed",
+      "Fayde",
+      "Ghost"
+    ],
+    "attributes": [
+      "str",
+      "int",
+      "int",
+      "str",
+      "int"
+    ]
+  },
+  "secret": "H0AFVBcFBBRWAGkBAgEBAAAUHggLBh1VUVEWVkc8SlZXU0RRXg8LSg9fWE5XWS0GRgBcS1VQQQwBAQcOARNDTFZQW1pFMAcFV0ZIQyEVV1dCflNKWF5DEBUYUFgWBzBfBR9DXFZ1dRJPSw=="
+}

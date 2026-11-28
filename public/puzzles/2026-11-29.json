@@ -1,0 +1,56 @@
+{
+  "puzzleNo": 47,
+  "date": "2026-11-29",
+  "patch": "7.41",
+  "hero": {
+    "id": 55,
+    "key": "dark_seer",
+    "name": "Dark Seer"
+  },
+  "role": {
+    "pos": 3,
+    "label": "Offlane"
+  },
+  "tournament": {
+    "leagueId": 19719,
+    "name": "The International 2026",
+    "stage": "Group Stage"
+  },
+  "hints": {
+    "allies": [
+      55,
+      53,
+      51,
+      9,
+      126
+    ],
+    "enemies": [
+      11,
+      13,
+      29,
+      119,
+      100
+    ],
+    "result": "win",
+    "durationSec": 2377,
+    "player": {
+      "name": "Davai",
+      "team": "Nigma Galaxy"
+    },
+    "priceBands": [
+      "2000-3500",
+      "0-2000",
+      "4500-5500",
+      "3500-4500",
+      "2000-3500",
+      "4500-5500"
+    ]
+  },
+  "match": {
+    "matchId": 8946386614,
+    "radiantTeam": "Nigma Galaxy",
+    "direTeam": "Vici Gaming",
+    "playerSide": "radiant"
+  },
+  "answer": "PxlGUVdJEAwPWVRBX2ZVUmgQCgFlVl9fX0NQRUJAGxYWQw0PAWlXUxAMGAECUB5CGF9SHUBeGFNCUVdDVG5PXVZORxVIQBBTX1VhU04TCxsGDUcYTEYJAUMQChBFRVhHTEFmXUFWFgZGFhBEW1tIYlROEAMLBA5QH0hBEFtXTw8LE09eWFlfaA8LCl1tUlNEDx0TWVtUX2dSB0BeCwYFCksBShNGV0AYDhUGDg1UWRIeFFlYXEhhXFkWDVVUVANPHEkURlRIDwgbSVxSARIXTltTWRQBE0VEX1xpUVRGWFYKAwVPaw=="
+}
